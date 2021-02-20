@@ -36,7 +36,5 @@ STORE @301; store r[i] <- r[min_j]
 LOAD 304; load temp <- r[i]
 STORE @303; store r[min_j] <- temp
 INC 301; i++
-LOAD @301; r[i] 
-JUML 41; if r[i] < 0 STOP else: continue
-JUMP 16 ; 
+JUMP 14 ; 
 STOP;
