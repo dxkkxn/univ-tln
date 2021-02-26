@@ -1,0 +1,2 @@
+jour = $(date +%Y%m%d)
+tail -n 1 "$1"|grep $jour

@@ -1,0 +1,88 @@
+
+1. Manipulation des fichiers et des répertoires
+
+    Ouvrez un terminal de commandes. Quelle commande vous permet de savoir dans quel répertoire de travail vous êtes ?
+La commande ls -l
+
+
+    Grâce à la commande cd, allez dans le répertoire /etc/X11 puis appliquez la commande cat au fichier rgb.txt qui se trouve dans ce répertoire. Ceci a pour effet d'afficher le contenu du fichier dans la fenêtre terminal. Que contient ce fichier ?
+Ce fichier contient les diferents couleurs et ils sond codes en RGB
+
+    Utilisez l'aide en ligne (man) et déterminez l'effet de l'option -l de la commande ls. Quels sont les protections, le propriétaire et la taille du fichier rgb.txt ? Effacez ce fichier, que se passe t'il ? Expliquez.
+Montre en plus les autorisations pour chaque fichier.Pour le createur du fichier c'est  ecriture et lecture et pour le group et les autres que l'ecriture. La taille c'est 17394 et le propiétaire c'est root. On ne peut pas le effacer car on n'a pas les permissions
+
+    Retournez dans votre répertoire d'origine (celui dont vous êtes propriétaire). Créez un répertoire Unix. Faites en votre répertoire de travail courant.
+
+    Copiez dans ce répertoire le fichier /etc/X11/rgb.txt. Dupliquez ce fichier, présent dans le répertoire Unix, en le nommant couleurs.txt.
+
+    Créez un sous-répertoire Trash dans votre répertoire Unix et déplacez tous les fichiers dedans à l'aide d'une seule commande. Renommez ce répertoire Corbeille puis effacez le (!). Que se passe t'il ? Expliquez.
+ON peut pas le effacer directemment car il y un fichier dedas le repertoire on est obligé à utiliser la commande rm -R
+
+2. Droits d'accès
+
+Si les protections sur les fichiers sont naturellement compréhensibles, il n'en va pas nécessairement de même en ce qui concerne les répertoires.
+
+   Créez un répertoire de nom Bidon et dans ce répertoire un fichier bidon.txt (la commande touch permet de créer un fichier ordinaire vide à partir du shell) ; par la suite ce fichier devra systématiquement avoir les droits suivants : -rw-rw-r-- (les membres de votre groupe doivent pouvoir le lire, le modifier voire le détruire)
+    Modifiez les droits du répertoire de la façon suivante : drwxrw---- (pas de droit en exécution pour les membres de votre groupe) puis demandez à un voisin de lancer les commandes suivantes à partir de votre répertoire de travail : ls Bidon ; cat Bidon/bidon.txt ; rm Bidon/bidon.txt ; cd Bidon. Expliquez ?
+    Modifiez les droits du répertoire de la façon suivante : drwxr-x--- (pas de droit en écriture pour les membres de votre groupe) puis demandez à un voisin de lancer les commandes suivantes à partir de votre répertoire de travail : ls Bidon ; cat Bidon/bidon.txt ; rm Bidon/bidon.txt ; cd Bidon. Expliquez ?
+    Modifiez les droits du répertoire de la façon suivante : drwx-wx--- (pas de droit en lecture pour les membres de votre groupe) puis demandez à un voisin de lancer les commandes suivantes à partir de votre répertoire de travail : ls Bidon ; cat Bidon/bidon.txt ; rm Bidon/bidon.txt ; cd Bidon. Expliquez ?
+Conclusions
+ Pour la comande ls il faut avoir le droit r, Pour la commande cat il faut que soit un fichier et avoir le droit x, por la commande cd il faut avoir le droit x et pour rm il faudra avoir tous les droites
+
+
+3. Processus
+
+    Lancez l'éditeur de texte gedit depuis le terminal. Pouvez-vous taper des commandes supplémentaires ? Expliquez.
+No car le terminal est bloqué il faudra utiliser la commande avec un & au final
+
+    Lancer maintenant l'éditeur en tache de fond. À l'aide de la commande ps -l donnez
+        le numéro de processus du programme hitori
+PID 11986
+        le numéro de processus du programme père ainsi que son nom
+PPID 10809
+        le temps écoulé depuis qu'il a été lancé
+18"
+    Pourquoi les commandes gedit et ps partagent elles le même PPID?
+Pcq son procesus pére c'est le meme
+
+    Lancez la commande xterm en tâche de fond. Depuis le nouveau terminal lancez un programme quelconque. Depuis le premier terminal trouvez le pid du processus xterm et arrêtez le à l'aide de la commande kill. Que s'est-il passé? Expliquez.
+Xterm et le programme lancé ils ont été arretés car le procesus pèrè du programme lancé etait xterm 
+
+4. Entrées-sorties
+
+Sous Unix, tout périphérique d'entrée-sortie correspond à un fichier. Pour montrer cela, vous allez suivre les étapes suivantes :
+
+    À partir d'un terminal, exécutez la commande cat /etc/X11/rgb.txt qui a pour résultat de vous afficher le contenu du fichier des couleurs. Exécutez la commande cat /etc/X11/rgb.txt > couleurs. Ceci a pour effet d'afficher le contenu du fichier des couleurs dans un fichier couleurs situé dans le répertoire courant. Vérifiez que ce fichier est bien dans votre répertoire.
+    Ouvrez une deuxième fenêtre terminal. Vous avez donc maintenant deux terminaux ouverts que nous appellerons T1 et T2. Chacun d'entre eux correspond à un fichier situé dans /dev. Positionnez vous dans T2 et tapez la commande tty qui affiche le nom du fichier correspondant à T2, par exemple /dev/pts/2. Positionnez-vous dans T1 et tapez alors cat couleurs > /dev/pts/2 (c'est un exemple !). Quel est le résultat obtenu ? Explication ?
+il afiche le fichier couleurs dans le deuxieme terminal. Car les terminaux sont des fichiers du coup on peut afficher sur eux outres fichiers
+
+
+
+
+5. Quelques manipulations de plus
+
+    Dans votre répertoire personnel, créez un dossier TPO131. Toujours depuis votre répertoire personnel créez deux répertoires cmd1 et cmd2 à l'intérieur du répertoire TPO131.
+    Affichez l'ensemble des fichiers contenu dans le répertoire /usr/bin depuis:
+
+        votre répertoire personnel
+        depuis le répertoire racine (/)
+        /usr/bin.
+
+    Depuis /usr/bin, affichez tous les fichiers:
+
+        commençant par la lettre a
+        se terminant par le chiffre 0
+        commençant par un a ou un b et se terminant par un x, un y ou un z
+        contenant un -
+        contenant deux y
+        se terminant par un . suivi de deux caractères.
+
+    Depuis /usr/bin, copier tous les fichiers du répertoire /usr/bin de deux lettres exactement dans le répertoire cmd1.
+    Déplacez vous dans le répertoire TPO131. Copiez tous les fichiers du répertoire /usr/bin contenant un chiffre entre 2 et 9 dans le répertoire cmd2.
+    Depuis le répertoire cmd1 déplacez tous les fichiers du répertoire cmd2 commençant par x86 vers le répertoire TPO131.
+    En une seule commande, déplacez vous dans le répertoire cmd2.
+    Depuis cmd2 créez un répertoire save dans le répertoire TPO131 et copiez l'ensemble du contenu du répertoire cmd1 dedans.
+    Depuis votre répertoire personnel, effacez, en une commande, tous les fichiers des répertoires cmd1 et cmd2.
+    Effacer le contenu du répertoire save, puis tous les répertoires dans TPO131 et enfin le répertoire TPO131.
+
+
