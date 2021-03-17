@@ -16,9 +16,12 @@ double square_and_multiply(float x, uint n)
 	return res;
 }
 
-int main(int argc, char argv[])
+int main(int argc, char* argv[])
 {
-	square_and_multiply(1.01, atoi(argv[1]));
+	for(int i = 0; i < 10000; i++)
+	{
+		square_and_multiply(1.01, atoi(argv[1]));
+	}
 }
 		
 

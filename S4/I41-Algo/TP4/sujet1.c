@@ -34,6 +34,9 @@ int main( int argc, char * argv[])
 	}
 */
 	
-	power_a(1.01, atoi(argv[1]));
+	for(int i = 0; i < 10000; i++)
+	{
+		power_a(1.01, atoi(argv[1]));
+	}
 
 }
