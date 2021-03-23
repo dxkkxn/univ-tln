@@ -11,13 +11,14 @@ int main(int argc, char** argv)
     if (fork() == 0)
     {
         // fils
-        //close(tube[0]);
         dup2(tube[1], 1);
+        close(tube[1]);
+        close(tube[0]);
         execlp(com1, com1, NULL);
     }
     else
     {
-        //close(tube[1]);
+        close(tube[1]);
         dup2(tube[0], 0);
         execlp(com2, com2, NULL);
     } 
