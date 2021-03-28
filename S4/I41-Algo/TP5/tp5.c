@@ -122,6 +122,7 @@ void main()
         float* curr_poly = create_poly(i);
         eval_naif(curr_poly, 5, i+1, &num_mult);
         fprintf(file, "%d, %d\n", i, num_mult);
+        num_mult = 0;
     }
 
     FILE* file1 = fopen("fichier_eval_sm", "w");
@@ -132,6 +133,7 @@ void main()
         float* curr_poly = create_poly(i);
         eval_sm(curr_poly, 5, i+1, &num_mult);
         fprintf(file1, "%d, %d\n", i, num_mult);
+        num_mult = 0;
     }
     
     FILE* file2 = fopen("fichier_eval_horner", "w");
@@ -142,6 +144,7 @@ void main()
         float* curr_poly = create_poly(i);
         eval_horner(curr_poly, 5, i+1, &num_mult);
         fprintf(file2, "%d, %d\n", i, num_mult);
+        num_mult = 0;
     }
 
 }
