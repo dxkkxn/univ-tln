@@ -4,20 +4,20 @@
 typedef int semaphore[2];
 
 void init_sem(semaphore s, int n) {
-    char jeton = '#';
+    char chip = '#';
     pipe(s);
     for(int i = 0; i < n; i++) {
-        write(s[1], &jeton, sizeof(jeton));
+        write(s[1], &chip, sizeof(char));
     }
 }
 
 void p(semaphore s) {
-    char jeton;
-    read(s[0], &jeton, sizeof(char));
+    char chip;
+    read(s[0], &chip, sizeof(char));
 }
 
 void v(semaphore s) {
-    char jeton = '#';
-    write(s[1], &jeton, sizeof(char));
+    char chip = '#';
+    write(s[1], &chip, sizeof(char));
 }
 
