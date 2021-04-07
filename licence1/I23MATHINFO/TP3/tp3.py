@@ -40,10 +40,21 @@ def phoqueit(n):
             L = ['.' + x for x in B] + ['_' + x for x in A]
             A = B
             B = L
-            print(L)
     return L
 
-phoqueit(5)
+def fibonacci(n):
+    res = [0,1]
+    for i in range(1, n):
+        res.append(res[i-1]+res[i])
+    return tuple(res)
 
+def genuplet(n, m, nuplet):
+    if n == 0:
+        print(nuplet)
+    else:
+        for i in range(1, m+1):
+            genuplet(n-1, m, nuplet+(i,))
+
+genuplet(3,5,())
 
 

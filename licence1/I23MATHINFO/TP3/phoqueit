@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+import sys
+
+def phoqueit(n):
+    L = []
+    A = ['.']
+    B = ['..', '_']
+    if n == 1:
+        return A
+    if n == 2:
+        return B
+    else:
+        for i in range(3, n+1):
+            L = ['.' + x for x in B] + ['_' + x for x in A]
+            A = B
+            B = L
+    return L
+
+if (len(sys.argv) < 2):
+    print("error")
+else:
+    phoqueit(int(sys.argv[1]))
+
