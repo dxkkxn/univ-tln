@@ -70,8 +70,6 @@ ullong selection_sort(int *arr, uint n) {
         swap(new_arr, i, tmp);
         comp += (n-i);
     }
-    print_array(new_arr, n);
-    printf("tri selection fait ^^\n");
     free(new_arr);
     return comp;
 }
@@ -93,8 +91,6 @@ ullong buble_sort(int *arr, uint n) {
         }
         i++;
     }
-    print_array(new_arr, n);
-    printf("tri a bulles fait ^^\n");
     free(new_arr);
     return comp;
 }
@@ -109,8 +105,6 @@ ullong insertion_sort(int *arr, uint n) {
             comp += 1;
         }
     }
-    print_array(new_arr, n);
-    printf("tri insertion fait ^^\n");
     free(new_arr);
     return comp;
 }
@@ -125,25 +119,26 @@ ullong fact(uint n) {
 
 
 void main(int argc, char **argv) {
-    uint n = atoi(argv[1]);
+    uint limit = atoi(argv[1]);
+    uint n = 1000;
     ullong fact_n = fact(n), comp_sel = 0, comp_bub = 0, comp_ins = 0;
     uint *arr;
     srand(time(NULL));
 
-    FILE *file = fopen("tris_comp", "w");
+    FILE *file = fopen("tris_imp", "w");
 
-    for (uint i = 0; i < fact_n; i++) {
+    for (uint i = 0; i < limit; i++) {
         arr = gen_perm(n);
 
-        comp_sel = selection_sort(arr, n);
+        comp_sel += selection_sort(arr, n);
 
-        comp_bub = buble_sort(arr, n);
+        comp_bub += buble_sort(arr, n);
 
-        comp_ins = insertion_sort(arr, n);
+        comp_ins += insertion_sort(arr, n);
 
         free(arr);
 
-        fprintf(file, "%d %llu %llu %llu\n", i+1, comp_sel, comp_bub, comp_ins); 
+        fprintf(file, "%llu %llu %llu\n", comp_sel, comp_bub, comp_ins); 
 
     }
     fclose(file);

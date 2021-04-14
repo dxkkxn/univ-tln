@@ -41,7 +41,7 @@ def frequent_letter(m):
         if frequency == max_f and letter not in list_letters:
             list_letters.append(letter)
 
-    return list_letters[0]
+    return list_letters
 
 
 
