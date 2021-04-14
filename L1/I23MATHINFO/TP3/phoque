@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+
+import sys
+
+def phoque(n):
+    if (n == 0):
+        return []
+    elif (n == 1):
+        return ['.']
+    elif (n == 2):
+        return ["..", '_']
+    else:
+        return ['.' + x for x in phoque(n-1)] + ['_' + x for x in phoque(n-2)]
+
+if (len(sys.argv) < 2):
+    print(f"Error")
+else:
+    phoque(int(sys.argv[1]))
+
