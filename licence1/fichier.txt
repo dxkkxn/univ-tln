@@ -1,9 +1,0 @@
-total 48
-drwxr-xr-x 2 ybenjello021 etudiants  4096 sept. 30 09:07 Bureau
--rw-r--r-- 1 ybenjello021 etudiants 17394 oct.   7 18:11 couleurs
-drwxr-xr-x 3 ybenjello021 etudiants  4096 sept. 30 09:07 Documents
--rw-r--r-- 1 ybenjello021 etudiants     0 oct.  14  2019 fichier.txt
-drwxr-xr-x 2 ybenjello021 etudiants  4096 oct.  14 12:04 ordinapoche
-drwxr-xr-x 4 ybenjello021 etudiants  4096 oct.   7 18:20 TP0131
--rw-r--r-- 1 ybenjello021 etudiants  6969 oct.   7 19:03 tp1
-drwxr-xr-x 3 ybenjello021 etudiants  4096 oct.   7 16:57 unix
