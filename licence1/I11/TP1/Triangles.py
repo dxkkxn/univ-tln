@@ -1,9 +1,0 @@
-cotea = float (input())
-coteb = float (input())
-cotec = float (input())
-s = cotea + coteb + cotec
-Aire = ((s*(s-cotea)*(s-coteb)*(s-cotec))**0.5)
-print("Longueur du premier cote=", cotea)
-print("Longueur du premier cote=", coteb)
-print("Longueur du premier cote=", cotec)
-print("Aire=",Aire)

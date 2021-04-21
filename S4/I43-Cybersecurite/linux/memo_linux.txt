@@ -1,4 +1,0 @@
-- tube et redirections
-- tour de l'hote
-- structure du systeme de fichiers
-- commande fichiers
