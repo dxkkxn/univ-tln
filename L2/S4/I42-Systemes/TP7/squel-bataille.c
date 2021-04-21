@@ -16,7 +16,7 @@ key_t SEMID;
 void sem_create(key_t cle, int semNum) 
 {
 /* -- A compléter en vous inspirant de l'exercice  6 */
-    if (SEMID = semget(ftok("tmp_file", cle), semNum, 0777|IPC_CREAT) < 0) {
+    if ((SEMID = semget(ftok("tmp_file", cle), semNum, 0777|IPC_CREAT)) < 0) {
         perror("Error creation of sem");
     }
     
@@ -44,7 +44,7 @@ void P(int sem)
     /* -- A compléter en vous inspirant de l'exercice  6 */
     struct sembuf sops;
     sops.sem_num = sem;
-    sops.sem_op = 1;
+    sops.sem_op = -1;
     sops.sem_flg = 0;
     if (semop(SEMID, &sops, 1) < 0) 
         perror("Error on semop in P");
@@ -56,7 +56,7 @@ void V(int sem)
     /* -- A compléter en vous inspirant de l'exercice  6 */
     struct sembuf sops;
     sops.sem_num = sem;
-    sops.sem_op = -1;
+    sops.sem_op = 1;
     sops.sem_flg = 0;
     if (semop(SEMID, &sops, 1) < 0)
         perror("Error on semop in V");
@@ -117,19 +117,13 @@ typedef int booleen;
   
   /* Iniatilisation de chaque case des deux tableaux de bateaux avec le caractère '.' */
   /*-- Ecrire le code d'initialisation */
-    if (param == 1) {
-        for (int i = 0; i < NBBAT; i++) {
-            for (int j = 0; j < NBBAT; j++) {
-                Bat[i][j] = '.';
-          }
+  for (int i = 0; i < NBBAT; i++) {
+      for (int j = 0; j < NBBAT; j++) {
+          Bat[i][j] = '.';
+          BatA[i][j] = '.';
       }
-    } else if (param == 2) {
-        for (int i = 0; i < NBBAT; i++) {
-            for (int j = 0; j < NBBAT; j++) {
-                BatA[i][j] = '.';
-          }
-      }
-    }
+  }
+   
     
   /* Initialisation du générateur aléatoire */  
   srand(getpid());
@@ -139,39 +133,26 @@ typedef int booleen;
   /*------- Ecrire le code de placement des bateaux */
   int x, y;
 
-  if (param == 1) {
-      for (int i = 0; i < N; i++) {
-          do {
-              x = rand() % NBBAT;
-              y = rand() % NBBAT;
-          } while (Bat[x][y] == '*'); 
-          Bat[x][y] = '*';
-      } 
-  } else if (param == 2) {
-      for (int i = 0; i < N; i++) {
-          do {
-              x = rand() % NBBAT;
-              y = rand() % NBBAT;
-          } while (BatA[x][y] == '*'); 
-          BatA[x][y] = '*';
-      } 
-  }
+  for (int i = 0; i < N; i++) {
+      do {
+          x = rand() % NBBAT;
+          y = rand() % NBBAT;
+      } while (Bat[x][y] == '*'); 
+      Bat[x][y] = '*';
+  } 
 
   printf("Initialisation des bateaux OK\n");
 
   /* Création de la zone de mémoire partagée par les deux joueurs */
          /*-- Ecrire le code de création du segment de mémoire partagée */ 
-  NumM = shmget(ftok("tmp_file", CLE), sizeof(Tir) + 256, IPC_CREAT);
+  NumM = shmget(ftok("tmp_file", CLE), sizeof(Tir), IPC_CREAT | 0666);
   if (NumM < 0 )  
       perror("shm get failed");
   printf("NumM %d\n", NumM);
          /*-- Attacher le segment de mémoire partagée (Structuré) */
-  pTir = (Tir *) shmat(NumM, NULL, 0);
+  pTir = shmat(NumM, 0, 0);
   if (pTir == NULL) 
       perror("shmat failed");
-  printf("x - > %d\n", 2);
-  pTir->X = 2;
-  printf("yesssssssssssss\n");
   /* Création du groupe de 3 sémaphores */
   /*-- Utiliser semcreate pour créer le groupe */
   sem_create(CLE, 3);
@@ -181,10 +162,8 @@ typedef int booleen;
   /* Le sémaphore S2 est initialisé au nombre de joueurs */   
   if (param == 1){
     printf("Joueur 1\n");
-    printf("ok1\n");
     pTir->R=0; /* Cette initialisation indique qu'il s'agit du premier coup */
   /*-- Ecrire le code d'initialisation */
-    printf("ok2\n");
     init_sem(0, S0);
     init_sem(1, S1);
     init_sem(2, S2);
@@ -194,6 +173,11 @@ typedef int booleen;
 
   /* Blocage du processus si deux joueurs sont déjà connectés */
   P(S2); 
+  while (semctl(SEMID, 2, GETVAL) > 0) {
+          printf("Attente de 2 joueur\nsem2val%d\n",semctl(SEMID, 2, GETVAL)) ;
+          sleep(1);
+      }
+
 
   /* Boucle principale du programme se termine quand l'un des deux joueurs n'a plus de bateaux */
   while (!Fin) {
@@ -205,9 +189,9 @@ typedef int booleen;
     
     /*-- Ecrire le code d'attente de son tour */
     if (param == 1) {
-        P(S1);
-    } else {
         P(S0);
+    } else {
+        P(S1);
     }
     
     
@@ -221,15 +205,15 @@ typedef int booleen;
         case RATE :
           if (BatA[X][Y] != 'C')
               BatA[X][Y] = 'R';
-          printf("Mon tir raté en %d %d\n", X, Y);      
+          printf("Mon tir rate en %d %d\n", X, Y);      
           break;
         case COULE :
           BatA[X][Y] = 'C';
           NBCAdv++;
-          printf("Adversaire coulé en %d %d, Nb de bateaux coulés: %d\n",X, Y,NBCAdv);
+          printf("Adversaire coule en %d %d, Nb de bateaux coules: %d\n",X, Y,NBCAdv);
           if (NBCAdv == NBBAT) {
-        Fin = 1;
-        printf("Tous les bateaux adverses sont coulés\n");
+              Fin = 1;
+              printf("Tous les bateaux adverses sont coules\n");
           }
           break;
     }
@@ -239,7 +223,7 @@ typedef int booleen;
       if (pTir->R == 0) {
         pTir->R = -1; /* si c'est le premier tour, pas de resultat pour l'adversaire */
       }
-      else 
+      else {
       	/* On vérifie le tir de l'adversaire */
       	/* si il y a un bateau à cette place: */
       		/* on affiche touché */
@@ -249,13 +233,12 @@ typedef int booleen;
       		/* si tous les bateaux sont coulés on met Fin à vrai */ 
       		
       /*-- Ecrire le code correspondant */
-      x = pTir->X;
-      y = pTir->Y;
-      if (param == 1) {
+          x = pTir->X;
+          y = pTir->Y;
           if (Bat[x][y] == '*') {
               printf("Touche'\n");
               pTir->R = COULE;
-              Bat[x][y] = COULE;
+              Bat[x][y] = 'C';
               NBC++;
               if (NBC == NBBAT) 
                   Fin = vrai;
@@ -264,21 +247,7 @@ typedef int booleen;
               printf("Rate'\n");
               pTir->R = RATE;
           }
-      } else {
-          if (BatA[x][y] == '*') {
-              printf("Touche'\n");
-              pTir->R = COULE;
-              BatA[x][y] = COULE;
-              NBCAdv++;
-              if (NBCAdv == NBBAT) 
-                  Fin = vrai;
-          } else {
-              printf("Rate'\n");
-              pTir->R = RATE;
-              BatA[x][y] = RATE;
-          }
       }
-    }
       
     
       /* si le tir est manqué: */
@@ -290,38 +259,37 @@ typedef int booleen;
   /*-- Afficher cote à cote les deux grilles Bat et BatA: */
   for (int i = 0; i < NBBAT; i++) {
       for (int j = 0; j < NBBAT; j++) {
-          printf("%d ", Bat[i][j]);
+          printf("%c ", Bat[i][j]);
       }
-      printf("           ");
+      printf("             ");
       for (int j = 0; j < NBBAT; j++) {
-          printf("%d ", BatA[i][j]);
+          printf("%c ", BatA[i][j]);
       }
       printf("\n");           
   }
   	
-  printf("\nCoulés : %d         Coulés : %d\n",NBC, NBCAdv);
+  printf("\nCoules : %d         Coules : %d\n",NBC, NBCAdv);
 
   /* Si la partie n'est pas finie on démande à l'utilisateur les coordonnée de son */
   /* prochain tir, puis on les écrit dans le segment de mémoire partagée. */ 
   if (!Fin) {
 	/*-- Ecrire le code correspondant */
     printf("Prochain tir x = ");
-    scanf("%d", &x);
+    scanf("%d", &X);
     printf("Prochain tir y = ");
-    scanf("%d", &y);
-    pTir->X = x;
-    pTir->Y = y;
+    scanf("%d", &Y);
+    pTir->X = X;
+    pTir->Y = Y;
   }
   
   /* Le joueur courant a fini son son tour, il autorise donc l'autre joueur à jouer */
   /*-- Ecrire le code correspondant */
   if (param == 1) {
       V(S1);
-      P(S0);
   } else if (param == 2) {
       V(S0);
-      P(S1);
   }
+}
 }
 
 /*Quand la partie est finie, le joueur 1 détruit le sémaphore et le segment de mémoire partagée */
@@ -331,4 +299,5 @@ typedef int booleen;
         shmdt(&NumM);
         shmctl(NumM, IPC_RMID, 0);
     }
+
 }
