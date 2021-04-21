@@ -5,7 +5,7 @@
 
 #define True 1
 #define False 0
-#define N 10
+#define N 7
 
 typedef unsigned int uint;
 typedef struct {

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 10
+#define N 7
 typedef struct { 
     unsigned int n;
     int *vals;

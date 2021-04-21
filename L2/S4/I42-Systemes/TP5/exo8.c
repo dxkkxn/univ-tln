@@ -23,7 +23,7 @@
 
 int main (int argc, char **argv)
 {
-	for (int i = 0; i < argc; i++)
+	for (int i = 0; i < (argc-1); i++)
 	{
 		if (fork() != 0)
 		{
@@ -35,8 +35,10 @@ int main (int argc, char **argv)
 		else
 		{
 			printf("command num %d \n", i);
-			if (execlp(argv[i+1], argv[i+1], NULL) < 0) {
+			if (execlp(argv[i+1], argv[i+1], NULL) < 0) 
                 exit(0);
+            
+
 		}
 	}
     exit(0);
