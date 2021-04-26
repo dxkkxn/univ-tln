@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 7
+#define N 1000
 typedef struct { 
     unsigned int n;
     int *vals;
 } list;
 typedef unsigned int uint;
 
-unsigned long long comp;
+unsigned long long comp = 0;
 
 void print_list(list arr) {
     printf("[");
@@ -41,6 +41,7 @@ void fusion(list L, unsigned int p, unsigned int q, unsigned int r) {
     list right_list = {r-q, right_tab};
     copy(L, p, left_list, 0, q-p+1);
     copy(L, q+1, right_list, 0, r-q);
+    comp += (r-p);
 
     int i = 0, j = 0, k = p;
     while(i < left_list.n && j < right_list.n) {
@@ -54,6 +55,7 @@ void fusion(list L, unsigned int p, unsigned int q, unsigned int r) {
         comp += 1;
     }
     copy(left_list, i, L, k, left_list.n-i);
+    comp+=(left_list.n-i);
 }
 
 void fusion_sort(list L, unsigned int p, unsigned int r) {
@@ -107,15 +109,16 @@ void main(int argc, char** argv) {
     unsigned int nlogn = N*log(N);
     unsigned long long complexity = nlogn;
     unsigned long long fact_n = fact(N);
-    //fprintf(file, "n_log(n) fusion\n");
-    for (unsigned long long i = 0; i <fact_n; i++) {
-        int *tab = gen_perm(N);
-        list liste = {N, tab};
-        fusion_sort(liste, 0, N-1);
-        fprintf(file, "%lld\n", comp);
-        //complexity += nlogn;
-        //free(liste);
-        free(tab);
+    fprintf(file, "fusion\n");
+    for (unsigned long long i = 0; i < N; i++) {
+        for (int j = 0; j < 50; j++) {
+            int *tab = gen_perm(i);
+            list liste = {i, tab};
+            fusion_sort(liste, 0, i);
+            free(tab);
+        }
+        fprintf(file, "%lld\n", comp/50);
+        comp = 0;
     }
     fclose(file);
 

@@ -4,6 +4,7 @@
 
 #define True 1
 #define False 0
+#define N 1000
 
 typedef unsigned int uint;
 typedef unsigned long long ullong;
@@ -41,9 +42,7 @@ uint* gen_perm(uint n) {
     uint tmp;
 
     for (uint i = 0; i < n; i++) {
-        do {
-            tmp = rand() % n;
-        } while (tmp < i);
+        tmp = rand() % (n-i) + i;
         swap(new_arr, i, tmp);    
     }
     return new_arr;
@@ -119,27 +118,26 @@ ullong fact(uint n) {
 
 
 void main(int argc, char **argv) {
-    uint limit = atoi(argv[1]);
-    uint n = 1000;
-    ullong fact_n = fact(n), comp_sel = 0, comp_bub = 0, comp_ins = 0;
+    ullong comp_sel = 0, comp_bub = 0, comp_ins = 0;
     uint *arr;
     srand(time(NULL));
 
     FILE *file = fopen("tris_imp", "w");
+    fprintf(file, "selection buble insertion\n");
 
-    for (uint i = 0; i < limit; i++) {
-        arr = gen_perm(n);
-
-        comp_sel += selection_sort(arr, n);
-
-        comp_bub += buble_sort(arr, n);
-
-        comp_ins += insertion_sort(arr, n);
-
-        free(arr);
-
-        fprintf(file, "%llu %llu %llu\n", comp_sel, comp_bub, comp_ins); 
-
+    for (uint i = 0; i < N; i++) {
+        for(uint j = 0; j < 50; j++) {
+            arr = gen_perm(i);
+            comp_sel += selection_sort(arr, i);
+            comp_bub += buble_sort(arr, i);
+            comp_ins += insertion_sort(arr, i);
+            free(arr);
+        }
+        printf("%d\n", i);
+        fprintf(file, "%llu %llu %llu\n", comp_sel/50, comp_bub/50, comp_ins/50); 
+        comp_sel = 0;
+        comp_bub = 0;
+        comp_ins = 0;
     }
     fclose(file);
 }

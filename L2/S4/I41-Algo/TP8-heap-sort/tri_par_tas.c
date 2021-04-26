@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define N 50
+#define N 1000
 
 
 typedef unsigned int uint;
-unsigned int comp;
+unsigned long long comp = 0;
 
 void print_tas(int *arr, unsigned int n) {
     int depth = floor(log(n)/log(2));
@@ -60,26 +60,18 @@ void tamiser(int *arr, unsigned int i, unsigned int n) {
     if (child < n && arr[child+1] > arr[child]) 
         child += 1;
     if (child <= n && arr[child] > arr[i]) {
-        comp += 2;
         swap(arr, child, i);
         tamiser(arr, child, n);
+    comp += 2;
     }
 }
 
-unsigned int* gen_perm(uint n) {
-    uint *new_arr = (uint *) malloc(sizeof(uint)*n);
-    for (int i = 0; i<n; i++) {
-        new_arr[i] = i;
-    }
+void gen_perm(int *new_arr, int n) {
     uint tmp;
-
     for (uint i = 0; i < n; i++) {
-        do {
-            tmp = rand() % n;
-        } while (tmp < i);
+        tmp = rand() % (n-i) + i;
         swap(new_arr, i, tmp);    
     }
-    return new_arr;
 }
 
 void entasser(int *arr, unsigned int n) {
@@ -101,7 +93,7 @@ void tri_tas(int *arr, unsigned int n) {
     }
 }
 
-uint fact (uint n) {
+unsigned long long fact (uint n) {
     uint res = 1;
     while (n) {
         res *= n;
@@ -117,17 +109,25 @@ void main(int argc, char **argv) {
     //print_tas(liste, 10);
     //tri_tas(liste, 10);
     //print_tas(liste, 10);
-    unsigned int cte = N*(log(N)/log(2));
-    unsigned long nlogn = cte;
+    unsigned long long nlogn;
     uint fact_n = fact(N);
     srand(time(NULL));
-    FILE *file = fopen("tris_tas", "w");
-    for (int i = 0; i < atoi(argv[1]); i++) {
-        uint* tab = gen_perm(N);
-        tri_tas(tab, N);
-        fprintf(file, "%ld %d\n", nlogn, comp);
-        nlogn += cte;
+    FILE *file = fopen("tri_tas", "w");
+    fprintf(file, "nlogn tri-tas\n0 0\n");
+    for (int i = 1; i < N; i++) {
+        int *tab = calloc(i, sizeof(int));
+        for (int j = 0; j < i; j++) 
+            tab[j] = j+1;
+        int j;
+        for (j = 0; j < 50 ; j++) {
+            gen_perm(tab, i);
+            tri_tas(tab, i);
+        }
+        nlogn = i*(log(i)/log(2));
+        fprintf(file, "%lld %lld\n", nlogn, comp/50);
+        comp = 0;
         free(tab);
+        
     }
     fclose(file);
 }

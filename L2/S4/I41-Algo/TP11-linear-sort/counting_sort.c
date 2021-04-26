@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <math.h>
+#include <errno.h>
 
 #define N 1000
 
@@ -58,6 +58,7 @@ void counting_sort (list L) {
             comp += 2;
         }
     }
+    free(H.arr);
 }
         
 void gen_perm(list L) {
@@ -105,9 +106,9 @@ void main (int argc, char** argv) {
         assert(is_sorted(L));
     }
     */
-    unsigned long long fact_n = fact(N);
     FILE *file = fopen("counting_sort.txt", "w");
-    for (unsigned long long i = 2; i < N; i++) {
+    fprintf(file, "countingsort\n");
+    for (unsigned long i = 1; i < N; i++) {
         int *arr = calloc(i, sizeof(int));
         for (int j = 0; j < i; j++) 
             arr[j] = j+1;
@@ -118,8 +119,10 @@ void main (int argc, char** argv) {
             assert(is_sorted(L));
         }
         free(L.arr);
-        fprintf(file, "%lld\n", comp/50);
+        fprintf(file, "%lld \n", comp/50);
         comp = 0;
+        printf("OK %ld\n", i);
     }
+    perror("wtf");
 }
 

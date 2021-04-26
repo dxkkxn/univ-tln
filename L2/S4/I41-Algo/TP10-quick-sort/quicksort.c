@@ -5,7 +5,7 @@
 
 #define True 1
 #define False 0
-#define N 7
+#define N 1000
 
 typedef unsigned int uint;
 typedef struct {
@@ -81,8 +81,6 @@ int is_sorted (list L) {
 }
 
 void quick_sort(list L, uint p, uint r) {
-    if (p == 0 && r == L.n -1) 
-        gen_perm(L);
     if (p < r) {
         int q = partition(L, p, r);
         quick_sort(L, p, q);
@@ -90,9 +88,9 @@ void quick_sort(list L, uint p, uint r) {
     }
 }
 
-void quick_sort_v2(list L, uint p, uint r) {
-    //if (p == 0 && r == L.n -1) 
-    //    gen_perm(L);
+void quick_sort_v3(list L, uint p, uint r) {
+    if (p == 0 && r == L.n -1) 
+        gen_perm(L);
     if (p < r) {
         int q = partition(L, p, r);
         if (!is_sorted(L)){
@@ -116,16 +114,21 @@ void main () {
     //print_list(L);
     
     uint arr[N];  
-    for (int i = 0; i<N; i++) {
-        arr[i] = i+1;
-    }
-    list L = {N, arr};
     unsigned long long fact_n = fact(N);
     FILE *file = fopen("quicksort.txt", "w");
-    for (unsigned long long i = 0; i < fact_n; i++) {
-        gen_perm(L);
-        quick_sort(L, 0, N-1);
-        fprintf(file, "%lld\n", comp);
+    fprintf(file, "quicksort\n");
+    for(unsigned long long i = 1; i < N; i++) {
+        int *arr = calloc(i, sizeof(int));
+        for (int k = 0; k<i; k++) {
+            arr[k] = k+1;
+        }
+        list L = {i, arr};
+        for(unsigned int j = 0; j < 50; j++) {
+            gen_perm(L);
+            quick_sort(L, 0, i-1);
+        }
+        fprintf(file, "%lld\n", comp/50);
+        comp = 0;
     }
     fclose(file);
     /*
