@@ -1,0 +1,1024 @@
+   25  env
+   26  env | loss
+   27  env | less
+   28  clear
+   29  type echo
+   30  main less
+   31  man less
+   32  type PATH
+   33  type $PATH
+   34  type bidon
+   35  bidon
+   36  clear
+   37  type $PATH
+   38  type PATH
+   39  vim ~/.bashrc 
+   40  which python3
+   41  which echo
+   42  ls
+   43  cd linux
+   44  ls
+   45  vim test.sh
+   46  clear
+   47  mv test.sh builtin.sh
+   48  clear
+   49  ls
+   50  mv builtin.sh built-in.sh
+   51  ls
+   52  clear
+   53  vim built-in.sh 
+   54  ls
+   55  mv built-in.sh primitive.sh
+   56  ls
+   57  ls -l
+   58  chmod u+x primitive.sh
+   59  ls
+   60  man bash
+   61  echo $BASH_CMDS
+   62  man bash
+   63  $BASH_CMDS
+   64  man bash
+   65  BASH
+   66  $BASH
+   67  echo $BASH
+   68  echo $BASH_CMDS
+   69  man bash
+   70  man bash | grep builtin
+   71  man bash | grep builtin | less
+   72  man bash | grep builtin | wc -l
+   73  man bash | grep builtin -c
+   74  man grep
+   75  man bash | grep 'list.*builtin' -c
+   76  man bash
+   77  JOBS
+   78  jobs
+   79  kill %1
+   80  fg
+   81  clear
+   82  man bash
+   83  enable
+   84  enable | less
+   85  man cut
+   86  enable | cut -d 
+   87  cut --help
+   88  enable | cut --delimiter=' '
+   89  enable > cut --delimiter=' '
+   90  cut --delimiter=' ' < enable
+   91  cut --delimiter=' ' < echo enable
+   92  cut --delimiter=' ' <<< enable
+   93  enable
+   94  echo enable
+   95  clear
+   96  history
+   97  history | less
+   98  cut -d < enable
+   99  cut -d | enable
+  100  clear
+  101  ls
+  102  fg
+  103  ls
+  104  vim primitive.sh
+  105  tr ':'' ' /etc/passwd
+  106  tr ':'' ' </etc/passwd
+  107  tr ':'' '</etc/passwd
+  108  tr ':'' '</etc/passwd
+  109  tr ': '</etc/passwd
+  110  tr ':'' '</etc/passwd
+  111  tr ':'' ' </etc/passwd
+  112  tr ':'' ' < /etc/passwd
+  113  tr :' ' < /etc/passwd
+  114  tr : ' ' < /etc/passwd
+  115  tr : ' ' < /etc/passwd
+  116  clear
+  117  tr : ' ' < /etc/passwd > /tmp/bidon.txt
+  118  cut /tmp/bidon.txt 
+  119  cat /tmp/bidon.txt 
+  120  clear
+  121  ls
+  122  fg
+  123  clear
+  124  ls
+  125  ./here.sh 
+  126  ./primitive.sh 
+  127  cat /tmp/bidon.txt 
+  128  fg
+  129  ./primitive.sh 
+  130  clear
+  131  fg
+  132  ./primitive.sh
+  133  fg
+  134  ./primitive.sh
+  135   fg
+  136  ./primitive.sh
+  137  fg
+  138  which toto
+  139  man which
+  140  which which
+  141  man which
+  142  ./primitive.sh
+  143  aliman which
+  144  man which
+  145  fg
+  146  ./primitive.sh
+  147  clear
+  148  fg
+  149  ./primitive.sh 
+  150  cat /dev/null
+  151  ls /dev/null
+  152  cat /dev/null
+  153  which [
+  154  cat /dev/null
+  155  enable
+  156  man cut
+  157  cut -d' '<enable
+  158  cut -d' ' < enable
+  159  cut -d' ' <<< enable
+  160  enable | cut -d' ' 
+  161  enable | cut -d' ' -f2 
+  162   cut -d' ' -f2 < enable
+  163   cut -d' ' -f2 <<< enable
+  164   cut -d' ' -f2 < enable
+  165  enable | cut -d' ' -f2 
+  166  enable | cut -d' ' -f2 | xarg which
+  167  enable | cut -d' ' -f2 | xargs which
+  168  enable | cut -d' ' -f2 | xargs which | cut -d'/' -f2
+  169  enable | cut -d' ' -f2 | xargs which | cut -d'/' -f3
+  170  enable | cut -d' ' -f2 | xargs which | cut -d'/' -f3,4
+  171  enable | cut -d' ' -f2 | xargs which 
+  172  basename /usr/bin/bash
+  173  man basename
+  174  enable | cut -d' ' -f2 | xargs which | xargs basename
+  175  enable | cut -d' ' -f2 | xargs which | xargs basename {}
+  176  clear
+  177  enable | cut -d' ' -f2 | xargs which 
+  178  enable | cut -d' ' -f2 | xargs which | xargs basename
+  179  enable | cut -d' ' -f2 | xargs which | xargs basename
+  180  basename /bin/false
+  181  enable | cut -d' ' -f2 | xargs which | xargs basename
+  182  enable | cut -d' ' -f2 | xargs which | xargs basename | echo
+  183  enable | cut -d' ' -f2 | xargs which | xargs basename | echo
+  184  base /bin/false 
+  185  basename /bin/false 
+  186  enable | cut -d' ' -f2 | xargs which | xargs basename {}
+  187  enable | cut -d' ' -f2 | xargs which | xargs basename '{}'
+  188  basename /bin/echo
+  189  basename /bin/[
+  190  clear
+  191  enable | cut -d' ' -f2 | xargs which | xargs basename '{}'
+  192  enable | cut -d' ' -f2 | xargs which | cat | xargs basename '{}'
+  193  type basename
+  194  man basename
+  195  enable | cut -d' ' -f2 | xargs which | cat | xargs basename -a 
+  196  man basename
+  197  ls
+  198  enable | sed 's/enable/@/g'
+  199  enable | sed 's/enable/@/'
+  200  enable | sed 's/enable/ /'
+  201  enable | sed 's/enable/ /'
+  202  enable | sed 's/enable/ /'
+  203  enable | sed 's/enable//'
+  204  man sed
+  205  find ~ -name 'prim*'
+  206  find / -name 'prim*'
+  207  find / -name 'prim*' 2 > /dev/null
+  208  find / -name 'prim*' 2> /dev/null
+  209  cd ~/univ-tln/
+  210  git add *
+  211  git commit -m "linux tp"
+  212  git push origin master
+  213  fg
+  214  fg
+  215  jobs
+  216  clear
+  217  ls
+  218  cd univ-tln/
+  219  clear
+  220  ls
+  221  cd S4/I41-Algo/
+  222  ls
+  223  mkdir TP8
+  224  cd TP8/
+  225  ls
+  226  vim fusion.c
+  227  fg
+  228  fg
+  229  vim fusion.c 
+  230  fg
+  231  clear
+  232  ls
+  233  cd ../../../
+  234  ls
+  235  git add *
+  236  git commit -m "merge sort"
+  237  git push origin master
+  238  clear
+  239  clear
+  240  ls
+  241  cd univ-tln/
+  242  clear
+  243  ls
+  244  git pull origin master
+  245  ls
+  246  clear
+  247  rm -rf licence1
+  248  rm -rf licence2/
+  249  clear
+  250  ls
+  251  rm -rf licence\ 1/
+  252  ls
+  253  clear
+  254  cd L2/
+  255  ls
+  256  cd S4/
+  257  ls
+  258  cd I42-Systemes/
+  259  clear
+  260  ls
+  261  cd TP5/
+  262  clear
+  263  ls
+  264  vim exo2.c
+  265  vim exo3.c 
+  266  vim exo4.c 
+  267  vim exo5.c
+  268  clear
+  269  ls
+  270  vim exo7.c
+  271  ls
+  272  gcc exo7.c
+  273  ./a.out who ls pwd
+  274  who
+  275  clear
+  276  titi pwd
+  277  ls
+  278  cat exo7.c > exo8.c
+  279  clear
+  280  ls
+  281  vim exo8.c
+  282  man execlp
+  283  fg
+  284  clear
+  285  gcc exo8.c
+  286  ./a.out
+  287  ./a.out titi pwd
+  288  fg
+  289  fg
+  290  gcc exo8.c
+  291  ./a.out
+  292  fg
+  293  vim exo8.c 
+  294  clear
+  295  gcc exo8.c
+  296  ./a.out titi pwd
+  297  fg
+  298  gcc exo8.c
+  299  ./a.out
+  300  fg
+  301  clear
+  302  gcc exo8.c
+  303  ./a.out titi pwd
+  304  ./a.out ls pwd
+  305  clear
+  306  cd ..
+  307  cd TP6/
+  308  clear
+  309  ls
+  310  vim exo9.c
+  311  clear
+  312  vim exo10.c 
+  313  clear
+  314  vim exo11.c 
+  315  clear
+  316  gcc exo11.c
+  317  ls
+  318  cat comptemot
+  319  clear
+  320  ls
+  321  man grep
+  322  grep -c if exo10.c
+  323  grep -c if exo11.c
+  324  ./a.out exo10.c exo11.c exo12.c exo9.c
+  325  ./a.out if exo10.c exo11.c exo12.c exo9.c
+  326  vim exo12.
+  327  vim exo12.c 
+  328  clear
+  329  cd ../../
+  330  cd I41-Algo/
+  331  clear
+  332  ls
+  333  clear
+  334  ls
+  335  cd TP10-quick-sort/
+  336  clear
+  337  ls
+  338  gnuplot comparisons_dq_sorts.gnu 
+  339  cd ../TP9-merge-sort/
+  340  clear
+  341  cat mergesort.txt 
+  342  clear
+  343  ls
+  344  clear
+  345  ls
+  346  pwd
+  347  cd ../TP10-quick-sort/
+  348  clear
+  349  ls
+  350  vim comparisons_dq_sorts.gnu 
+  351  clear
+  352  gnuplot comparisons_dq_sorts.gnu 
+  353  vim comparisons_dq_sorts.gnu 
+  354  gnuplot comparisons_dq_sorts.gnu 
+  355  fg
+  356  fg
+  357  clear
+  358  ls
+  359  vim quicksort.c
+  360  fg
+  361  fg
+  362  jobs
+  363  fg
+  364  clear
+  365  gcc quicksort.c
+  366  ./a.out
+  367  cat quicksort.txt 
+  368  cd ../
+  369  cd TP9-merge-sort/
+  370  clear
+  371  ls
+  372  vim fusion.c
+  373  clear
+  374  ls
+  375  gcc fusion.c 
+  376  ./a.out
+  377  ls
+  378  cat tri_fusion 
+  379  ls
+  380  mv tri_fusion mergesort.txt
+  381  ls
+  382  cat mergesort.txt 
+  383  clear
+  384  cd ../TP10-quick-sort/
+  385  clear
+  386  ls
+  387  ls
+  388  gnuplot comparisons_dq_sorts.gnu 
+  389  ls
+  390  vim comparisons_dq_sorts.gnu 
+  391  clear
+  392  gnuplot comparisons_dq_sorts.gnu 
+  393  clear
+  394  ls
+  395  vim comparisons_dq_sorts.gnu 
+  396  gnuplot comparisons_dq_sorts.gnu 
+  397  vim comparisons_dq_sorts.gnu 
+  398  cp ../TP9-merge-sort/mergesort.txt ./
+  399  clear
+  400  ls
+  401  gnuplot comparisons_dq_sorts.gnu 
+  402  fg
+  403  gnuplot comparisons_dq_sorts.gnu 
+  404  clear
+  405  cd ../../I42-Systemes/TP7/
+  406  clear
+  407  ls
+  408  gcc update_shm.c 
+  409  ./a.out
+  410  gcc testshm.c 
+  411  ipcs
+  412  gcc update_shm.c 
+  413  ./a.out 
+  414  clear
+  415  vim testshm.c 
+  416  clear
+  417  ls
+  418  gcc testshm.c 
+  419  ./a.out 
+  420  vim testshm.c 
+  421  gcc testshm.c 
+  422  ./a.out 
+  423  vim testshm.c 
+  424  ls
+  425  gcc testshm.c 
+  426  ./a.out
+  427  vim testshm.c 
+  428  clear
+  429  ls
+  430  gcc testshm.c 
+  431  ./a.out
+  432  ipcs
+  433  ipcrm shm 2490382 
+  434  ipcs
+  435  clear
+  436  gcc testshm.c 
+  437  ./a.out 
+  438  gcc update_shm.c 
+  439  ./a.out
+  440  vim update_shm.c 
+  441  ls
+  442  rm a.out 
+  443  cd univ-tln/L2/S4/
+  444  ls
+  445  cd I41-Algo/
+  446  cd TP11-linear-sort/
+  447  ls
+  448  vim counting_sort.c 
+  449  gcc counting_sort.c
+  450  ./a.out
+  451  clear
+  452  vim counting_sort.c 
+  453  gcc counting_sort.c 
+  454  ./a.out 
+  455  cat counting_sort.txt 
+  456  gnuplot
+  457  cd ../../../
+  458  cd ../../
+  459  cd univ-tln/
+  460  ls
+  461  git add .
+  462  git commit -m "counting sort finished"
+  463  git push origin master
+  464  ls
+  465  cd univ-tln/
+  466  ls
+  467  clear
+  468  cd L2/S4/I43-Cybersecurite/
+  469  ls
+  470  clear
+  471  rm __pycache__/
+  472  rm -rf __pycache__/
+  473  ls
+  474  vim hill.py 
+  475  clear
+  476  python3
+  477  clear
+  478  ls
+  479  fg
+  480  fg
+  481  clear
+  482  ls
+  483  vim vigenere.py 
+  484  fg
+  485  ls
+  486  vim vigenere.py 
+  487  clear
+  488  ls
+  489  ls
+  490  vim hill.py 
+  491  ls
+  492  clear
+  493  ls
+  494  vim vigenere.py 
+  495  clear
+  496  fg
+  497  ls
+  498  vim hill.py
+  499  clear
+  500  ls
+  501  history|wc -l
+  502  man history
+  503  man 1 history
+  504  man 2 history
+  505  man history
+  506  type history
+  507  which history
+  508  help history
+  509  man bash
+  510  history | wc -l
+  511  ls
+  512  ls -a
+  513  vim .bashrc 
+  514  clear
+  515  ls
+  516  source .bashrc 
+  517  history 
+  518  history | wc -l
+  519  ls
+  520  clear
+  521  ls
+  522  history | wc -l
+  523  gcc counting_sort.
+  524  gcc counting_sort.c
+  525  echo gcc counting_sort.c
+  526  echo ls
+  527  echo ls
+  528  echo ls
+  529  man bash
+  530  echo ls
+  531  echo ${!HI*}
+  532  echo ${HI*}
+  533  echo ${!HI*}
+  534  clear
+  535  toto='hello world'
+  536  echo $toto
+  537  ptr=toto
+  538  echo $ptr
+  539  echo ${!ptr}
+  540  echo ptr
+  541  echo $ptr
+  542  echo=hello
+  543  echo
+  544  echo abc
+  545  echo echo
+  546  echo $echo
+  547  echo ${!ptr}
+  548  man bash
+  549  info bash
+  550  echo ${!HI*}
+  551  echo S${!HI*}
+  552  echo $${!HI*}
+  553  for x in ${!HI*} do; echo $x
+  554  for x in ${!HI*} ; do echo $x; done
+  555  for x in ${!HI*} ; do echo $x ${!x}; done
+  556  for x in ${!HI*} ; do echo $x $!x; done
+  557  for x in ${!HI*} ; do echo $x ${!x}; done
+  558  clear
+  559  for x in {a..h}*{1..8}; do echo $x; done
+  560  for x in {a..h}*{1..8}; do echo $x; done > /tmp/toto
+  561  for x in $( cat /tmp/toto); do echo $x; done
+  562  man bash
+  563  ls /tmp
+  564  ls
+  565  cd univ-tln/
+  566  cd L2/S4/I43-Cybersecurite/linux/
+  567  ls
+  568  vim friday.sh
+  569  which bash
+  570  fg
+  571  clear
+  572  chmod u+x friday.sh 
+  573  ls
+  574  ./friday 1444
+  575  ./friday.sh 1444
+  576  vim friday.sh 
+  577  clear
+  578  ./friday.sh  1444
+  579  ./friday.sh  1444 1222 1444
+  580  ./friday.sh 2021 hello ./friday.sh  1444 1222 1444
+  581  date
+  582  man date
+  583  date
+  584  man date
+  585  date -d 2021-01-13
+  586  man date
+  587  date -d 13/021/2021
+  588  date -d 13/21/2021
+  589  date -d 13-21-2021
+  590  date -d 13-01-2021
+  591  date -d 13-1-2021
+  592  date -d 13/1/2021
+  593  date -d 2021-01-13
+  594  date -d 01/13/2021
+  595  clear
+  596  ls
+  597  date -d 1444-1-1
+  598  man date
+  599  date -d 1444-1-1 %u
+  600  date %u -d 1444-1-1 
+  601  clear
+  602  ls
+  603  vim friday.sh 
+  604  ./friday.sh 
+  605  ./friday.sh  2021
+  606  clear
+  607  ./friday.sh  2021
+  608  ./friday.sh  2000
+  609  ./friday.sh  2000 | grep vendredi
+  610  fg
+  611  clear
+  612  ls
+  613  ./friday.sh 1999
+  614  ./friday.sh 2035
+  615  vim friday.sh 
+  616  clear
+  617  clear
+  618  ls
+  619  echo {1..3}
+  620  ./friday.sh  $( echo {2020..2035})
+  621  ./friday.sh 2020 2021 2022 2023
+  622  ls
+  623  calendar
+  624  clear
+  625  vim friday.sh 
+  626  clear
+  627  man calendar
+  628  man -k calendar
+  629  zshcalsys
+  630  ncal
+  631  cal
+  632  orage
+  633  evolution
+  634  clear
+  635  man -k calendar
+  636  cal
+  637  cal 1444
+  638  cal 2022-05-01
+  639  cal 2022-05
+  640  man cal
+  641  cal 05 2022
+  642  cal 05 2013
+  643  vim friday.sh 
+  644  clear
+  645  ./friday.sh 
+  646  fg
+  647  ./friday.sh 
+  648  fg
+  649  ./friday.sh 
+  650  ./friday.sh  2021
+  651  ./friday.sh  1444
+  652  grep root /etc/passwd
+  653  echo $?
+  654  grep toto /etc/passwd
+  655  echo $?
+  656  vim friday.sh 
+  657  ./friday.sh 
+  658  fg
+  659  ./friday.sh 
+  660  ./friday.sh  1444
+  661  man grep
+  662  clear
+  663  ls
+  664  vim friday.sh 
+  665  cler
+  666  clear
+  667  ./friday.sh 
+  668  ./friday.sh  1988
+  669  man bash 
+  670  man bash  | wc -l
+  671  man bash  | wc -l
+  672  clear
+  673  man bash | wc
+  674  man wc
+  675  man bash | wc -w
+  676  man bash | wc -w
+  677  clear
+  678  man html
+  679  man -k html
+  680  clear
+  681  man bash | grep -E "[A-Za-z]
+  682  "
+  683  man bash | grep -E "[A-Za-z]"
+  684  clear
+  685  man bash | grep -E "[A-Za-z]"
+  686  clear
+  687  man bash | grep -E "[A-Za-z]+"
+  688  man bash | grep -E '[A-Za-z]+'
+  689  clear
+  690  man bash | grep -Eo '[A-Za-z]+'
+  691  man bash | grep -Eo '[A-Za-z]+'
+  692  man bash | grep -Eo '[A-Za-z]{3,}'
+  693  man bash | grep -Eo '[A-Za-z]{3,}' | sort | uniq -c
+  694  man bash | grep -Eo '[A-Za-z]{3,}' | sort | uniq -c | sort -n
+  695  man bash | grep -Eo '[A-Za-z]{3,}' | sort | uniq -c | sort -nr
+  696  man bash | grep -Eo '[A-Za-z]{3,}' | sort | uniq -c | sort -nr | head -n 10
+  697  man bash | grep -Eo '[A-Za-z]{3,}' | sort -f | uniq -c | sort -nr | head -n 10
+  698  man bash | grep -Eo '[A-Za-z]{3,}' | sort -f | uniq -ci | sort -nr | head -n 10
+  699  man bash | grep -Eo '[A-Za-z]{3,}' | grep -vE '(the|and)'| sort -f | uniq -ci | sort -nr | head -n 10
+  700  man bash | grep -Eo '[A-Za-z]{3,}' | grep -viE '(the|and|are)'| sort -f | uniq -ci | sort -nr | head -n 10
+  701  shell
+  702  set a b c d
+  703  echo $*
+  704  man 7 regex
+  705  cd ~
+  706  cd univ-tln/
+  707  git add *
+  708  git commit -m "unix et hill"
+  709  git push origin master
+  710  git push origin master
+  711  man fing
+  712  man find
+  713  man find
+  714  man find -E [0-9]+.[0-9]+.[0-9]+.[0-9]
+  715  find /etc -E [0-9]+.[0-9]+.[0-9]+.[0-9]
+  716  find /etc [0-9]+.[0-9]+.[0-9]+.[0-9]
+  717  find /etc | grep -E [0-9]+.[0-9]+.[0-9]+.[0-9]
+  718  cat/etc/ssl/certs/111e6273.0
+  719  man 7 regex
+  720  find /etc | grep -E {[0-9]+.[0-9]+.[0-9]+.[0-9]}
+  721  find /etc | grep -E {[0-9]+.[0-9]+.[0-9]+.[0-9]+}
+  722  ls
+  723  files_with_ipv4.sh
+  724  vim files_ipv4.sh
+  725  which bahs
+  726  which bash
+  727  ls
+  728  route -n
+  729  cd univ-tln/
+  730  git pull origin master
+  731  clear
+  732  cd ..
+  733  mv files_ipv4.sh univ-tln/L2/S4/I43-Systemes-et-securite/linux/
+  734  cd univ-tln/L2/S4/I43-Systemes-et-securite/linux/
+  735  ls
+  736  cat friday.sh
+  737  cat here.sh 
+  738  cat primitive.sh 
+  739  clear
+  740  ls
+  741  cat cut
+  742  rm cut
+  743  ls
+  744  cat friday.sh 
+  745  cat primitive.sh 
+  746  vim friday.sh 
+  747  vim primitive.sh 
+  748  ls
+  749  vim files_ipv4.sh 
+  750  ls -l
+  751  chmod u+x files_ipv4.sh 
+  752  ./files_ipv4.sh 
+  753  ls
+  754  clear
+  755  ls
+  756  vim files_ipv4.sh 
+  757  clear
+  758  ./files_ipv4.sh 
+  759  ls
+  760  cat friday.sh 
+  761  vim files_ipv4.sh 
+  762  ./files_ipv4.sh 
+  763  vim files_ipv4.sh 
+  764  ./files_ipv4.sh 
+  765  man cat
+  766  clear
+  767  vim files_ipv4.sh 
+  768  ./files_ipv4.sh 
+  769  ls
+  770  clear
+  771  vim files_ipv4.sh 
+  772  ls
+  773  history
+  774  clear
+  775  ls
+  776  grep friday.sh friday
+  777  man grep
+  778  grep -e cal friday.sh 
+  779  vim files_ipv4.sh 
+  780  ./files_ipv4.sh 
+  781  clear
+  782  ls
+  783  vim files_ipv4.sh 
+  784  man grep
+  785  vim files_ipv4.sh 
+  786  ./files_ipv4.sh 
+  787  clear
+  788  vim files_ipv4.sh 
+  789  ls
+  790  ./files_ipv4.sh 
+  791  ls
+  792  clear
+  793  vim files_ipv4.sh 
+  794  ./files_ipv4.sh 
+  795  find /etc
+  796  grep -ip /etc/lynx
+  797  grep -e ip /etc/lynx
+  798  clear
+  799  ls
+  800  vim files_ipv4.sh 
+  801  ./files_ipv4.sh 
+  802  vim files_ipv4.sh 
+  803  clear
+  804  ./files_ipv4.sh 
+  805  stat /etc/apparmor.d/cache/usr.lib.telepathy
+  806  clear
+  807  ls
+  808  cat here.sh 
+  809  cat primitive.sh 
+  810  clear
+  811  ls
+  812  vim files_ipv4.sh 
+  813  ./files_ipv4.sh 
+  814  clear
+  815  ls
+  816  vim files_ipv4.sh 
+  817  ./files_ipv4.sh 
+  818  cat primitive.sh 
+  819  vim files_ipv4.sh 
+  820  ./files_ipv4.sh 
+  821  clear
+  822  ./files_ipv4.sh 
+  823  clear
+  824  ls
+  825  vim files_ipv4.sh 
+  826  ./files_ipv4.sh 
+  827  cat /etc/resolv.conf 
+  828  clear
+  829  ls
+  830  vim files_ipv4.sh 
+  831  ./files_ipv4.sh 
+  832  clear
+  833  vim files_ipv4.sh 
+  834  clear
+  835  man grep
+  836  clear
+  837  grep -r /etc
+  838  grep -r /etc
+  839  grep -r /etc hello
+  840  grep -r /etc ip
+  841  grep -r ip /etc 
+  842  clear
+  843  grep -r hello /etc
+  844  clear
+  845  grep -Er '^([0–9]{1,3}.){3}.([0–9]{1,3})$' /etc
+  846  clear
+  847  grep -Elr '^([0–9]{1,3}.){3}.([0–9]{1,3})$' /etc
+  848  clear
+  849  grep -rlE '^([0–9]{1,3}.){3}.([0–9]{1,3})$' /etc
+  850  grep -rlE "^([0–9]{1,3}.){3}.([0–9]{1,3})$r" /etc
+  851  clear
+  852  grep -rlE "([0–9]{1,3}\.){3}\.([0–9]{1,3})" /etc
+  853  clear
+  854  grep -rlE "([0–9]{1,3}\.){3}\.([0–9]{1,3})" /etc 2>/dev/null
+  855  grep -rlE "([0–9]{1,3}\.){3}\.([0–9]{1,3})" /etc 2>/dev/null | wc -l
+  856  grep -rlE '([0–9]{1,3}\.){3}\.([0–9]{1,3})' /etc 2>/dev/null | wc -l
+  857  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})' /etc 2>/dev/null | wc -l
+  858  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})'  | wc -l39
+  859  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})'  | wc -l3g
+  860  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})'  | wc -l39
+  861  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})'  | wc -l 39
+  862  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})'  | wc -l 
+  863  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})'
+  864  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})' /etc | wc -l
+  865  grep -rlE '([0–9]{1,3}\.){3}([0–9]{1,3})' /etc |& wc -l
+  866  clear
+  867  ls
+  868  vim files_ipv4.sh 
+  869  ./files_ipv4.sh 
+  870  clear
+  871  ls
+  872  vim files_ipv4.sh 
+  873  ./files_ipv4.sh 
+  874  clear
+  875  vim ./files_ipv4.sh 
+  876  ./files_ipv4.sh 
+  877  ./files_ipv4.sh | wc -l
+  878  cat /etc/sane.d/genesys.conf
+  879  clear
+  880  history
+  881  clear
+  882  history | grep x
+  883  clear
+  884  vim files_ipv4.sh 
+  885  ./files_ipv4.sh 
+  886  vim files_ipv4.sh 
+  887  clear
+  888  ./files_ipv4.sh 
+  889  cat /etc/bogofilter.cf 
+  890  ./files_ipv4.sh 
+  891  vim files_ipv4.sh 
+  892  ./files_ipv4.sh 
+  893  vim files_ipv4.sh 
+  894  ./files_ipv4.sh 
+  895  vim files_ipv4.sh 
+  896  ./files_ipv4.sh 
+  897  ./files_ipv4.sh | wc -l
+  898  cat /etc/alternatives/rlogin
+  899  clear
+  900  vim files_ipv4.sh 
+  901  ./files_ipv4.sh 
+  902  cat /etc/brltty.conf
+  903  clear
+  904  ./files_ipv4.sh  | wc -l
+  905  vim files_ipv4.sh 
+  906  ./files_ipv4.sh 
+  907  cat /etc/rc3.d/S02oidentd
+  908  clear
+  909  vim files_ipv4.sh 
+  910  ./files_ipv4.sh 
+  911  ./files_ipv4.sh | wc -l
+  912  cat /etc/rc6.d/K01oidentd
+  913  clear
+  914  ./files_ipv4.sh 
+  915  clear
+  916  vim files_ipv4.sh 
+  917   grep -Eq '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  918   grep -Elq '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  919  cat /etc/resolv.conf 
+  920   grep -El '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  921   grep -E '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  922  grep -E '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  923  grep -oE '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  924  grep -roE '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  925  grep -E '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  926  PS1=::
+  927  clear
+  928  grep -Eo  '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  929  cat /etc/resolv.conf
+  930  grep -Eo  '([0–9]{1,3}.){3}[0–9]{1,3}' /etc/resolv.conf
+  931  grep -Eo  '([0–9])' /etc/resolv.conf
+  932  grep -Eo  '([0–9]{1,3})' /etc/resolv.conf
+  933  grep -E  '([0–9]{1,3})' /etc/resolv.conf
+  934  grep -E  '([0–9]{1,3})' /etc/resolv.conf
+  935  grep -Eo  '([0–9]{1,3})' /etc/resolv.conf
+  936  grep -E  '([0–9]{1,3}.){3}[0–9]{1,3}' /etc/resolv.conf
+  937  grep -E '([0–9]{1,3}.){3}[0–9]{1,3}' /etc/resolv.conf
+  938  grep -E '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  939  grep -E search /etc/resolv.conf
+  940  cat /etc/resolv.conf
+  941  grep -E '[0-9]' /etc/resolv.conf
+  942  grep -E '[0-9]{2,3} ' /etc/resolv.conf
+  943  grep -E '[0-9]{2,3}' /etc/resolv.conf
+  944  grep -E '[0-9]{2,3}\.' /etc/resolv.conf
+  945  grep -E '([0-9]{2,3}\.){3}' /etc/resolv.conf
+  946  grep -E '([0-9]{1,3}\.){3}' /etc/resolv.conf
+  947  grep -E '([0-9]{1,3}\.){1,3}' /etc/resolv.conf
+  948  grep -E '([0-9]{1,3}\.){3}' /etc/resolv.conf
+  949  grep -E '([0-9]{1,3}\.){3}[0-9]' /etc/resolv.conf
+  950  grep -E '([0-9]{1,3}\.){3}[0-9]{1,3}' /etc/resolv.conf
+  951  grep -E '([0-9]{1,3}\.){3}[0-9]{1,3}' /etc/resolv.conf
+  952  grep -E '([0-9]{1,3}\.){3}[0-9]{1,3}' /etc/resolv.conf
+  953  history       
+  954  exit
+  955  grep -E '([0-9]{1,3}\.){3}[0-9]' /etc/resolv.conf
+  956  PS1=:
+  957  history | grep grep
+  958  history | grep grep | sed 's/.*grep/grep/'
+  959  history | grep grep | sed 's/.*grep/grep/' | sort | uniq -c
+  960  history | grep grep | sed 's/.*grep/grep/' | sort | uniq -c
+  961* 
+  962  history | hexdump -C
+  963  history | hexdump -c
+  964  cleqr
+  965  clear
+  966  ls
+  967  clear
+  968  hexdump -C
+  969  clear
+  970  grep -E '([0-9]{1,3}\.){3}[0-9]' /etc/resolv.conf
+  971  history
+  972  history 925
+  973  man history
+  974  man echo
+  975  echo -e ' grep -E '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf
+  976  echo -e ' grep -E '([0–9]{1,3}\.){3}[0–9]{1,3}' /etc/resolv.conf'
+  977  echo -e ' grep -E ([0–9]{1,3}\.){3}[0–9]{1,3} /etc/resolv.conf'
+  978  echo -e ' grep -E ([0–9]{1,3}\.){3}[0–9]{1,3} /etc/resolv.conf' | hexdump -c
+  979  clear
+  980  ls
+  981  cat resolv.conf
+  982  cat /etc/resolv.conf 
+  983  dns 10.1.65.1
+  984  dds 10.1.65.1
+  985  host 10.1.65.1
+  986  host 10.1.65.1
+  987  clear
+  988  cat /etc/resolv.conf 
+  989  host 
+  990  clear
+  991  cat /etc/resolv.conf 
+  992  host 10.1.66.87
+  993  host -l
+  994  host -l univ-tln.fr
+  995  clear
+  996  host -l univ-tln.fr | wc -l
+  997  route -n
+  998  cd univ-tln/L2/S4/I43-Systemes-et-securite/linux/
+  999  ls
+ 1000  clear
+ 1001  vim files_ipv4.sh 
+ 1002  ./files_ipv4.sh 
+ 1003  clear
+ 1004  vim files_ipv4.sh 
+ 1005  ./files_ipv4.sh | wc -l
+ 1006  vim files_ipv4.sh 
+ 1007  ./files_ipv4.sh 
+ 1008  ./files_ipv4.sh | grep resolv.conf
+ 1009  clear
+ 1010  vim files_ipv4.sh 
+ 1011  ./files_ipv4.sh | grep search
+ 1012  vim net_unix.c
+ 1013  gcc net_unix.c 
+ 1014  fg
+ 1015  gcc net_unix.c 
+ 1016  ./a.out 67
+ 1017  ./a.out 67 |& 0
+ 1018  ./a.out 67 |& tmp/test
+ 1019  touch /tmp/test
+ 1020  ./a.out 67 |& /tmp/test
+ 1021  clear
+ 1022  echo $?
+ 1023  ./a.out 67 
+ 1024  echo $?
+ 1025  if ./a.out 13; then echo hello; fi
+ 1026  if ./a.out 0; then echo hello; fi
+ 1027  vim net_unix.c 
+ 1028  gcc net_unix.c 
+ 1029  vim net_unix.c 
+ 1030  gcc net_unix.c 
+ 1031  ./a.out 1 2 3 4 5 6 7
+ 1032  vim net_unix.c 
+ 1033  gcc net_unix.c 
+ 1034  vim net_unix.c 
+ 1035  gcc net_unix.c 
+ 1036  ./a.out 1 2 3 4 5 6 7
+ 1037  fg
+ 1038  vim net_unix.c 
+ 1039  gcc net_unix.c 
+ 1040  ./a.out 1 2 3 4 5 6 7
+ 1041  oldpwd
+ 1042  vim net_unix.c 
+ 1043  clear
+ 1044  gcc -Wall -g net_unix.c 
+ 1045  ./a.out 12 hello world
+ 1046  ls
+ 1047  touch history.txt
+ 1048  history > history.txt 
