@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
+#include <time.h>
 
-#define N 1000
+#define N 1000000
 
 typedef struct {
     int n;
@@ -51,11 +52,11 @@ void counting_sort (list L) {
     int k = 0, min, max;
     min_max(L, &min, &max);
     list H = histogramme(L, min, max);
+    int j;
     for(int i = 0; i < H.n; i++) {
-        for (int j = 0; j < H.arr[i]; j++) {
+        for (j = 0; j < H.arr[i]; j++) {
             L.arr[k] = (i + min);
-            j++, k++;
-            comp += 2;
+            k++;
         }
     }
     free(H.arr);
@@ -85,7 +86,7 @@ unsigned long long fact (uint n) {
     return res;
 }
 
-void main (int argc, char** argv) {
+int main (int argc, char** argv) {
     /*
     int arr[10] = {0,91,2,3,-4,5,6,7,8,9};
     list L = {10, arr};
@@ -105,7 +106,6 @@ void main (int argc, char** argv) {
         counting_sort(L);
         assert(is_sorted(L));
     }
-    */
     FILE *file = fopen("counting_sort.txt", "w");
     fprintf(file, "countingsort\n");
     for (unsigned long i = 1; i < N; i++) {
@@ -123,6 +123,28 @@ void main (int argc, char** argv) {
         comp = 0;
         printf("OK %ld\n", i);
     }
-    perror("wtf");
+    */
+    srand(1);
+    int *arr = calloc(N, sizeof(int));
+
+    FILE *file = fopen("list.txt", "w");
+    for (int i = 0; i<N; i++) {
+        arr[i] = rand()%100;
+        fprintf(file, "%d ", arr[i]);
+    }
+    fclose(file);
+    list L = {N, arr};
+
+    clock_t start = clock();
+    counting_sort(L);
+    printf(" counting c program last %lf seconds\n",(double) (clock()-start)/CLOCKS_PER_SEC);
+
+    FILE *file2 = fopen("sortedlist.txt", "w");
+    for (int i = 0; i<N; i++) {
+        fprintf(file, "%d ", L.arr[i]);
+    }
+    fclose(file);
+
+    return 0;
 }
 

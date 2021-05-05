@@ -31,7 +31,7 @@ def gen_l(n,l):
     for i in range(n):
         L.append(random.randrange(0,l))
     return L
-
+"""
 L = gen_l(8000, 10)
 L_ = copy.copy(L)
 start_time_cs = time.time()
@@ -41,3 +41,21 @@ start_time_bs = time.time()
 L_.sort()
 print(f"builtin sort last {time.time() - start_time_bs}")
 print(L == L_)
+"""
+with open("list.txt", 'r') as f:
+    data = f.read().split()
+    l = []
+    for num in data:
+        l.append(int(num))
+
+start_time_bs = time.time()
+l.sort()
+print(f"builtin sort last {time.time() - start_time_bs}")
+
+with open("sortedlist.txt", 'r') as f:
+    data = f.read().split()
+    ls = []
+    for num in data:
+        ls.append(int(num))
+
+print(ls == l)

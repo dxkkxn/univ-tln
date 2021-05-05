@@ -49,7 +49,7 @@ def gen_liste(n, l):
         size = random.randrange(1,l+1)
         wordlist.append(''.join(random.choice(string.ascii_lowercase) for x in range(size)))
     return wordlist
-
+"""
 L = gen_liste(10000, 105)
 L1 = copy.deepcopy(L)
 start_time_sort = time.time()
@@ -59,6 +59,21 @@ start_time_lex = time.time()
 tri_lexico(L1)
 print("-------sort %s seconds-------" %(time.time() - start_time_lex))
 print(L1 == L)
+"""
+with open("list2sort.txt", 'r') as f:
+    data = f.read()
+    L = data.split(' ')
+    L.remove('')
+
+start_time = time.time()
+L.sort()
+print(f"--------------python sort last {time.time() - start_time}--------")
+
+with open("listsorted.txt", 'r') as f:
+    data = f.read()
+    L_sortd = data.split(' ')
+    L_sortd.remove('')
+print(L == L_sortd);
 
 
 
