@@ -4,20 +4,20 @@
 typedef int semaphore[2];
 
 void init_sem(semaphore s, int n) {
-    char chip = '#';
+    char token = '#';
     pipe(s);
     for(int i = 0; i < n; i++) {
-        write(s[1], &chip, sizeof(char));
+        write(s[1], &token, sizeof(char));
     }
 }
 
 void p(semaphore s) {
-    char chip;
-    read(s[0], &chip, sizeof(char));
+    char token;
+    read(s[0], &token, sizeof(char));
 }
 
 void v(semaphore s) {
-    char chip = '#';
-    write(s[1], &chip, sizeof(char));
+    char token = '#';
+    write(s[1], &token, sizeof(char));
 }
 
