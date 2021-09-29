@@ -70,68 +70,86 @@ Fact    -> NB
 
 """
 
+def first() :
+    global i
+    if expr() and i == len(l):
+        print("Chaine valide")
+        return postfixed_l
+    else:
+        if i >= len(l):
+            print(f"Chaine invalide near character {l[-1][1]} index out")
+        else:
+            print(f"Chaine invalide near character {l[i][1]}")
 def expr():
     global i
     if terme() and reste_e():
-        print("Chaine valide")
-        return 1
+        return True
+    return False
 
 
 def reste_e():
     global i
 
-    if i >= len(l):
-        return 1;
-
-    elif l[i][1] == '+' or l[i][1] == '-':
+    if i < len(l) and (l[i][1] == '+' or l[i][1] == '-'):
         op = l[i][1]
         i += 1
-        if terme() and reste_e():
-            print(op, end='')
-            return 1
+        if terme():
+            postfixed_l.append(op)
+            if reste_e():
+                return 1
+            else:
+                return False
+        else:
+            return False
     return 1
 
 def terme() :
     global i
     if fact() and reste_t():
-        return 1;
+        return True
+    return False
 
 def reste_t():
     global i
-    if i > (len(l)-1):
-        return 1
-    elif l[i][1] == '*' or l[i][1] == '/':
+    if i < len(l) and (l[i][1] == '*' or l[i][1] == '/'):
         op = l[i][1]
         i += 1
-        if fact() and reste_t():
-            print(op, end='')
-            return 1
-        elif fact():
-            print(op, end='')
-            return 1
-    return 1
+        if fact():
+            postfixed_l.append(op)
+            if reste_t():
+                return True
+            else:
+                return False
+        else:
+            return False
+    return True
 
 def fact():
     global i
 
-    if l[i][0] == 'NB':
-        print(l[i][1], end='')
+    if i < len(l) and l[i][0] == 'NB':
+        postfixed_l.append(l[i][1])
         i += 1
         return 1
 
-    elif l[i][1] == '(':
+    elif i < len(l) and l[i][1] == '(':
         i += 1
-        if expr() and l[i][1] == ')':
-            i += 1
-            return 1;
+        if expr() :
+            if i < len(l) and l[i][1] == ')':
+                i += 1
+                return True;
     else:
-        print(f" here Chaine invalide near character {l[i][1]}")
-        return 0
+        if i >= len(l):
+            print(f"Chaine invalide near character {l[-1][1]} index out")
+        else:
+            print(f"Chaine invalide near character {l[i][1]}")
+        return False
 
 
 
 
 if __name__ == '__main__':
+    """
     tests = [('123+-',[('NB',1),('NB',2),('NB',3),('OP','+'),('OP','-')]),
              ('(1111+22)',[('PO','('),('NB',1111),('OP','+'),('NB',22),('PF',')')])]
     for cas, resultat in tests:
@@ -139,8 +157,24 @@ if __name__ == '__main__':
             print("Erreur cas: {}\n    sortie: {}\n  resultat: {}".format(cas, scanner(cas),resultat))
         else:
             print("ok")
-    #l = scanner(sys.argv[1:][0])
-    l = scanner("5+33-44")
+    """
+    l = scanner(sys.argv[1:][0])
+    postfixed_l = []
     i = 0
-    print(l)
-    print(expr()==1)
+    if first():
+        f = open("a.out", "w")
+        f.write("#!/usr/bin/python3\n")
+        stack_level = 0
+        for element in postfixed_l:
+            if isinstance(element,int):
+                f.write(f"t{stack_level} = {element}\n")
+                stack_level += 1
+            else:
+                f.write(f"t{stack_level-2} = t{stack_level-2} {element} t{stack_level-1}\n")
+                stack_level -= 1
+        f.write("print(t0)")
+        f.close()
+
+
+
+
