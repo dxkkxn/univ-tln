@@ -16,4 +16,14 @@ void init(complex_num&);
 
 complex_num bidon(complex_num&);
 
+
+void create_complex_num(complex_num** ppc) ;
+
+typedef complex_num* pt_complexe_num;
+void create_complex_num_2(pt_complexe_num& a) ;
+
+complex_num* create_complex_num();
+
+complex_num* create_vect_complex (unsigned int n);
+
 #endif

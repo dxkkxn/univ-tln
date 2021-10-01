@@ -56,8 +56,24 @@ void create_complex_num(complex_num** ppc) {
     init(**ppc);
 }
 
-typedef complexe_num* pt_complexe_num;
 void create_complex_num_2(pt_complexe_num& a) {
+    a = new complex_num;
+    init(*a);
+}
+
+complex_num* create_complex_num(){
+    complex_num* new_complex = new complex_num;
+    init(*new_complex);
+    return new_complex;
+}
+
+complex_num* create_vect_complex (unsigned int n){
+    complex_num *tab_complex = new complex_num[n];
+    return tab_complex;
+}
+
+
+
     
 
 

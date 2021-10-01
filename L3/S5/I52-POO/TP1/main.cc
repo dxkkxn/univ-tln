@@ -39,6 +39,9 @@ int main() {
     cout<<"adresse recep.ident ="<< &recep.ident<<endl;
     cout<<"adresse recep.re ="<< &recep.re<<endl;
     cout<<"adresse recep.im ="<< &recep.im<<endl;
+    complex_num *tab = create_vect_complex(3);
+    for(int i = 0; i < 3; i++)
+        cout<<"tab["<<i<<"]"<<"adresse ="<<&tab[i]<<endl;
     
 
     return 0;
