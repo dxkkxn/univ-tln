@@ -61,7 +61,7 @@ def reste_t():
 def fact():
     global i
 
-    if i < len(l) and l[i][0] == 'NB':
+    if i < len(l) and l[i][0] == 'NOMBRE':
         postfixed_l.append(l[i][1])
         i += 1
         return 1
