@@ -1,6 +1,24 @@
+"""
+Expr -> Terme Reste_E
+
+Reste_E -> OU Terme Reste_e
+        | None
+
+Terme   -> Fact Reste_t
+
+Reste_t -> ET Fact Reste_t
+        |  None
+
+Fact    -> BOOL
+        |  ! BOOL
+        | (Exp)
+
+BOOL    -> VRAI | FAUX
+
+"""
+l = []
 i = 0
 postfixed_l = []
-l = []
 def parser(unilex) :
     global i
     global l
@@ -24,8 +42,8 @@ def expr():
 def reste_e():
     global i
 
-    if i < len(l) and (l[i][1] == '+' or l[i][1] == '-'):
-        op = l[i][1]
+    if i < len(l) and l[i][1] == "OU" :
+        op = "or"
         i += 1
         if terme():
             postfixed_l.append(op)
@@ -35,7 +53,7 @@ def reste_e():
                 return False
         else:
             return False
-    return 1
+    return True
 
 def terme() :
     global i
@@ -45,8 +63,8 @@ def terme() :
 
 def reste_t():
     global i
-    if i < len(l) and (l[i][1] == '*' or l[i][1] == '/'):
-        op = l[i][1]
+    if i < len(l) and l[i][1] == "ET":
+        op = "and"
         i += 1
         if fact():
             postfixed_l.append(op)
@@ -60,11 +78,17 @@ def reste_t():
 
 def fact():
     global i
+    if i < len(l) and l[i][1] == "NON":
+        op = "not"
+        i += 1
+        if fact():
+            postfixed_l.append(op)
+        else:
+            return False
 
-    if i < len(l) and l[i][0] == 'NOMBRE':
+    elif i < len(l) and l[i][0] == "BOOL":
         postfixed_l.append(l[i][1])
         i += 1
-        return True
 
     elif i < len(l) and l[i][1] == '(':
         i += 1
@@ -72,9 +96,17 @@ def fact():
             if i < len(l) and l[i][1] == ')':
                 i += 1
                 return True;
+            else:
+                return False
+        else:
+            return False
     else:
         if i >= len(l):
             print(f"Chaine invalide near character {l[-1][1]} index out")
         else:
             print(f"Chaine invalide near character {l[i][1]}")
         return False
+
+    return True
+
+
