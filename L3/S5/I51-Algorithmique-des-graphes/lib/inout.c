@@ -54,7 +54,7 @@ void write_graph(char* filename, graph g) {
     }
 }
 
-void dessiner_graph(graph g, char * filename) {
+void draw_graph(graph g, char * filename) {
     FILE *dst;
     char fn[1024];
     sprintf(fn, "../data/%s.dot",filename);
@@ -64,8 +64,9 @@ void dessiner_graph(graph g, char * filename) {
         exit(1);
     }
     char cmd[1024];
-    fprintf(dst, "graphe { \n");
+    fprintf(dst, "graph { \n");
     for(int i = 0; i < g.nbs; i++) {
+        fprintf(dst,"%d;\n", i);
         for(int j = i; j < g.nbs; j++) {
             if (g.mat[i][j])
                 fprintf(dst,"%d--%d;\n",i,j);
@@ -73,8 +74,9 @@ void dessiner_graph(graph g, char * filename) {
     }
     fprintf(dst,"}\n");
     fclose(dst);
-    sprintf(cmd, "dot -Tpng -o %s.png ../data/%s.dot",filename, filename);
+    sprintf(cmd, "dot -Tpng -o ../data/%s.png ../data/%s.dot",filename, filename);
     system(cmd);
+    printf("Drawed succesfully\n");
 }
     
 

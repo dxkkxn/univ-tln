@@ -5,5 +5,9 @@
 
 void write_graph(char* dst, graph g);
 graph read_graph(char* src);
+void draw_graph(graph g, char * filename); 
+
+
+
 
 #endif

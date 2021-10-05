@@ -16,3 +16,16 @@ void free_graph(graph g) {
     free(g.mat);
 }
 
+graph random_graph(int n, float p) {
+    graph res = create_graph(n);
+    double threshold = p*RAND_MAX;
+    for(int i = 0; i < n; i++) {
+        for (int j = (i+1); j < n; j++) {
+            if (random() < threshold) 
+                res.mat[i][j] = res.mat[j][i] = 1;
+            
+        }
+    }
+    return res; 
+}
+

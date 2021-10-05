@@ -7,5 +7,6 @@ typedef struct {
 
 graph create_graph(int n);
 void free_graph(graph g);
+graph random_graph(int n, float p);
 
 #endif
