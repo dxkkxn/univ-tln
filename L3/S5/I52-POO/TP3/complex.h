@@ -3,6 +3,7 @@
 class Complex{
     private:
         float re, im;
+        static int ident;
     public:
         Complex();
         Complex(float, float);
@@ -14,11 +15,10 @@ class Complex{
         void conjugate(Complex& a);
         float get_re();
         float get_im();
-        bool ident(const Complex&);
+        bool is(const Complex&);
         void sum1(Complex& a);
         Complex sum2(const Complex &z);
         Complex sum3(const Complex &z);
         Complex& sum4(const Complex &z);
 };
-
 #endif

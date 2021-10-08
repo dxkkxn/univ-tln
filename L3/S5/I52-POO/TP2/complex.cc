@@ -3,21 +3,26 @@
 #include <cmath>
 
 using namespace std;
-
+int Complex::ident = 0;
 Complex::Complex(){
     re = 0; im = 0;
-    cout<<"call to constructor by default "<<this<<endl;
+    cout<<"call to constructor by default "<<this<<" number"<<ident<<endl;
+    ident++;
+
 }
 Complex::Complex(float a, float b){
     re = a; im = b;
-    cout<<"call to constructor by param "<<this<<endl;
+    cout<<"call to constructor by param "<<this<<" number"<<ident<<endl;
+    ident++;
 }
 Complex::Complex(const Complex& cm){
     re = cm.re; im = cm.im;
-    cout<<"call to constructor by copy "<<this<<endl;
+    cout<<"call to constructor by copy "<<this<<" number"<<ident<<endl;
+    ident++;
 }
 Complex::~Complex() {
-    cerr<<"Destroyed "<<this<<endl;
+    cerr<<"Destroyed "<<this<<" number"<<ident<<endl;
+    ident--;
 }
 void Complex::print() {
     cout<<re<<"+"<<im<<"i"<<endl;
@@ -47,14 +52,13 @@ float Complex::module(Complex& a){
 void Complex::conjugate(Complex& a){
     im *= -1;
 }
-    
+
 float Complex::get_re(){
     return re;
 }
 float Complex::get_im(){
     return im;
 }
-bool Complex::ident(const Complex& a){
+bool Complex::is(const Complex& a){
     return (re==a.re && im==a.im);
 }
-

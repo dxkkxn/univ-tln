@@ -1,3 +1,11 @@
+HEADER = '\033[95m'
+WARNING = '\033[93m'
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+BOLD = '\033[1m'
+UNDERLINE = '\033[4m'
+
+
 def scanner(s):
     list_ul = []
     OP = {'+', '-', '*', '/'}
@@ -21,7 +29,18 @@ def scanner(s):
         elif s[i] == ' ' or s[i] == '\n' :
             pass
         else:
-            print(f"Error near character {s[i]}, i = {i}")
+            error(s,i)
             return None
         i += 1
     return list_ul
+
+def error(s,i):
+    print(f"{FAIL} SYNTAX ERROR {s[0]} {ENDC}")
+    for j in range(len(s)):
+        print(s[j], end ="", sep="")
+        if j == i:
+            print(f"{BOLD}{FAIL}{s[j]}{ENDC}", end="",sep="")
+    print("\n")
+
+
+
