@@ -35,20 +35,21 @@ def main():
         Codegen.codegen(postfix)
         os.system("chmod u+x a.out")
 
-
+    #Le code suivant permet de tester le compilo plus rapidement
+    """
     try:
-        str_s.replace("NON", "not")
-        str_s.replace("OU", "or")
-        str_s.replace("ET", "et")
-        str_s.replace("VRAI", "True")
-        str_s.replace("FAUX", "False")
+        str_s = str_s.replace("NON", "not")
+        str_s = str_s.replace("OU", "or")
+        str_s = str_s.replace("ET", "and")
+        str_s = str_s.replace("VRAI", "True")
+        str_s = str_s.replace("FAUX", "False")
         expected = eval(str_s)
         print(f"expected = {expected}")
         print(f"got = ", end="", flush=True)
         os.system("./a.out")
     except:
         pass
-    
+    """
     return 1
 if __name__ == '__main__':
     main()

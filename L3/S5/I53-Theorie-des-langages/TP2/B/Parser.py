@@ -42,7 +42,7 @@ def parser(unilex) :
         error(expr_val, i)
 
 def expr():
-    return (terme and reste_e)
+    return (terme() and reste_e())
 
 def reste_e():
     global i
@@ -77,8 +77,7 @@ def fact():
         i += 1
         if fact():
             postfixed_l.append(op)
-        else:
-            return False
+            return True
 
     elif i < len(l) and l[i][0] == "BOOL":
         postfixed_l.append(l[i][1])
@@ -106,10 +105,8 @@ def error(expr_val, i):
 
     print(f"{HEADER}{FAIL}{BOLD}ERREUR SYNTAXIQUE{ENDC}")
     if expr_val:
-        print(l)
-        print(postfixed_l)
-        print(f"{WARNING}Erreur syntaxique, la chaine n'a pas ete parcourue en entier.Erreur pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique, la chaine n'a pas ete parcourue en entier.Erreur pres l'unite lexicale {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
     elif i == len(l):
-        print(f"{WARNING}Erreur syntaxique pres du caractere {ENDC}\'{FAIL}{l[-1][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique pres de l'unite lexicale {ENDC}\'{FAIL}{l[-1][1]}{ENDC}\'")
     else:
-        print(f"{WARNING}Erreur syntaxique pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique pres l'unite lexicale {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")

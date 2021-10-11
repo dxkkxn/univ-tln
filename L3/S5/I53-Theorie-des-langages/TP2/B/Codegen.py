@@ -28,6 +28,6 @@ def codegen(postfixed_l):
         else:
             f.write(f"t{stack_level-2} = t{stack_level-2} {element} t{stack_level-1}\n")
             stack_level -= 1
-    f.write("print(t0)")
+    f.write("print(\"VRAI\" if t0 else \"FAUX\")")
     f.close()
     print('\033[92m'+"Compilé avec success"+'\033[0m')
