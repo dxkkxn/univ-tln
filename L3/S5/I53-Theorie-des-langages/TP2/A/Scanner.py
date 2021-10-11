@@ -23,7 +23,7 @@ def scanner(s):
     """
     La fonction scanner prend en entree une chaine de caracteres <s>
     et renvoie une liste d'unites lexicales de la forme (<type>, <valeur>).
-    Retourne None en cas d'erreur et affiche le caractere fautif
+    Retourne None en cas d'erreur et affiche le caractere fautif.
     """
     list_ul = []
     OP = {'+', '-', '*', '/'}
@@ -35,7 +35,7 @@ def scanner(s):
                 nb *= 10
                 nb += int(s[i])
                 i += 1
-            i -= 1 #decrement de i pour mantenir le bon indice
+            i -= 1 #decrementation de i pour maintenir le bon indice
             list_ul.append(('NOMBRE', nb))
 
         elif s[i] in OP:
@@ -69,6 +69,3 @@ def error(s,i):
     print(f"{HEADER}{FAIL}{BOLD}ERREUR LEXICALE{ENDC}")
     print(f"{WARNING}Erreur lexicale pres du caractere{ENDC} \'{FAIL}{s[i]}{ENDC}\' -> ",end = "")
     print(f"{s[0:i]}{BOLD}{FAIL}{s[i]}{ENDC}{s[i+1:]}")
-
-
-

@@ -90,7 +90,7 @@ def fact():
 
 def error(expr_val,i):
     """
-    Affiche le caractere fautif en ajoutant plus d'information si possible
+    Affiche le caractere fautif en ajoutant plus d'informations si possible
     """
 
     HEADER = '\033[95m'
@@ -101,10 +101,8 @@ def error(expr_val,i):
 
     print(f"{HEADER}{FAIL}{BOLD}ERREUR SYNTAXIQUE{ENDC}")
     if expr_val:
-        print(f"{WARNING}Erreur syntaxique, la chaine n'a pas ete parcouru en entier.Erreur pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique, la chaine n'a pas ete parcourue en entier.Erreur pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
     elif i == len(l):
         print(f"{WARNING}Erreur syntaxique pres du caractere {ENDC}\'{FAIL}{l[-1][1]}{ENDC}\'")
     else:
         print(f"{WARNING}Erreur syntaxique pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
-
-

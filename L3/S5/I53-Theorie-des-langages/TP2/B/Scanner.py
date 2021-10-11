@@ -1,9 +1,33 @@
+###############################################
+# Scanner.py
+# ----------
+#
+# Analyseur lexical d'expression booléennes
+#
+# BENJELLOUN Youssef et LEAL Andre
+# I53 - Compilation et theorie des langages
+# 10/10/2021
+###############################################
+
+
+
+
 """
-Convertit la chaine de caracteres <s> en une liste d'unités
-léxicales de la forme (<type>, <valeur>). Retourne None en cas
-d'erreur et affiche le caractere fautif
+On utilise le lexique suivant:
+
+BOOL --> VRAI
+        | FAUX
+OP --> OU | ET | NON
+PO  --> (
+PF  --> )
 """
+
 def scanner(s):
+    """
+    Convertit la chaine de caracteres <s> en une liste d'unités
+    léxicales de la forme (<type>, <valeur>). Retourne None en cas
+    d'erreur et affiche le caractere fautif
+    """
     list_ul = []
     i = 0
     while i < len(s):
@@ -39,8 +63,23 @@ def scanner(s):
             i += 1
 
         else:
-            print(f"Lexical error near char {s[i]}")
+            error(s,i)
             return None
 
     return list_ul
 
+def error(s,i):
+    """
+    Affiche la chaine de caracteres en soulignant en rouge le
+    caractere fautif
+    """
+
+    HEADER = '\033[95m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+
+    print(f"{HEADER}{FAIL}{BOLD}ERREUR LEXICALE{ENDC}")
+    print(f"{WARNING}Erreur lexicale pres du caractere{ENDC} \'{FAIL}{s[i]}{ENDC}\' -> ",end = "")
+    print(f"{s[0:i]}{BOLD}{FAIL}{s[i]}{ENDC}{s[i+1:]}")

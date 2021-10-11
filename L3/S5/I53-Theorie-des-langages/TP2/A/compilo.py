@@ -11,35 +11,41 @@
 
 import Scanner, Parser, Codegen, sys, os
 
-# Si l'argument n'est pas un fichier, le premier argument
-# est suppose' etre une expression arithmetique
-if len(sys.argv) < 2:
-    print("Fichier ou expression arithmetique non trouve'")
-    exit(-1)
+def main():
+    # Verification de l'existance d'un argument
+    if len(sys.argv) < 2:
+        print("Fichier ou expression arithmétique non trouvé")
+        return -1
+    # Si l'argument n'est pas un fichier, le premier argument
+    # est considere comme une expression arithmetique
+    if (os.path.isfile(sys.argv[1])):
+        f = open(sys.argv[1], "r")
+        str_s = f.read()
+    else:
+        str_s = sys.argv[1]
 
-if (os.path.isfile(sys.argv[1])):
-    f = open(sys.argv[1], "r")
-    str_s = f.read()
+    l = Scanner.scanner(str_s)
 
-else:
-    str_s = sys.argv[1]
+    if l:
+        postfix = Parser.parser(l)
+    else:
+        return -1
 
-l = Scanner.scanner(str_s)
+    if postfix:
+        Codegen.codegen(postfix)
+        os.system("chmod u+x a.out")
+    return 1
 
-if l:
-    postfix = Parser.parser(l)
-else:
-    exit(1)
+    #Ce code permet de tester le compilo plus rapidement
+    """
+    try:
+        expected = eval(str_s)
+        print(f"expected = {expected}")
+        print(f"got = ", end="", flush=True)
+        os.system("./a.out")
+    except:
+        pass
+    """
 
-if postfix:
-    Codegen.codegen(postfix)
-    os.system("chmod u+x a.out")
-
-#Le code permet de tester le compilo plus rapidement
-try:
-    expected = eval(str_s)
-    print(f"expected = {expected}")
-    print(f"got = ", end="", flush=True)
-    os.system("./a.out")
-except:
-    pass
+if __name__ == '__main__':
+    main()

@@ -12,7 +12,7 @@
 
 def codegen(postfixed_l):
     """
-    Prend en entree une expression postfixee et produit un fichier python
+    Prend en entrée une expression postfixée et produit un fichier python
     contenant un code a trois adresses traduisant l'evaluation de l'expression
     avec un pile
     """
@@ -28,4 +28,4 @@ def codegen(postfixed_l):
             stack_level -= 1
     f.write("print(t0)\n")
     f.close()
-    print('\033[92m'+"Compile' avec success"+'\033[0m')
+    print('\033[92m'+"Compilé avec success"+'\033[0m')
