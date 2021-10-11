@@ -36,7 +36,7 @@ def parser(unilex) :
     global i, l
     l = unilex
     if (expr_val:=expr()) and i == len(l):
-        print('\033[92m'+"Chaine valide"+'\033[0m')
+        print('\033[92m'+"Chaîne valide"+'\033[0m')
         return postfixed_l
     else:
         error(expr_val, i)
@@ -90,7 +90,7 @@ def fact():
 
 def error(expr_val,i):
     """
-    Affiche le caractere fautif en ajoutant plus d'informations si possible
+    Affiche le caractère fautif en ajoutant plus d'informations si possible
     """
 
     HEADER = '\033[95m'
@@ -101,8 +101,8 @@ def error(expr_val,i):
 
     print(f"{HEADER}{FAIL}{BOLD}ERREUR SYNTAXIQUE{ENDC}")
     if expr_val:
-        print(f"{WARNING}Erreur syntaxique, la chaine n'a pas ete parcourue en entier.Erreur pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique, la chaîne n'a pas été parcourue en entier.Erreur près de l'unité lexicale {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
     elif i == len(l):
-        print(f"{WARNING}Erreur syntaxique pres du caractere {ENDC}\'{FAIL}{l[-1][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique près de l'unité lexicale {ENDC}\'{FAIL}{l[-1][1]}{ENDC}\'")
     else:
-        print(f"{WARNING}Erreur syntaxique pres du caractere {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
+        print(f"{WARNING}Erreur syntaxique près de l'unité lexicale {ENDC}\'{FAIL}{l[i][1]}{ENDC}\'")
