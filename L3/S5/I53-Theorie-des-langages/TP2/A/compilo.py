@@ -2,7 +2,7 @@
 # Codegen.py
 # ----------
 #
-# Compilateur arithmetique fonctionelle
+# Compilateur arithmétique fonctionnel
 #
 # BENJELLOUN Youssef et LEAL Andre
 # I53 - Compilation et theorie des langages
@@ -12,12 +12,12 @@
 import Scanner, Parser, Codegen, sys, os
 
 def main():
-    # Verification de l'existance d'un argument
+    # Vérification de l'existance d'un argument
     if len(sys.argv) < 2:
-        print("Fichier ou expression arithmétique non trouvé")
+        print("Fichier ou expression arithmétique non trouvé(e)")
         return -1
     # Si l'argument n'est pas un fichier, le premier argument
-    # est considere comme une expression arithmetique
+    # est considéré comme une expression arithmétique
     if (os.path.isfile(sys.argv[1])):
         f = open(sys.argv[1], "r")
         str_s = f.read()
