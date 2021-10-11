@@ -2,7 +2,7 @@
 # Scanner.py
 # ----------
 #
-# Analyseur lexical d'expression booléennes
+# Analyseur lexical d'expressions booléennes
 #
 # BENJELLOUN Youssef et LEAL Andre
 # I53 - Compilation et theorie des langages
@@ -24,9 +24,9 @@ PF  --> )
 
 def scanner(s):
     """
-    Convertit la chaine de caracteres <s> en une liste d'unités
-    léxicales de la forme (<type>, <valeur>). Retourne None en cas
-    d'erreur et affiche le caractere fautif
+    Convertit la chaîne de caractères <s> en une liste d'unités
+    lexicales de la forme (<type>, <valeur>). Retourne None en cas
+    d'erreur et affiche le caractère fautif
     """
     list_ul = []
     i = 0
@@ -70,8 +70,8 @@ def scanner(s):
 
 def error(s,i):
     """
-    Affiche la chaine de caracteres en soulignant en rouge le
-    caractere fautif
+    Affiche la chaîne de caractères en soulignant en rouge le
+    caractère fautif
     """
 
     HEADER = '\033[95m'
@@ -81,5 +81,5 @@ def error(s,i):
     BOLD = '\033[1m'
 
     print(f"{HEADER}{FAIL}{BOLD}ERREUR LEXICALE{ENDC}")
-    print(f"{WARNING}Erreur lexicale pres du caractere{ENDC} \'{FAIL}{s[i]}{ENDC}\' -> ",end = "")
+    print(f"{WARNING}Erreur lexicale près de l'unité lexicale{ENDC} \'{FAIL}{s[i]}{ENDC}\' -> ",end = "")
     print(f"{s[0:i]}{BOLD}{FAIL}{s[i]}{ENDC}{s[i+1:]}")
