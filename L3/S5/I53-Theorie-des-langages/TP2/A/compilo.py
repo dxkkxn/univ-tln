@@ -34,10 +34,9 @@ def main():
     if postfix:
         Codegen.codegen(postfix)
         os.system("chmod u+x a.out")
-    return 1
 
-    #Ce code permet de tester le compilo plus rapidement
-    """
+    #Ce block permet de tester le compilo plus rapidement
+    """"
     try:
         expected = eval(str_s)
         print(f"expected = {expected}")
@@ -46,6 +45,8 @@ def main():
     except:
         pass
     """
+
+    return 1
 
 if __name__ == '__main__':
     main()

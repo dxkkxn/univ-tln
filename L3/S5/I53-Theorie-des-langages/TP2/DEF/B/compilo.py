@@ -36,6 +36,7 @@ def main():
         os.system("chmod u+x a.out")
 
     #Le code suivant permet de tester le compilo plus rapidement
+    """
     try:
         str_s = str_s.replace("NON", "not")
         str_s = str_s.replace("OU", "or")
@@ -48,6 +49,7 @@ def main():
         os.system("./a.out")
     except:
         pass
+    """
     return 1
 if __name__ == '__main__':
     main()
