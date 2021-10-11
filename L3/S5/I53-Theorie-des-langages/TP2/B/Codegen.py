@@ -2,7 +2,7 @@
 # Codegen.py
 # ----------
 #
-# Production du code a trois adresses
+# Production du code à trois adresses
 #
 # BENJELLOUN Youssef et LEAL Andre
 # I53 - Compilation et theorie des langages
@@ -12,7 +12,7 @@
 def codegen(postfixed_l):
     """
     Prend en entrée une expression postfixée et produit un fichier python
-    contenant un code a trois adresses traduisant l'evaluation de l'expression
+    contenant un code à trois adresses traduisant l'évaluation de l'expression
     avec un pile
     """
     f = open("a.out", "w")
@@ -30,4 +30,4 @@ def codegen(postfixed_l):
             stack_level -= 1
     f.write("print(\"VRAI\" if t0 else \"FAUX\")")
     f.close()
-    print('\033[92m'+"Compilé avec success"+'\033[0m')
+    print('\033[92m'+"Compilé avec succès"+'\033[0m')
