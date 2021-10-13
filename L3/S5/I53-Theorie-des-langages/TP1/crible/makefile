@@ -1,4 +1,6 @@
 SHELL=/bin/bash
+compte_rendu.tex:
+	pdflatex compte_rendu.tex
 timing0x.png:
 	for i in {1..3}; do \
 		gcc -O$$i crible.c -o crible.exe;\
