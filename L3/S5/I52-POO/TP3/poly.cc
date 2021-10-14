@@ -1,7 +1,8 @@
 #include "poly.h"
 #include <iostream>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 Poly::Poly() {
     deg = -1;
@@ -40,8 +41,12 @@ Poly & Poly::operator=(const Poly& P) {
 }
 
 void Poly::print() {
-    cout<<coef_arr[0]<<" " ;
-    for(int i = 1; i<=deg; i++) {
-        cout<<coef_arr[i]<<"x^"<<i<<" ";
+    if (coef_arr) {
+        cout<<coef_arr[0]<<" " ;
+        for(int i = 1; i<=deg; i++) 
+            cout<<coef_arr[i]<<"x^"<<i<<" ";
+        cout<<endl;
+    } else {
+        cout<<"NULL"<<endl;
     }
 }

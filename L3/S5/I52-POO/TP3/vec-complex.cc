@@ -23,7 +23,7 @@ VecComplex::VecComplex(ifstream& in){
 }
 VecComplex::~VecComplex(){
     cout<<"Destruction vec complex ";
-    delete [] vec;
+    delete[] vec;
 }
 
 void VecComplex::print_vec() {
