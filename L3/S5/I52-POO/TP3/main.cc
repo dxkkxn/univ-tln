@@ -1,5 +1,4 @@
 #include <iostream>
-#include "complex.h"
 #include "vec-complex.h"
 #include "poly.h"
 #include "complex_def.h"
@@ -48,11 +47,22 @@ int main() {
     def_poly.print();
     try_poly.print();
     cpy_poly.print();
+    ComplexDef c0(1,2);
+    ComplexDef c1;
+    cout << c0<<endl;
+    c1 = c0*3;
+    cout << c1<<endl;
+    c1 = 3*c0;
+    cout << c1<<endl;
   */
-    ComplexDef test(5,1);
-    ComplexDef test1(2,1);
-    ComplexDef zero;
-    zero = test * 3;
-    zero.print();
+    ComplexDef c0(1,2);
+    ComplexDef c1(3,4);
+    ComplexDef res;
+    res = c1.inverse();
+    cout<<"inverse\n"<<res<<endl;
+    cout<<c0<<endl;
+    cout<<c1<<endl;
+    res = c0/c1;
+    cout<<res<<endl;
     return 0;
 }
