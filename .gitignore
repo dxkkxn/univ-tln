@@ -1,4 +1,4 @@
 *.out
 *.o
 __pycache__/
-.exe
+*.exe
