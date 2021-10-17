@@ -13,8 +13,12 @@ int main(int argc, char* argv[]) {
     dessiner_graph(g,"maison");
     return 0;
     */
-    graph g = random_graph(10, 0.2);
+    graph g = random_graph(40, 0.06);
     int nb_cc = nb_of_components_r(g);
+    int max_c = max_component(g);
+    printf("Nombre des composantes connexes %d\n", nb_cc);
+    printf("The maximal component size is %d\n", max_c);
+    nb_cc = nb_of_components_it(g);
     printf("Nombre des composantes connexes %d\n", nb_cc);
     draw_graph(g, "test");
 
