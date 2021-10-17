@@ -1,4 +1,6 @@
-#include <string>
+#include <iostream>
+#ifndef PERSON_H
+#define PERSON_H
 
 using std::string;
 class Person {
@@ -8,9 +10,11 @@ class Person {
         unsigned int age;
     public:
         Person();
-        Person(string name, string surname, unsigned age);
+        Person(string surname, string name, unsigned age);
         Person(const Person & );
         void print();
-        void grow();
-        
+        void grow(); 
+        string get_name();
+        string get_surname();
 };
+#endif
