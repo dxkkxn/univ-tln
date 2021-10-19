@@ -60,7 +60,7 @@ void draw_graph(graph g, char * filename) {
     sprintf(fn, "../data/%s.dot",filename);
     dst = fopen(fn,"w");
     if (!dst) {
-        perror("not existing filename");
+        perror("open error");
         exit(1);
     }
     char cmd[1024];

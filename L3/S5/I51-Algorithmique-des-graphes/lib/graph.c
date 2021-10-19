@@ -48,3 +48,12 @@ uint degree(graph g, uint s) {
     }
     return res;
 }
+void print_mat(graph g) {
+    for(int i = 0; i < g.nbs; i++) {
+        printf("[");
+        for(int j = 0; j < (g.nbs-1); j++) 
+            printf("%d,",g.mat[i][j]);
+        printf("%d]\n", g.mat[i][g.nbs-1]);
+    }
+}
+

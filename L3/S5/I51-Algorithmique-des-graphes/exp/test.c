@@ -1,9 +1,10 @@
 #include "graph.h"
+#include "list.h"
 #include "inout.h"
 #include "connexe.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "eulerien.h"
+#include "eulerian.h"
 
 int main(int argc, char* argv[]) {
     /*
@@ -21,14 +22,16 @@ int main(int argc, char* argv[]) {
     int start = 1001;
     int res = 1001;
     if (nb_of_components_it(g) == 1) {
-        eulerien(g);
+        draw_eulerian(g, "test");
+
     }
-        
+    free_graph(g);
+/*        
     printf("Nombre des composantes connexes %d\n", nb_cc);
     printf("res %d, start %d\n", res, start);
     //printf("The maximal component size is %d\n", max_c);
     //nb_cc = nb_of_components_it(g);
     //printf("Nombre des composantes connexes %d\n", nb_cc);
-
+    */
 }
 
