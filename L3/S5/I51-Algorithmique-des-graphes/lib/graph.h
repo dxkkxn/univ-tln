@@ -1,5 +1,6 @@
 #ifndef GRAPH_H
 #define GRAPH_H
+typedef unsigned int uint;
 typedef struct {
     int nbs;
     int **mat;
@@ -8,5 +9,6 @@ typedef struct {
 graph create_graph(int n);
 void free_graph(graph g);
 graph random_graph(int n, float p);
-
+uint degree(graph g, uint s);
+graph copy_graph(graph g);
 #endif

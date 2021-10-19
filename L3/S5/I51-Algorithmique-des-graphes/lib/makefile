@@ -1,4 +1,4 @@
-OBJ=inout.o graph.o connexe.o stack.o
+OBJ=inout.o graph.o connexe.o stack.o eulerien.o
 CFLAGS=-Wall -g
 libgraph.a: $(OBJ)
 	ar -cr libgraph.a $^
@@ -15,3 +15,5 @@ inout.o: inout.c inout.h
 stack.o: stack.c stack.h
 	gcc $(CFLAGS) -c stack.c
 
+eulerien.o: eulerien.c eulerien.h
+	gcc $(CFLAGS) -c eulerien.c

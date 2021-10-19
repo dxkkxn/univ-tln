@@ -3,6 +3,7 @@
 #include "connexe.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "eulerien.h"
 
 int main(int argc, char* argv[]) {
     /*
@@ -13,14 +14,21 @@ int main(int argc, char* argv[]) {
     dessiner_graph(g,"maison");
     return 0;
     */
-    graph g = random_graph(40, 0.06);
+    graph g = random_graph(5, 1);
+    draw_graph(g, "test");
     int nb_cc = nb_of_components_r(g);
     int max_c = max_component(g);
+    int start = 1001;
+    int res = 1001;
+    if (nb_of_components_it(g) == 1) {
+        eulerien(g);
+    }
+        
     printf("Nombre des composantes connexes %d\n", nb_cc);
-    printf("The maximal component size is %d\n", max_c);
-    nb_cc = nb_of_components_it(g);
-    printf("Nombre des composantes connexes %d\n", nb_cc);
-    draw_graph(g, "test");
+    printf("res %d, start %d\n", res, start);
+    //printf("The maximal component size is %d\n", max_c);
+    //nb_cc = nb_of_components_it(g);
+    //printf("Nombre des composantes connexes %d\n", nb_cc);
 
 }
 
