@@ -1,9 +1,11 @@
 #include "afd.h"
+#define true 1
+#define false 0
 
 void afd_init(afd *A, uint nbetat, char * alphabet, uint nbfinal, uint init, uint *finals)
 {
   int i, nbsymb=0;
-  uint symb;
+  uchar symb;
   
   A->nbetat = nbetat;
   A->nbfinal = nbfinal;
@@ -24,9 +26,9 @@ void afd_init(afd *A, uint nbetat, char * alphabet, uint nbfinal, uint init, uin
       exit(-1);
     }
     
-    symb = (uint) (*alphabet - SYMB_ASCII_DEB);
+    symb = (uchar) (*alphabet - SYMB_ASCII_DEB);
     if ( A->tsymb[symb] != SYMB_NONE ){
-      fprintf(stderr,"[afd_init]  (warning) caractere <%c> deja defini\n",*alphabet);
+      fprintf(stderr,"[afd_init] caractere <%c> deja defini (ignorer)\n",symb);
     }
     else {
       A->tsymb[symb] = nbsymb;
@@ -59,9 +61,9 @@ void afd_free(afd *A)
   free(A->delta);
 }
 
-void afd_add_trans(afd *A, uint q1, char s, uint q2)
+void afd_add_trans(afd *A, uint q1, uint s, uint q2)
 {
-  uint symb = A->tsymb[s-SYMB_ASCII_DEB];
+  uchar symb = A->tsymb[s-SYMB_ASCII_DEB];
 
   if (symb == SYMB_NONE){
     fprintf(stderr, "[add_trans] %u -- %c --> %u\n", q1,s,q2);
@@ -92,8 +94,9 @@ void afd_copy(afd *dest, afd *src)
 
   memcpy(dest->tsymb, src->tsymb,SYMB_NB_MAX);
 
-  dest->finals = calloc(sizeof(uint),src->nbfinal);
-  for (int i=0;i<src->nbfinal;i++) dest->finals[i] = src->finals[i];
+  int size = (src->nbetat-1)/ULLONG_BIT+1;
+  dest->finals = calloc(sizeof(ullong),size);
+  memcpy(dest->finals, src->finals, sizeof(ullong)*size);
 
   int i;
   dest->delta = calloc(src->nbetat, sizeof(uint *));
@@ -105,11 +108,18 @@ void afd_copy(afd *dest, afd *src)
 
 void afd_print(afd A)
 {
-  int i;
+  int i,j;
   
   printf("etat initial: %d\n", A.init);
   printf("etats finals:");
-  for (i=0; i<A.nbfinal; i++) printf("%u ",A.finals[i]);
+
+  for (i=0; i< ((A.nbetat-1)/ULLONG_BIT)+1; i++){
+    
+    for (j=0; j<ULLONG_BIT; j++){
+      if ((1ULL<<j) & A.finals[i])
+	printf(" %lu", i*ULLONG_BIT+j);
+    }
+  }
   printf("\n");
 
   uint q;
@@ -133,25 +143,44 @@ void afd_print(afd A)
 
 void afd_finit(afd *A, char *nomfichier) {
     FILE * f;
-    if(f = fopen(nomfichier, "r")){
+    if((f = fopen(nomfichier, "r")) == NULL){
         perror("fopen");
         exit(1);
     }
-    uint nb_etat, nb_symb, nbfinal, init, curr_final;
+    uint nb_etat, nb_final, init, curr_final;
     char* alphabet;
-    uint* finals = calloc(nbfinal, sizeof(uint));
+    uint* finals = calloc(nb_final, sizeof(uint));
     uint i = 0;
-    fscanf(f, "%d %s %d\n", &nb_etat, alphabet, &nbfinal);
-    fscanf(f, "%d\n", &init);
-    while(fscanf(f, "%d", &curr_final) != EOF) {
+    fscanf(f, "%u %s %u\n", &nb_etat, alphabet, &nb_final);
+    fscanf(f, "%u\n", &init);
+    while(i<nb_final) {
+        fscanf(f, "%u", &curr_final);
         finals[i] = curr_final;
         i++;
     }
-    afd_init(A, nb_etat, alphabet, nbfinal, init, finals);
-    afd_print(A);
-}
+    afd_init(A, nb_etat, alphabet, nb_final, init, finals);
 
+    uint state_i; //state i
+    uint state_j; //state j
+    uchar symb;
+    // statei symb statej
+    while(fscanf(f, "%u %c %u", &state_i, &symb, &state_j) == 3) {
+        afd_add_trans(A, state_i, symb, state_j);
+    }
+}  
+
+int afd_simul(char *s, afd A){
+    uint curr_state = A.init;
+    uint i = 0;
+    char curr_char;
+    while(i<strlen(s)) {
+        curr_char = s[i];
+        curr_state = A.delta[curr_state][A.tsymb[curr_char-SYMB_ASCII_DEB]];
+        i++;
+    }
     
-
-int afd_simul(char *s, afd A);
-
+    uint res = false;
+    for(i = 0; i < A.nbfinal && res == false; i++) 
+        res = (curr_state == A.finals[i]);
+    return res;
+}
