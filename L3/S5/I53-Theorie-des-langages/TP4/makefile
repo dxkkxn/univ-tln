@@ -3,8 +3,8 @@ CFLAGS = -Wall -g
 
 all: af
 
-af: af.o afd.o
-	$(CC) $(CFLAGS) $^ -o $@
+af: af.o afd.o afn.o
+	$(CC) $(CFLAGS) $^ -o $@ -lm
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@

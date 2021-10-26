@@ -3,10 +3,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <error.h>
 #include "afd.h"
 
 
-#define INT_ETAT(q) (1ULL<< (q)) 
+
+#define INT_ETAT(q) (1ULL<< (q))
 #define IN(q,X) ((INT_ETAT(q) & X ) > 0)
 
 typedef unsigned int uint;
@@ -15,7 +17,7 @@ typedef unsigned long long int ullong;
 typedef struct{
   uint nbetat, nbsymb;
   char * alphabet;
-  uint tsymb[SYMB_NB_MAX];
+  uchar tsymb[SYMB_NB_MAX];
   ullong init, finals;
   ullong **delta;
 } afn;
