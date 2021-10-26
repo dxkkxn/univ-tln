@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     dessiner_graph(g,"maison");
     return 0;
     */
-    graph g = random_graph(5, 1);
+    graph g = random_graph(9, 1);
     draw_graph(g, "test");
     int nb_cc = nb_of_components_r(g);
     int max_c = max_component(g);
