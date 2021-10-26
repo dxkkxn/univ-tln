@@ -2,21 +2,16 @@
 #define STUDENT_H
 #include <iostream>
 #include "person.h"
+#include "cursus.h"
+#include "teacher.h"
 
 class Student: public Person {
-    protected:
-        unsigned nb_marks;
-        float * marks;
+    private:
+        Cursus cursus;
     public:
         Student();
-        Student(string sn, string n, unsigned a, unsigned nb_m);
-        Student(const Student &);
-        ~Student();
-        void write_marks(float *arr, unsigned size);
+        Student(string sn, string n, unsigned age, Cursus c);
         void print();
-        void print_marks();
-        float average();
-        Student & operator=(const Student &);
 };
 
 #endif

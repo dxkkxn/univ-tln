@@ -7,9 +7,7 @@ class Subject {
         string name;
     public:
         Subject();
-        Subject(string, float);
-        void print();
+        Subject(string);
         string get_name();
-        float get_coef();
 };
 #endif
