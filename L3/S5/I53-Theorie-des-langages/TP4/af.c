@@ -34,11 +34,28 @@ int main(int argc, char *argv[])
   printf("%d\n", afd_simul(argv[1],B)); 
   afd_free(&B);
   afd_free(&A);
-  */
   afn A;
   afn_finit(&A, "example.afn");
   printf("---->%llu\n", afn_epsilon_fermeture(A, A.init));
   afn_print(A);
+  afn_free(&A);
+  */
+  afn A;
+  afn_char(&A,'a');
+  afn B;
+  afn_char(&B, 'b');
+
+  afn C;
+  afn_union(&C, A, B);
+
+  afn D;
+  afn_char(&D, 'd');
+
+  afn res;
+  afn_union(&res, D, C);
+  afn_print(res);
+  
+  //printf("---->%llu\n", afn_epsilon_fermeture(A, A.init));
   afn_free(&A);
   return 0;
 }

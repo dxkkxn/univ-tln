@@ -32,5 +32,9 @@ void afn_finit(afn *A, char *f);
 ullong afn_epsilon_fermeture(afn A, ullong R);
 void afn_determinisation(afn A, afd *D);
 
+void afn_char(afn *C, char c);
+void afn_union(afn *C, afn A, afn B);
+
+
 
 #endif

@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <math.h>
 
+#define ALPHABET "&abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTVWXYZ0123456789"
+
 
 void afn_init(afn *A, uint nbetat, char * alphabet, ullong init, ullong finals)
 {
@@ -178,32 +180,35 @@ void afn_finit(afn *A, char *nomfichier) {
 
 
 /*
-   Return 1 if (p,~,q) exists
+   Return 1 if (p,&,q) exists
    0 if not
 */
 char exist_ep_trans(afn A, ullong q, ullong p) {
-    return ((A.delta[q][A.tsymb['~'-SYMB_ASCII_DEB]]) & INT_ETAT(p));
+    return ((A.delta[q][A.tsymb['&'-SYMB_ASCII_DEB]]) & INT_ETAT(p));
 }
 
-    
+/*
+   Return 1 if (p,c,q) exists
+   0 if not
+*/
+char exist_trans(afn A, ullong q, char c, ullong p) {
+    return ((A.delta[q][A.tsymb[c-SYMB_ASCII_DEB]]) & INT_ETAT(p));
+}
 
 /*
   Retourne l'epsilon fermeture de l'ensemble d'états <R> par
   l'automate <A>
 */
 ullong afn_epsilon_fermeture(afn A, ullong R) {
-  printf("R = %lld\n", R);
-  uchar track[64];
+  uchar track[INT_ETAT(A.nbetat)-1];
   for(int i = 0; i < 64; i++) {
       track[i] = 0;
   }
-  ullong stack[64];  
+  ullong stack[INT_ETAT(A.nbetat)-1];  
   uint top = -1;
 
-  ullong next;
   ullong r = R; //copy of R
-  uint st_i = 1;
-  r = r>>1;
+  uint st_i = 0;
   while (r) {
       if (r & 1) {
           top++;
@@ -222,8 +227,7 @@ ullong afn_epsilon_fermeture(afn A, ullong R) {
       q = stack[top];
       top--;
       r = Q;
-      r = r>>1;
-      st_i = 1;
+      st_i = 0;
       while (r && track[q] == 0) {
           if (r&1) 
               q2 = st_i;
@@ -285,6 +289,7 @@ void create_arr_Q(uchar * track, ullong Q) {
         st_i++;
         Q = Q>>1;
     }
+}
 void afn_determinisation(afn A, afd *D) {
     ullong Q = afn_epsilon_fermeture(A, A.init);
     uchar * track = calloc(wt(Q), sizeof(uchar));
@@ -301,18 +306,75 @@ void afn_determinisation(afn A, afd *D) {
 
 
 
-
-}
 /*
   Calcule l'automate qui reconnait le caractere <c> dans un alphabet a
   <nbsymb> symboles
 */
-void afn_char(afn *C, char c, uint nbsymb);
+void afn_char(afn *C, char c) {
+    afn_init(C, 2, ALPHABET, 1, 2);
+    afn_add_trans(C, 0, c, 1);
+}
+/*
+ Add all transitions of A to C starting at start 
+ */
+void add_all_trans(afn *C, afn A, uint start) {
+    ullong all_st_a = INT_ETAT(A.nbetat);
+    ullong curr_state_i = 1, curr_state_j = 1;
+    uint i = 0;
+    ullong st_j, st_i;
+    ullong r;
+    while (all_st_a > curr_state_i){
+        curr_state_j = 1;
+        st_i = log(curr_state_i)/log(2);
+        while (all_st_a > curr_state_j) {
+            i = 0;
+            st_j = log(curr_state_j)/log(2);
+            while(i < strlen(ALPHABET)) {
+                if (exist_trans(A, st_i, C->alphabet[i], st_j)) {
+                    afn_add_trans(C, st_i+start, C->alphabet[i], st_j+start);
+                }
+                i++;
+            }
+            curr_state_j <<=1;
+        }
+        curr_state_i <<= 1;
+    }
+}
 
 /*
   Calcule un automate qui reconnait l'union de <A> et <B>
 */
-void afn_union(afn *C, afn A, afn B);
+void afn_union(afn *C, afn A, afn B) {
+    uint nb_states = A.nbetat + B.nbetat;
+    ullong fin_states = A.finals | B.finals;
+    afn_init(C, nb_states + 1, ALPHABET, 1, fin_states);
+
+    // add all trans of A to C
+    add_all_trans(C, A, 1);  
+    add_all_trans(C, B, A.nbetat+1);
+    afn_print(*C);
+    
+    ullong curr_st = 1;
+    ullong st;
+    while(A.init >= curr_st) {
+        if (A.init & 1) {
+            st = log(curr_st)/log(2);
+            afn_add_trans(C, 0, '&', st+1);
+        }
+        curr_st <<= 1;
+    }
+    curr_st = 1;
+    while(B.init >= curr_st) {
+        if (B.init & 1) {
+            st = log(curr_st)/log(2);
+            afn_add_trans(C, 0, '&', st+A.nbetat+1);
+        }
+        curr_st <<= 1;
+    }
+
+}
+
+    
 
 /*
   Calcule un automate qui reconnait la concatenation de <A> et <B>
@@ -323,3 +385,5 @@ void afn_concat(afn *C, afn A, afn B);
   Calcule un automate qui reconnait la fermeture de Kleene de <A>
 */
 void afn_kleene(afn *C, afn A);
+
+
