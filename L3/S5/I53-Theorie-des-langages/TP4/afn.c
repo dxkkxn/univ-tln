@@ -2,8 +2,7 @@
 #include <assert.h>
 #include <math.h>
 
-#define ALPHABET "&abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTVWXYZ0123456789"
-
+char * ALPHABET = "&abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTVWXYZ0123456789";
 
 void afn_init(afn *A, uint nbetat, char * alphabet, ullong init, ullong finals)
 {
@@ -315,14 +314,15 @@ void afn_char(afn *C, char c) {
     afn_add_trans(C, 0, c, 1);
 }
 /*
- Add all transitions of A to C starting at start 
+ Add all transitions of A to C starting at start in C
+ i.e  0 in A is start in B
+      1 in b is start+1 in B
  */
 void add_all_trans(afn *C, afn A, uint start) {
     ullong all_st_a = INT_ETAT(A.nbetat);
     ullong curr_state_i = 1, curr_state_j = 1;
     uint i = 0;
     ullong st_j, st_i;
-    ullong r;
     while (all_st_a > curr_state_i){
         curr_state_j = 1;
         st_i = log(curr_state_i)/log(2);
@@ -330,14 +330,30 @@ void add_all_trans(afn *C, afn A, uint start) {
             i = 0;
             st_j = log(curr_state_j)/log(2);
             while(i < strlen(ALPHABET)) {
-                if (exist_trans(A, st_i, C->alphabet[i], st_j)) {
-                    afn_add_trans(C, st_i+start, C->alphabet[i], st_j+start);
+                if (exist_trans(A, st_i, ALPHABET[i], st_j)) {
+                    afn_add_trans(C, st_i+start, ALPHABET[i], st_j+start);
                 }
                 i++;
             }
             curr_state_j <<=1;
         }
         curr_state_i <<= 1;
+    }
+}
+
+/*
+** Add & trans in C from 0 to all initial states of A
+** renaming 0 in A to start ...
+ */
+void add_ep_trans(afn *C, afn A, uint start){
+    ullong curr_st = 1;
+    ullong st;
+    while(A.init >= curr_st) {
+        if (A.init & 1) {
+            st = log(curr_st)/log(2);
+            afn_add_trans(C, 0, '&', st+start);
+        }
+        curr_st <<= 1;
     }
 }
 
@@ -351,35 +367,48 @@ void afn_union(afn *C, afn A, afn B) {
 
     // add all trans of A to C
     add_all_trans(C, A, 1);  
+    // add all trabs of B to A
     add_all_trans(C, B, A.nbetat+1);
-    afn_print(*C);
-    
-    ullong curr_st = 1;
-    ullong st;
-    while(A.init >= curr_st) {
-        if (A.init & 1) {
-            st = log(curr_st)/log(2);
-            afn_add_trans(C, 0, '&', st+1);
-        }
-        curr_st <<= 1;
-    }
-    curr_st = 1;
-    while(B.init >= curr_st) {
-        if (B.init & 1) {
-            st = log(curr_st)/log(2);
-            afn_add_trans(C, 0, '&', st+A.nbetat+1);
-        }
-        curr_st <<= 1;
-    }
-
+    // add ep trans from c->init to A
+    add_ep_trans(C, A, 1);
+    // add ep trans from c->init to A
+    add_ep_trans(C, A, A.nbetat+1);
+    // test
 }
-
-    
 
 /*
   Calcule un automate qui reconnait la concatenation de <A> et <B>
 */
-void afn_concat(afn *C, afn A, afn B);
+void afn_concat(afn *C, afn A, afn B) {
+    afn_init(C,A.nbetat+B.nbetat, ALPHABET,A.init,B.finals);
+    add_all_trans(C, A, 0);
+    add_all_trans(C, B, A.nbetat);
+    // for each final state of A add a ep trans to each initial
+    // state of B
+    ullong curr_stateb = 1;
+    ullong curr_state = 0;
+    ullong curr_statejb = 1;
+    ullong curr_statej = 0;
+    while (A.finals >= curr_state) {
+      if (A.finals & curr_stateb) {
+        // curr_state is a final state
+        curr_statejb = 1;
+        curr_statej = 0;
+        while(B.init >= curr_statejb) {
+          if (curr_statejb & B.init) 
+              //
+            afn_add_trans(C,curr_state, '&', curr_statej+A.nbetat);
+          curr_statejb <<= 1;
+          curr_statej++;
+        }
+      }
+      curr_stateb <<= 1;
+      curr_state++;
+    }
+}
+
+
+
 
 /*
   Calcule un automate qui reconnait la fermeture de Kleene de <A>

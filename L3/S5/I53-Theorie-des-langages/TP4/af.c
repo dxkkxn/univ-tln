@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
   printf("---->%llu\n", afn_epsilon_fermeture(A, A.init));
   afn_print(A);
   afn_free(&A);
-  */
+
   afn A;
   afn_char(&A,'a');
   afn B;
@@ -48,15 +48,42 @@ int main(int argc, char *argv[])
   afn C;
   afn_union(&C, A, B);
 
+  printf("A - > \n");
+  afn_print(A);
+  printf("B - > \n");
+  afn_print(B);
+  printf("A U B - > \n");
+  afn_print(C);
+
   afn D;
   afn_char(&D, 'd');
-
+  printf("D - > \n");
+  afn_print(D);
+  
   afn res;
   afn_union(&res, D, C);
+  printf("D U A U B");
   afn_print(res);
+  afn A;
+  afn_char(&A, 'a');
+  afn B;
+  afn_char(&B, 'b');
+  afn C;
+  afn_concat(&C, A, B);
+  afn_print(C);
   
   //printf("---->%llu\n", afn_epsilon_fermeture(A, A.init));
   afn_free(&A);
+  */
+  afn A;
+  afn_finit(&A, "test.afn");
+  afn B;
+  afn_finit(&B, "test2.afn");
+  afn_print(A);
+  afn_print(B);
+  afn C;
+  afn_concat(&C, A, B);
+  afn_print(C);
   return 0;
 }
 
