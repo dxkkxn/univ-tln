@@ -1,5 +1,6 @@
-OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o
+OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o
 CFLAGS=-Wall -g
+
 libgraph.a: $(OBJ)
 	ar -cr libgraph.a $^
 
@@ -8,7 +9,7 @@ connexe.o: connexe.c connexe.h graph.h
 
 graphe.o: graph.c graph.h inout.h
 	gcc $(CFLAGS) -c graph.c
-	
+
 inout.o: inout.c inout.h
 	gcc $(CFLAGS) -c inout.c
 
@@ -20,3 +21,6 @@ eulerian.o: eulerian.c eulerian.h
 
 list.o: list.c list.h
 	gcc $(CFLAGS) -c list.c
+
+binary.o: binary.c binary.h
+	gcc $(CFLAGS) -c binary.c

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "eulerian.h"
+#include "binary.h"
 
 int main(int argc, char* argv[]) {
     /*
@@ -26,7 +27,9 @@ int main(int argc, char* argv[]) {
 
     }
     free_graph(g);
-/*        
+    ullong num = 34;
+    wt(num);
+/*
     printf("Nombre des composantes connexes %d\n", nb_cc);
     printf("res %d, start %d\n", res, start);
     //printf("The maximal component size is %d\n", max_c);
