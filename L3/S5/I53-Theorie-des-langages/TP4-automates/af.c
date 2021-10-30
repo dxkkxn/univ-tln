@@ -73,6 +73,7 @@ int main(int argc, char *argv[])
   afn_print(C);
   
   //printf("---->%llu\n", afn_epsilon_fermeture(A, A.init));
+  // test
   afn_free(&A);
   */
   afn A;

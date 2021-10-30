@@ -24,7 +24,7 @@
 typedef unsigned int uint;
 typedef unsigned long long int ullong;
 typedef unsigned char uchar;
-
+//x
 typedef struct {
   uint nbetat, nbsymb, nbfinal; 
   uint init;
