@@ -4,114 +4,111 @@
 
 char * ALPHABET = "&abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTVWXYZ0123456789";
 
-void afn_init(afn *A, uint nbetat, char * alphabet, ullong init, ullong finals)
-{
-  A->nbetat = nbetat;
+void afn_init(afn *A, uint nbetat, char * alphabet, ullong init, ullong finals) {
+    A->nbetat = nbetat;
 
-  A->alphabet = malloc(strlen(alphabet)+1);
-  strcpy(A->alphabet, alphabet);
-  A->nbsymb = strlen(alphabet);
+    A->alphabet = malloc(strlen(alphabet)+1);
+    strcpy(A->alphabet, alphabet);
+    A->nbsymb = strlen(alphabet);
 
-  A->init = init;
-  A->finals = finals;
+    A->init = init;
+    A->finals = finals;
 
-  int i;
-  uchar symb;
+    int i;
+    uchar symb;
 
-  for (i=0; i<SYMB_NB_MAX; i++)
-    A->tsymb[i] = SYMB_NONE;
+    for (i=0; i<SYMB_NB_MAX; i++)
+        A->tsymb[i] = SYMB_NONE;
 
-  for (i=0; i<A->nbsymb; i++){
-    if ( (alphabet[i] < SYMB_ASCII_DEB) ||
-	 (alphabet[i] > SYMB_ASCII_FIN) ){
-      fprintf(stderr,"[afd_init] caractere ascii numero %d invalide\n", alphabet[i]);
-      exit(-1);
+    for (i=0; i<A->nbsymb; i++){
+        if ( (alphabet[i] < SYMB_ASCII_DEB) ||
+             (alphabet[i] > SYMB_ASCII_FIN) ){
+            fprintf(stderr,"[afd_init] caractere ascii numero %d invalide\n", alphabet[i]);
+            exit(-1);
+        }
+        symb = (uchar) (alphabet[i] - SYMB_ASCII_DEB);
+        if ( A->tsymb[symb] != SYMB_NONE ){
+            fprintf(stderr,"[afd_init] caractere <%c> deja defini (ignorer)\n",alphabet[i]);
+        }
+        else {
+            A->tsymb[symb] = i;
+        }
     }
-    symb = (uchar) (alphabet[i] - SYMB_ASCII_DEB);
-    if ( A->tsymb[symb] != SYMB_NONE ){
-      fprintf(stderr,"[afd_init] caractere <%c> deja defini (ignorer)\n",alphabet[i]);
+    A->delta = calloc(nbetat, sizeof(ullong *));
+    for (i=0; i<nbetat; i++){
+        A->delta[i] = calloc(A->nbsymb, sizeof(ullong));
     }
-    else {
-      A->tsymb[symb] = i;
-    }
-  }
-  A->delta = calloc(nbetat, sizeof(ullong *));
-  for (i=0; i<nbetat; i++){
-    A->delta[i] = calloc(A->nbsymb, sizeof(ullong));
-  }
 }
 
-  /*
+/*
   Ajoute la relation (<q1>, <s>, <q2>) a l'AFN <A>
 */
-void afn_add_trans(afn *A, uint q1, uint s, uint q2)
-{
-  uchar symb = A->tsymb[s-SYMB_ASCII_DEB];
+void afn_add_trans(afn *A, uint q1, uint s, uint q2) {
+    uchar symb = A->tsymb[s-SYMB_ASCII_DEB];
 
-  if (symb == SYMB_NONE){
-    fprintf(stderr, "[add_trans] %u -- %c --> %u symbole inconnu\n", q1,s,q2);
-    exit(-1);
-  }
+    if (symb == SYMB_NONE){
+        fprintf(stderr, "[add_trans] %u -- %c --> %u symbole inconnu\n", q1,s,q2);
+        exit(-1);
+    }
 
-  if ( (q1<0) || (q1>=A->nbetat) ){
-   fprintf(stderr, "[add_trans] etat <%d> non reconnu\n", q1);
-    exit(-1);
-  }
-  if ( (q2<0) || (q2>=A->nbetat) ){
-   fprintf(stderr, "[add_trans] etat <%d> non reconnu\n", q2);
-    exit(-1);
-  }
+    if ( (q1<0) || (q1>=A->nbetat) ){
+        fprintf(stderr, "[add_trans] etat <%d> non reconnu\n", q1);
+        exit(-1);
+    }
+    if ( (q2<0) || (q2>=A->nbetat) ){
+        fprintf(stderr, "[add_trans] etat <%d> non reconnu\n", q2);
+        exit(-1);
+    }
 
-  A->delta[q1][symb] |= INT_ETAT(q2);
+    A->delta[q1][symb] |= INT_ETAT(q2);
 }
 
 
 /*
   Libere la memoire de l'AFN <A>
 */
-void afn_free(afn *A)
-{
-  free(A->alphabet);
+void afn_free(afn *A) {
+    free(A->alphabet);
 
-  int i;
-  for (i=0; i < A->nbetat; i++)
-    free(A->delta[i]);
-  free(A->delta);
+    int i;
+    for (i=0; i < A->nbetat; i++)
+        free(A->delta[i]);
+    free(A->delta);
 }
 
 
 /*
   Affiche l'AFN <A>
 */
-void afn_print(afn A){
-  uint q,q1,s;
-  printf("init:");
-  for (q=0; q<A.nbetat; q++)
+void afn_print(afn A) {
+    uint q,q1,s;
+    printf("init:");
+    for (q=0; q<A.nbetat; q++)
     {
-      if IN(q,A.init)
-	     printf(" %d",q);
+        if IN(q,A.init)
+                 printf(" %d",q);
     }
-  printf("\n");
-  printf("finals:");
-  for (q=0; q<A.nbetat; q++)
+    printf("\n");
+    printf("finals:");
+    for (q=0; q<A.nbetat; q++)
     {
-      if IN(q,A.finals)
-	     printf(" %d",q);
+        if IN(q,A.finals)
+                 printf(" %d",q);
     }
-  printf("\n");
-  for (q=0; q<A.nbetat; q++){
-    for (s=0; s<A.nbsymb; s++){
-      if (A.delta[q][s]!=0){
-	printf("%d -- %c --> {", q, A.alphabet[s]);
-	for (q1=0; q1<A.nbetat; q1++)
-	  {
-	    if (IN(q1, A.delta[q][s]))
-	      printf("%d,",q1);
-	  }
-	printf("\b}\n");
-      }
+    printf("\n");
+    for (q=0; q<A.nbetat; q++){
+        for (s=0; s<A.nbsymb; s++){
+            if (A.delta[q][s]!=0){
+                printf("%d -- %c --> {", q, A.alphabet[s]);
+                for (q1=0; q1<A.nbetat; q1++)
+                {
+                    if (IN(q1, A.delta[q][s]))
+                        printf("%d,",q1);
+                }
+                printf("\b}\n");
+            }
+        }
     }
-  }
 }
 
 
@@ -141,7 +138,7 @@ void afn_finit(afn *A, char *nomfichier) {
     }
 
     uint nb_st_init;
-    uint nb_st_fin; 
+    uint nb_st_fin;
     int r;
     r = fscanf(f, "%u %s %u %u", &nb_states, alphabet, &nb_st_init, &nb_st_fin);
     assert(r == 4);
@@ -177,90 +174,71 @@ void afn_finit(afn *A, char *nomfichier) {
     }
 }
 
-
 /*
-   Return 1 if (p,&,q) exists
-   0 if not
-*/
-char exist_ep_trans(afn A, ullong q, ullong p) {
-    return ((A.delta[q][A.tsymb['&'-SYMB_ASCII_DEB]]) & INT_ETAT(p));
-}
-
-/*
-   Return 1 if (p,c,q) exists
-   0 if not
+  Return 1 if (p,c,q) exists
+  0 if not
 */
 char exist_trans(afn A, ullong q, char c, ullong p) {
     return ((A.delta[q][A.tsymb[c-SYMB_ASCII_DEB]]) & INT_ETAT(p));
 }
 
+void print_array(ullong* array, int n) {
+	printf("[");
+	for(int i = 0; i < n - 1; i++)
+		printf("%lld,", array[i]);
+	printf("%lld]\n", array[n-1]);
+}
 /*
   Retourne l'epsilon fermeture de l'ensemble d'états <R> par
   l'automate <A>
 */
 ullong afn_epsilon_fermeture(afn A, ullong R) {
-  uchar track[INT_ETAT(A.nbetat)-1];
-  for(int i = 0; i < 64; i++) {
-      track[i] = 0;
-  }
-  ullong stack[INT_ETAT(A.nbetat)-1];  
-  uint top = -1;
+    uchar track[A.nbetat];
+    for(uint i = 0; i < A.nbetat; i++) {
+        track[i] = 0;
+    }
+    ullong stack[INT_ETAT(A.nbetat)-1];
+    int top = -1;
 
-  ullong r = R; //copy of R
-  uint st_i = 0;
-  while (r) {
-      if (r & 1) {
-          top++;
-          stack[top] = st_i;
-      }
-      r = r >> 1;
-      st_i++;
-  }
-
-  ullong ferm = R;
-  ullong q;
-  ullong q2;
-  ullong Q;
-  Q = INT_ETAT(A.nbetat) - 1;
-  while (top != -1) {
-      q = stack[top];
-      top--;
-      r = Q;
-      st_i = 0;
-      while (r && track[q] == 0) {
-          if (r&1) 
-              q2 = st_i;
-
-          printf("q=%lld q2=%lld\n",q, q2);
-          if(exist_ep_trans(A, q, q2) ) {
-              printf("EXISTS %lld\n", q2);
-              ferm |= INT_ETAT(q2);
-              top++;
-              stack[top] = q2;
-          }
-          st_i++;
-          r = r >> 1;
-      }
-      track[q] = 1;
-  }
-  return ferm;
+    ullong r = R; //copy of R
+    ullong temp;
+    ullong state;
+    while (r) {
+        temp = r;
+        r &= r - 1;
+        state = log(temp^r)/log(2);
+        top++;
+        stack[top] = state;
+    }
+    ullong ferm = R;
+    ullong q;
+    ullong q2;
+    while (top != -1) {
+        q = stack[top];
+        top--;
+        q2 = 0;
+        while (A.nbetat > q2 && track[q] == 0) {
+            if(exist_trans(A, q, '&', q2) ) {
+                ferm |= INT_ETAT(q2);
+                top++;
+                stack[top] = q2;
+            }
+            q2++;
+        }
+        track[q] = 1;
+    }
+    return ferm;
 }
   
-
-
-
-      
-
-
 /*
   Calcule un automate deterministe equivalent à <A> et affecte le
   resultat a <D>. Les etats de l'afd sont renumerotés à partir de 1
 */
 
-uchar all_states_tracked(uchar *track, uchar size) {
+uchar all_states_marked(uchar *track, uchar size) {
     uchar res_ast = 1;
     for(uchar i = 0; i < size && res_ast; i++) {
-        if(track[i] == 0) 
+        if(track[i] == 0)
             res_ast = 0;
     }
     return res_ast;
@@ -269,41 +247,71 @@ uchar all_states_tracked(uchar *track, uchar size) {
 uint wt(ullong n) {
     uint res = 0;
     while(n) {
-        res++;
         n &= n-1;
+        res++;
     }
     return res;
 }
 
-void create_arr_Q(uchar * track, ullong Q) {
-    track[0] = 1;
-    Q = Q>>1;
-    uchar st_i = 1;
-    uint i = 1;
-    while(Q) {
-        if (Q&1){
-            track[i] = st_i;
-            i++;
-        }
-        st_i++;
-        Q = Q>>1;
+int in(ullong * arr, uint size, ullong q) {
+    bool is_in = false;
+    for(uint i = 0; i < size && is_in == false; i++) {
+        is_in = (arr[i] == q);
     }
+    return is_in;
+}
+
+/* Takes un state and a character in parameter and */
+/* returns all states where can go with that single parameter */
+ullong simul(afn A, ullong states, char c) {
+    ullong copy;
+    ullong res = 0;
+    ullong curr_state;
+    while(states) {
+        copy = states;
+        states &= states -1;
+        curr_state = log(states^copy)/log(2);
+
+        for(uint i = 0; i < A.nbetat; i++) {
+            if(exist_trans(A, curr_state, c, i))
+                res |= INT_ETAT(i);
+        }
+    }
+    return res;
+}
+
+uint indexof(ullong *arr, uint size, ullong target) {
+    bool found = false;
+    uint i;
+    for(i = 0; i < size && found == false; i++) {
+        if(arr[i] == target)
+            found = true;
+    }
+    assert(arr[i-1]==target);
+    return i-1;
 }
 void afn_determinisation(afn A, afd *D) {
-    ullong Q = afn_epsilon_fermeture(A, A.init);
-    uchar * track = calloc(wt(Q), sizeof(uchar));
-    create_arr_Q(track, Q);
-    uchar i = 0;
-    while(all_states_tracked(track, wt(Q)) == 0) {
-        track[i] = 1;
+    ullong * states_Q = calloc(64, sizeof(ullong));
+    states_Q[0] = afn_epsilon_fermeture(A, A.init);
+    uint nb_etats = 1;
+    uint i = 0;
+    ullong ferm;
+    while(nb_etats > i) {
         char * sigma = A.alphabet;
         while(*sigma != '\0') {
+            if (*sigma != '&') {
+                ferm = afn_epsilon_fermeture(A, simul(A, states_Q[i], *sigma));
+                if(!in(states_Q, nb_etats, ferm)) {
+                    states_Q[nb_etats] = ferm;
+                    nb_etats++;
+                }
+                printf("%d -> %c -> %d\n",i, *sigma, indexof(states_Q, nb_etats, ferm));
+            }
             sigma++;
         }
+        i++;
     }
 }
-
-
 
 /*
   Calcule l'automate qui reconnait le caractere <c> dans un alphabet a
@@ -313,11 +321,12 @@ void afn_char(afn *C, char c) {
     afn_init(C, 2, ALPHABET, 1, 2);
     afn_add_trans(C, 0, c, 1);
 }
+
 /*
- Add all transitions of A to C starting at start in C
- i.e  0 in A is start in B
-      1 in b is start+1 in B
- */
+  Add all transitions of A to C starting at start in C
+  i.e  0 in A is start in B
+  1 in b is start+1 in B
+*/
 void add_all_trans(afn *C, afn A, uint start) {
     ullong all_st_a = INT_ETAT(A.nbetat);
     ullong curr_state_i = 1, curr_state_j = 1;
@@ -344,7 +353,7 @@ void add_all_trans(afn *C, afn A, uint start) {
 /*
 ** Add & trans in C from 0 to all initial states of A
 ** renaming 0 in A to start ...
- */
+*/
 void add_ep_trans(afn *C, afn A, uint start){
     ullong curr_st = 1;
     ullong st;
@@ -366,7 +375,7 @@ void afn_union(afn *C, afn A, afn B) {
     afn_init(C, nb_states + 1, ALPHABET, 1, fin_states);
 
     // add all trans of A to C
-    add_all_trans(C, A, 1);  
+    add_all_trans(C, A, 1);
     // add all trabs of B to A
     add_all_trans(C, B, A.nbetat+1);
     // add ep trans from c->init to A
@@ -390,25 +399,22 @@ void afn_concat(afn *C, afn A, afn B) {
     ullong curr_statejb = 1;
     ullong curr_statej = 0;
     while (A.finals >= curr_state) {
-      if (A.finals & curr_stateb) {
-        // curr_state is a final state
-        curr_statejb = 1;
-        curr_statej = 0;
-        while(B.init >= curr_statejb) {
-          if (curr_statejb & B.init) 
-              //
-            afn_add_trans(C,curr_state, '&', curr_statej+A.nbetat);
-          curr_statejb <<= 1;
-          curr_statej++;
+        if (A.finals & curr_stateb) {
+            // curr_state is a final state
+            curr_statejb = 1;
+            curr_statej = 0;
+            while(B.init >= curr_statejb) {
+                if (curr_statejb & B.init)
+                    //
+                    afn_add_trans(C,curr_state, '&', curr_statej+A.nbetat);
+                curr_statejb <<= 1;
+                curr_statej++;
+            }
         }
-      }
-      curr_stateb <<= 1;
-      curr_state++;
+        curr_stateb <<= 1;
+        curr_state++;
     }
 }
-
-
-
 
 /*
   Calcule un automate qui reconnait la fermeture de Kleene de <A>

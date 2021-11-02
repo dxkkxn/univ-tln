@@ -13,6 +13,7 @@
 
 typedef unsigned int uint;
 typedef unsigned long long int ullong;
+typedef enum{false = 0, true} bool;
 
 typedef struct{
   uint nbetat, nbsymb;
