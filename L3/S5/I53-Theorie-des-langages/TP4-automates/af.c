@@ -27,9 +27,6 @@ int main(int argc, char *argv[])
 
   afd_print(A);
 
-  printf("\n");
-  afd_finit(&B, "exemple.afd");
-  afd_print(B);
 
   printf("%d\n", afd_simul(argv[1],B)); 
   afd_free(&B);
@@ -66,24 +63,30 @@ int main(int argc, char *argv[])
   afn C;
   afn_concat(&C, A, B);
   afn_print(C);
+  */
   
   // test
-  afn_free(&A);
   afn A;
-  afn_finit(&A, "test.afn");
-  afn B;
-  afn_finit(&B, "test2.afn");
-  afn_print(A);
-  afn_print(B);
+  afn_finit(&A, "test2.afn");
   afn C;
-  afn_concat(&C, A, B);
+  afn_kleene(&C, A);
+  afn_print(A);
   afn_print(C);
-  */
-  afn A;
-  afd D;
-  afn_finit(&A, "example.afn");
-  afn_determinisation(A, &D);
   afn_free(&A);
+  afn_free(&C);
+
+  /* afn A; */
+  /* afd D; */
+  /* afn_finit(&A, "example-2pown.afn"); */
+  /* afn_determinisation(A, &D); */
+  /* afd_print(D); */
+  /* afn_free(&A); */
+  /* afd_free(&D); */
+
+  /* afd B; */
+  /* printf("\n"); */
+  /* afd_finit(&B, "exemple.afd"); */
+  /* afd_print(B); */
   return 0;
 }
 

@@ -2,8 +2,7 @@
 #define true 1
 #define false 0
 
-void afd_init(afd *A, uint nbetat, char * alphabet, uint nbfinal, uint init, uint *finals)
-{
+void afd_init(afd *A, uint nbetat, char * alphabet, uint nbfinal, uint init, uint *finals) {
   int i, nbsymb=0;
   uchar symb;
   
@@ -51,8 +50,7 @@ void afd_init(afd *A, uint nbetat, char * alphabet, uint nbfinal, uint init, uin
   }
 }
 
-void afd_free(afd *A)
-{
+void afd_free(afd *A) {
   int i;
   free(A->finals);
   free(A->alphabet);
@@ -61,8 +59,7 @@ void afd_free(afd *A)
   free(A->delta);
 }
 
-void afd_add_trans(afd *A, uint q1, uint s, uint q2)
-{
+void afd_add_trans(afd *A, uint q1, uint s, uint q2) {
   uchar symb = A->tsymb[s-SYMB_ASCII_DEB];
 
   if (symb == SYMB_NONE){
@@ -82,8 +79,7 @@ void afd_add_trans(afd *A, uint q1, uint s, uint q2)
   A->delta[q1][symb] = q2;
 }
 
-void afd_copy(afd *dest, afd *src)
-{
+void afd_copy(afd *dest, afd *src) {
   dest->nbetat = src->nbetat;
   dest->nbsymb = src->nbsymb;
   dest->nbfinal = src->nbfinal;
@@ -108,20 +104,16 @@ void afd_copy(afd *dest, afd *src)
 
 void afd_print(afd A)
 {
-  int i,j;
+  int i;
   
+
   printf("etat initial: %d\n", A.init);
   printf("etats finals:");
 
-  for (i=0; i< ((A.nbetat-1)/ULLONG_BIT)+1; i++){
-    
-    for (j=0; j<ULLONG_BIT; j++){
-      if ((1ULL<<j) & A.finals[i])
-	printf(" %lu", i*ULLONG_BIT+j);
-    }
+  for (i=0; i< A.nbfinal; i++){
+    printf(" %u", A.finals[i]);
   }
   printf("\n");
-
   uint q;
   int printed;
   
@@ -129,12 +121,12 @@ void afd_print(afd A)
     printed = 0;
     for (i=0; i<A.nbsymb; i++){
       if (A.delta[q][i]!=ETAT_NONE){
-	if (printed==1)
-	  printf("    ");
-	else
-	  printf("%4u", q);
-	printf(" -- %c --> %u\n", A.alphabet[i], A.delta[q][i]);
-	printed=1;
+        if (printed==1)
+          printf("    ");
+        else
+          printf("%4u", q);
+        printf(" -- %c --> %u\n", A.alphabet[i], A.delta[q][i]);
+        printed=1;
       }
     }
     //if (printed==0) printf("\n");

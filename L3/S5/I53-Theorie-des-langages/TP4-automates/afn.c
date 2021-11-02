@@ -290,26 +290,58 @@ uint indexof(ullong *arr, uint size, ullong target) {
     assert(arr[i-1]==target);
     return i-1;
 }
+
 void afn_determinisation(afn A, afd *D) {
-    ullong * states_Q = calloc(64, sizeof(ullong));
-    states_Q[0] = afn_epsilon_fermeture(A, A.init);
+    uint size_states_q  = 64;
+    ullong * states_q = calloc(size_states_q, sizeof(ullong));
+    uint size_of_trans = 64;
+    trans_t * trans = calloc(size_of_trans, sizeof(trans_t));
+    assert(trans != NULL);
+    assert(states_q != NULL);
+    states_q[0] = afn_epsilon_fermeture(A, A.init);
+    // at most all the states are final so the size of finals is 64
+    uint * finals = calloc(64, sizeof(uint));
+    uint nb_finals = 0;
+
     uint nb_etats = 1;
     uint i = 0;
     ullong ferm;
+    uint trans_i = 0;
     while(nb_etats > i) {
+        printf("%lld %lld \n", states_q[i], A.finals);
+        if(states_q[i] & A.finals) {
+            finals[nb_finals] = i;
+            nb_finals++;
+        }
         char * sigma = A.alphabet;
         while(*sigma != '\0') {
             if (*sigma != '&') {
-                ferm = afn_epsilon_fermeture(A, simul(A, states_Q[i], *sigma));
-                if(!in(states_Q, nb_etats, ferm)) {
-                    states_Q[nb_etats] = ferm;
+                ferm = afn_epsilon_fermeture(A, simul(A, states_q[i], *sigma));
+                if(!in(states_q, nb_etats, ferm)) {
+                    if(nb_etats >= size_states_q) {
+                        size_states_q += 64;
+                        states_q = realloc(states_q, size_states_q * sizeof(ullong));
+                        assert(states_q != NULL);
+                    }
+                    states_q[nb_etats] = ferm;
                     nb_etats++;
                 }
-                printf("%d -> %c -> %d\n",i, *sigma, indexof(states_Q, nb_etats, ferm));
+                trans_t new_trans = {i,*sigma, indexof(states_q, nb_etats, ferm)};
+                if (trans_i >= size_of_trans) {
+                    size_of_trans += 64;
+                    trans = realloc(trans, size_of_trans * sizeof(trans_t));
+                    assert(trans != NULL);
+                }
+                trans[trans_i] = new_trans;
+                trans_i++;
             }
             sigma++;
         }
         i++;
+    }
+    afd_init(D, nb_etats, A.alphabet, nb_finals, 0, finals);
+    for(i = 0; i< trans_i; i++) {
+        afd_add_trans(D, trans[i].q, trans[i].c, trans[i].q2);
     }
 }
 
@@ -324,7 +356,8 @@ void afn_char(afn *C, char c) {
 
 /*
   Add all transitions of A to C starting at start in C
-  i.e  0 in A is start in B
+  i.e
+  0 in A is start in B
   1 in b is start+1 in B
 */
 void add_all_trans(afn *C, afn A, uint start) {
@@ -419,6 +452,25 @@ void afn_concat(afn *C, afn A, afn B) {
 /*
   Calcule un automate qui reconnait la fermeture de Kleene de <A>
 */
-void afn_kleene(afn *C, afn A);
+void afn_kleene(afn *C, afn A) {
+    afn_init(C, A.nbetat, A.alphabet, A.init, A.finals);
+    add_all_trans(C, A, 0);
+    ullong finals = A.finals;
+    ullong initials;
+    ullong temp;
+    uint state_f;
+    uint state_i;
+    while(finals) {
+       temp = finals;
+       finals &= finals - 1;
+       state_f = log(temp^finals)/log(2);
+       initials = A.init;
+       while(initials) {
+           temp = initials;
+           initials &= initials - 1;
+           state_i = log(initials^temp)/log(2);
+           afn_add_trans(C, state_f, '&', state_i);
+       }
+    }
 
-
+}

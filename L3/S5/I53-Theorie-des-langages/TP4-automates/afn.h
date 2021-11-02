@@ -15,6 +15,12 @@ typedef unsigned int uint;
 typedef unsigned long long int ullong;
 typedef enum{false = 0, true} bool;
 
+typedef struct {
+  ullong q;
+  char c;
+  ullong q2;
+}trans_t;
+
 typedef struct{
   uint nbetat, nbsymb;
   char * alphabet;
@@ -36,6 +42,7 @@ void afn_determinisation(afn A, afd *D);
 void afn_char(afn *C, char c);
 void afn_union(afn *C, afn A, afn B);
 void afn_concat(afn *C, afn A, afn B);
+void afn_kleene(afn *C, afn A);
 
 
 
