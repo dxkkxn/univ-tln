@@ -1,9 +1,10 @@
 CC = gcc
 CFLAGS = -Wall -g
 
-all: af
+mygrep: mygrep.o compregrex.o
+	$(CC) $(CFLAGS)	$^ -o $@ -lm
 
-af: af.o afd.o afn.o
+af: af.o afd.o afn.o compregrex.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 
 %.o: %.c
