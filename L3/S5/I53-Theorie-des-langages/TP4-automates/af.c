@@ -66,14 +66,20 @@ int main(int argc, char *argv[])
   */
   
   // test
+  afn AFN;
   afn A;
-  afn_finit(&A, "test2.afn");
-  afn C;
-  afn_kleene(&C, A);
+  afn res;
+  afn_finit(&A, "test1a.afn");
+  afn_finit(&AFN, "test1.afn");
+  printf("A : \n");
   afn_print(A);
-  afn_print(C);
+  printf("AFN: \n");
+  afn_print(AFN);
+  afn_concat(&res, A, AFN);
+  afn_print(res);
+  afn_free(&res);
   afn_free(&A);
-  afn_free(&C);
+  afn_free(&AFN);
 
   /* afn A; */
   /* afd D; */

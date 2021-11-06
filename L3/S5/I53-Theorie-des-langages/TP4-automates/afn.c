@@ -162,14 +162,12 @@ void afn_finit(afn *A, char *nomfichier) {
         i++;
     }
     
-    afn_init(A, nb_states, alphabet, st_init, st_fin);
+    afn_init(A, nb_states, ALPHABET, st_init, st_fin);
 
     uint st_i; //state_i
     uint st_j; //state_j
     char symb;
-    printf("OK\n");
     while(fscanf(f, "%d %c %d\n", &st_i, &symb, &st_j) == 3) {
-        printf("%d %c %d\n", st_i, symb, st_j);
         afn_add_trans(A, st_i, symb, st_j);
     }
 }
@@ -178,7 +176,7 @@ void afn_finit(afn *A, char *nomfichier) {
   Return 1 if (p,c,q) exists
   0 if not
 */
-char exist_trans(afn A, ullong q, char c, ullong p) {
+ullong exist_trans(afn A, ullong q, char c, ullong p) {
     return ((A.delta[q][A.tsymb[c-SYMB_ASCII_DEB]]) & INT_ETAT(p));
 }
 
@@ -260,6 +258,13 @@ int in(ullong * arr, uint size, ullong q) {
     }
     return is_in;
 }
+int in2(uint * arr, uint size, ullong q) {
+    bool is_in = false;
+    for(uint i = 0; i < size && is_in == false; i++) {
+        is_in = (arr[i] == q);
+    }
+    return is_in;
+}
 
 /* Takes un state and a character in parameter and */
 /* returns all states where can go with that single parameter */
@@ -299,6 +304,7 @@ void afn_determinisation(afn A, afd *D) {
     assert(trans != NULL);
     assert(states_q != NULL);
     states_q[0] = afn_epsilon_fermeture(A, A.init);
+    printf("init - %lld\n", states_q[0]);
     // at most all the states are final so the size of finals is 64
     uint * finals = calloc(64, sizeof(uint));
     uint nb_finals = 0;
@@ -308,37 +314,49 @@ void afn_determinisation(afn A, afd *D) {
     ullong ferm;
     uint trans_i = 0;
     while(nb_etats > i) {
-        printf("%lld %lld \n", states_q[i], A.finals);
-        if(states_q[i] & A.finals) {
+        if(states_q[i] & A.finals && (!in2(finals, nb_finals, i))) {
             finals[nb_finals] = i;
             nb_finals++;
         }
         char * sigma = A.alphabet;
         while(*sigma != '\0') {
             if (*sigma != '&') {
-                ferm = afn_epsilon_fermeture(A, simul(A, states_q[i], *sigma));
-                if(!in(states_q, nb_etats, ferm)) {
-                    if(nb_etats >= size_states_q) {
-                        size_states_q += 64;
-                        states_q = realloc(states_q, size_states_q * sizeof(ullong));
-                        assert(states_q != NULL);
+                ullong temp = simul(A, states_q[i], *sigma);
+                if (temp) {
+                    ferm = afn_epsilon_fermeture(A, simul(A, states_q[i], *sigma));
+                    printf("curr_state %f curr char %c ferm = %lld\n",
+                           log(states_q[i])/log(2), *sigma, ferm);
+                    if(!in(states_q, nb_etats, ferm)) {
+                        if(nb_etats >= size_states_q) {
+                            size_states_q += 64;
+                            states_q = realloc(states_q, size_states_q * sizeof(ullong));
+                            assert(states_q != NULL);
+                        }
+                        states_q[nb_etats] = ferm;
+                        nb_etats++;
+                        /* if (ferm & A.finals && ) { */
+                        /*     finals[nb_finals++] = nb_etats - 1; */
+                        /*     printf("%u]\n", finals[0]); */
+                        /*     printf("%u]\n", finals[1]); */
+                        /*     printf("nb_finasl %u\n", nb_finals); */
+                        /* } */
+
                     }
-                    states_q[nb_etats] = ferm;
-                    nb_etats++;
-                }
-                trans_t new_trans = {i,*sigma, indexof(states_q, nb_etats, ferm)};
-                if (trans_i >= size_of_trans) {
-                    size_of_trans += 64;
-                    trans = realloc(trans, size_of_trans * sizeof(trans_t));
-                    assert(trans != NULL);
-                }
-                trans[trans_i] = new_trans;
+                    trans_t new_trans = {i,*sigma, indexof(states_q, nb_etats, ferm)};
+                    if (trans_i >= size_of_trans) {
+                        size_of_trans += 64;
+                        trans = realloc(trans, size_of_trans * sizeof(trans_t));
+                        assert(trans != NULL);
+                    }
+                    trans[trans_i] = new_trans;
                 trans_i++;
+                }
             }
             sigma++;
         }
         i++;
     }
+    printf("nb_finals %u\n", nb_finals);
     afd_init(D, nb_etats, A.alphabet, nb_finals, 0, finals);
     for(i = 0; i< trans_i; i++) {
         afd_add_trans(D, trans[i].q, trans[i].c, trans[i].q2);
@@ -361,25 +379,14 @@ void afn_char(afn *C, char c) {
   1 in b is start+1 in B
 */
 void add_all_trans(afn *C, afn A, uint start) {
-    ullong all_st_a = INT_ETAT(A.nbetat);
-    ullong curr_state_i = 1, curr_state_j = 1;
-    uint i = 0;
-    ullong st_j, st_i;
-    while (all_st_a > curr_state_i){
-        curr_state_j = 1;
-        st_i = log(curr_state_i)/log(2);
-        while (all_st_a > curr_state_j) {
-            i = 0;
-            st_j = log(curr_state_j)/log(2);
-            while(i < strlen(ALPHABET)) {
-                if (exist_trans(A, st_i, ALPHABET[i], st_j)) {
-                    afn_add_trans(C, st_i+start, ALPHABET[i], st_j+start);
+    for (uint i = 0; A.nbetat > i; i++){
+        for (uint j = 0; j < A.nbetat ; j++) {
+            for (uint k = 0; k < strlen(ALPHABET); k++) {
+                if (exist_trans(A, i, ALPHABET[k], j)) {
+                    afn_add_trans(C, i+start, ALPHABET[k], j+start);
                 }
-                i++;
             }
-            curr_state_j <<=1;
         }
-        curr_state_i <<= 1;
     }
 }
 
@@ -404,9 +411,9 @@ void add_ep_trans(afn *C, afn A, uint start){
 */
 void afn_union(afn *C, afn A, afn B) {
     uint nb_states = A.nbetat + B.nbetat;
-    ullong fin_states = A.finals | B.finals;
-    afn_init(C, nb_states + 1, ALPHABET, 1, fin_states);
+    ullong fin_states = (A.finals<<1) | (B.finals<<(A.nbetat+1));
 
+    afn_init(C, nb_states + 1, ALPHABET, 1, fin_states);
     // add all trans of A to C
     add_all_trans(C, A, 1);
     // add all trabs of B to A
@@ -422,7 +429,7 @@ void afn_union(afn *C, afn A, afn B) {
   Calcule un automate qui reconnait la concatenation de <A> et <B>
 */
 void afn_concat(afn *C, afn A, afn B) {
-    afn_init(C,A.nbetat+B.nbetat, ALPHABET,A.init,B.finals);
+    afn_init(C,A.nbetat+B.nbetat, ALPHABET,A.init, B.finals<<(A.nbetat));
     add_all_trans(C, A, 0);
     add_all_trans(C, B, A.nbetat);
     // for each final state of A add a ep trans to each initial

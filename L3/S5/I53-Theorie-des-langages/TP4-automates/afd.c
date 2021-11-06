@@ -102,8 +102,7 @@ void afd_copy(afd *dest, afd *src) {
   }
 }
 
-void afd_print(afd A)
-{
+void afd_print(afd A) {
   int i;
   
 
