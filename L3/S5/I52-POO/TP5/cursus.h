@@ -19,6 +19,7 @@ class Cursus {
         Cursus(const Cursus &);
         ~Cursus();
         Cursus & operator=(const Cursus &);
+        void print();
 
 
 };

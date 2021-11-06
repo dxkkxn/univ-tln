@@ -9,5 +9,6 @@ class Subject {
         Subject();
         Subject(string);
         string get_name();
+        Subject & operator=(const Subject &);
 };
 #endif

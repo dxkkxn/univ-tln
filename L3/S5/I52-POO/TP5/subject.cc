@@ -12,3 +12,9 @@ Subject::Subject(string _name) {
 string Subject::get_name() {
     return name;
 }
+
+Subject & Subject::operator=(const Subject & s) {
+    if (this != &s)
+        name = s.name;
+    return (*this);
+}

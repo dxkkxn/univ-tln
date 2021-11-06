@@ -13,6 +13,11 @@ int main() {
 
     Teacher t1("GRAY", "Doran", 30, sl, 3);
     t1.print();
-  
+    Cursus l3("L3", t1, sl, 3);
+    l3.print();
+    cout << endl;
+    Student ql("LOMBARDO", "quentin", 34, l3);
+    ql.print();
+
     return 0;
 }
