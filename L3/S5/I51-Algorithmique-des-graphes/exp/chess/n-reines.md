@@ -39,7 +39,7 @@ FIN
 ### Example :
 Voici un example d'execution pour n = 3. 
 <p align="center">
-  <img src="https://towardsdatascience.com/genetic-algorithm-vs-backtracking-n-queen-problem-cdf38e15d73f"/>
+  <img src="https://miro.medium.com/max/1200/1*89khR1bWFu0Tc0TY44_vFw.png"/>
 </p>
 
 > SOURCE = https://towardsdatascience.com/
