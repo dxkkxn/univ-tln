@@ -130,7 +130,7 @@ Avec le temps de calcul empirique on remarque que notre function est de l'ordre 
   <img src="https://raw.githubusercontent.com/dxkkxn/univ-tln/master/L3/S5/I51-Algorithmique-des-graphes/exp/chess/xd2.png"/>
 </p>
 
-> temps de calcul/taille de l'échequier 
+> temps de calcul(seconds)/taille de l'échequier 
 
 ## Nombre de solutions en fonction de n
 
