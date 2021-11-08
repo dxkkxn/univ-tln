@@ -39,10 +39,10 @@ FIN
 ### Example :
 Voici un example d'execution pour n = 3. 
 <p align="center">
-  <img src="https://images4.programmersought.com/766/a6/a670a462c6f8c2354343a7bd3a18e1f6.png"/>
+  <img src="https://towardsdatascience.com/genetic-algorithm-vs-backtracking-n-queen-problem-cdf38e15d73f"/>
 </p>
 
-> SOURCE = https://programmersought.com/article/78674658709/
+> SOURCE = https://towardsdatascience.com/
 ## Langage C
 Voici l'implementation en langage C
 ```c
