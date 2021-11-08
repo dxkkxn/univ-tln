@@ -2,7 +2,6 @@
 Le problème des n-reines consiste à placer sur un échequier de taille n x n, n reines ou dames telles que deux dames ne se controlent pas mutuellement. Voici un exemple pour n = 8:
 
 <p align="center">
-  <img src="<p align="center">
   <img src="https://rosettacode.org/mw/images/b/bd/N_queens_problem.png"/>
 </p>
 
@@ -40,7 +39,6 @@ FIN
 ### Example :
 Voici un example d'execution pour n = 3. 
 <p align="center">
-  <img src="<p align="center">
   <img src="https://images4.programmersought.com/766/a6/a670a462c6f8c2354343a7bd3a18e1f6.png"/>
 </p>
 
@@ -129,7 +127,6 @@ O(n*(n-1)*(n-2)*(n-3)....(n-(n-1)) = O(n!)
 ## Benchmark
 Avec le temps de calcul empirique on remarque que notre function est de l'ordre de n!
 <p align="center">
-  <img src="<p align="center">
   <img src="https://raw.githubusercontent.com/dxkkxn/univ-tln/fb3e234d1d9e6d0e3de9dd9534ef5b7a1a7e22ad/L3/S5/I51-Algorithmique-des-graphes/exp/xd.svg"/>
 </p>
 
