@@ -127,7 +127,7 @@ O(n*(n-1)*(n-2)*(n-3)....(n-(n-1)) = O(n!)
 ## Benchmark
 Avec le temps de calcul empirique on remarque que notre function est de l'ordre de n!
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dxkkxn/univ-tln/fb3e234d1d9e6d0e3de9dd9534ef5b7a1a7e22ad/L3/S5/I51-Algorithmique-des-graphes/exp/xd.svg"/>
+  <img src="https://raw.githubusercontent.com/dxkkxn/univ-tln/master/L3/S5/I51-Algorithmique-des-graphes/exp/chess/xd2.png"/>
 </p>
 
 > temps de calcul/taille de l'échequier 
