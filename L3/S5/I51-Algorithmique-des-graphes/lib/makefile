@@ -24,3 +24,6 @@ list.o: list.c list.h
 
 binary.o: binary.c binary.h
 	gcc $(CFLAGS) -c binary.c
+
+disjoint.o: disjoint.c disjoin.h
+	gcc $(CFLAGS) -c disjoint.c
