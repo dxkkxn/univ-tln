@@ -4,3 +4,6 @@
 [submodule "L3/S5/I53-Theorie-des-langages/automates"]
 	path = L3/S5/I53-Theorie-des-langages/automates
 	url = https://github.com/dxkkxn/automates
+[submodule "L3/S5/I53-Theorie-des-langages/TP4-automates"]
+	path = L3/S5/I53-Theorie-des-langages/TP4-automates
+	url = https://github.com/dxkkxn/automates
