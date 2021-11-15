@@ -1,3 +1,6 @@
 [submodule "L2/S3/I31-Algorithmique/diffie-hellman-key-ex/diffie-hellman-key-ex"]
 	path = L2/S3/I31-Algorithmique/diffie-hellman-key-ex/diffie-hellman-key-ex
 	url = https://github.com/dxkkxn/diffie-hellman-key-ex
+[submodule "L3/S5/I53-Theorie-des-langages/automates"]
+	path = L3/S5/I53-Theorie-des-langages/automates
+	url = https://github.com/dxkkxn/automates
