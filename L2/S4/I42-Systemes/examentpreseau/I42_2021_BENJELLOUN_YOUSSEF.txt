@@ -1,0 +1,55 @@
+﻿1-Configuration de la machine
+
+    a) ipv4 -> inet adr:10.9.186.152
+    b) MAC -> HWaddr 64:00:6a:67:21:62
+    c) Une machine peut avoir différents carte de réseau si l'adresse sollicité est dans la mème machine. On envoie l'adresse IP vers la boucle locale (lo)
+
+2-Correspondance IP/MAC/Nom
+
+    a)
+Address                  HWtype  HWaddress           Flags Mask            Iface
+sinfo5.univ-tln.fr       ether   00:16:3e:13:d5:6a   C                     eth0
+sinfo8.univ-tln.fr       ether   00:16:3e:3e:d6:ba   C                     eth0
+10.9.184.1               ether   ec:9b:8b:61:d8:b3   C                     eth0
+    b) nom -> u1-001-1.univ-tln.fr
+       IP -> 10.9.186.1
+       MAC -> 64:00:6a:66:fe:ad
+    c) Le fichier /etc/resolv.conf contient un ensemble de routines que donne accès a l'internet ‘domain name system’ (DNS).
+       Le fichier /etc/hosts/ contient un liste de hosts et utilisateurs qui son vérifiés et on accès au système.
+    d) L'adresse IP de la machine www.google.fr est IPv4 216.58.211.195 ou IPv6 2a00:1450:4006:809::2003
+    Le nom associé `a l'adresse IP 193.49.96.26 est lbwebdmz.univ-tln.fr.
+
+3-Routage simple
+    a)
+    Table de routage IP du noyau
+    Destination     Passerelle      Genmask         Indic Metric Ref    Use Iface
+    default         10.9.184.1      0.0.0.0         UG    0      0        0 eth0
+    10.9.184.0      *               255.255.248.0   U     0      0        0 eth0
+    10.9.188.0      panda5.univ-tln 255.255.255.0   UG    0      0        0 eth0
+    link-local      *               255.255.0.0     U     1000   0        0 eth0
+    172.17.0.0      *               255.255.0.0     U     0      0        0 docker0
+    La passerelle est 10.9.184.1
+
+    b) Pour trouver l'adresse MAC on réalise un ping et on regarde dans la table arp le nouvelle adresse MAC
+       associe à l'IP 10.9.184.1 qui est ec:9b:8b:61:d8:b3
+
+    c) Parce que l’adresse demandé n’est pas sur le même réseau ou sous-réseau
+
+4-SSH
+    a) La commande est ssh login@u1-001-1.
+    SSH génère une empreinte clef ECDSA SHA256
+    Cela ajout l'host a la liste de host connus et demande le mot de passe
+    Après authentification le shell renvoie des informations du système d’exploitation.
+
+    b)
+    scp /tmp/test.txt bruno@u1-001-2:ici/test-bis.txt
+
+    Copie le fichier test.txt situé dans la répertoire tmp vers l'utilisateur bruno dans la machine u1-001-2 dans le chemin ici/test-bis.txt
+
+    scp bruno@u1-001-2:encore/unTest.txt .
+
+    Copie le fichier unTest.txt situe' dans la machine u1-001-2 avec utilisateur bruno et avec chemin absolu /encore/unTest.txt dans le répertoire curent
+
+5-Netstat
+    Affiche  les connexions réseau, les tables de routage, les statistiques des inter‐faces, les connexions masquées, les messages netlink, et les membres multicast.
+   La commande pour afficher les connections tcp en continu est 'netstat --tcp -c'
