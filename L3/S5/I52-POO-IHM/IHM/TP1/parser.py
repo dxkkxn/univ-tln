@@ -18,7 +18,6 @@ def normalize_nb(nb):
     return nb
 
 
-
 def parser():
     """
     Read file rgb.txt and return a dictionary with every name and its
@@ -70,19 +69,43 @@ if __name__ == '__main__':
     dico = parser()
     sorted_dict_keys = sorted(dico.keys())
     print(sorted_dict_keys)
-    for key in sorted_dict_keys: 
+    nb_coul = 0
+    for key in sorted_dict_keys:
+        nb_coul+=1
         print_key_with_spaces(key);
         print(dico[key])
+    print(f"nb colors = {nb_coul}")
 
+    col = int((nb_coul**0.5)//1 + 1);
     root = tk.Tk()
     tl = tk.Toplevel(bg="#00ffff")
     sv = tk.StringVar()
-    canv = tk.Canvas(tl, highlightbackground="red", bg="yellow")
-    sv.set("Hello World")
+    HEIGHT = col*20
+    WIDTH = col*20
+    canv = tk.Canvas(tl, highlightbackground="red", width=WIDTH, height=HEIGHT)
+    it_col = iter(sorted_dict_keys)
+    k = 0
+    for i in range(0, HEIGHT, 20):
+        for j in range(0, WIDTH, 20):
+            if (k < len(sorted_dict_keys)) :
+                if (sorted_dict_keys[k] == "DebianRed"):
+                    k+=1
+                else:
+                    rec = canv.create_rectangle(i, j, i+20, j+20, fill=sorted_dict_keys[k])
+                    rec.tagbind()
+                    k += 1
+            else:
+                rec = canv.create_rectangle(i, j, i+20, j+20)
     frm = tk.Frame(tl, bd=3, bg="green")
+    scroll_y = tk.Scrollbar(tl, orient="vertical", command=canv.yview);
+    sv.set("Hello World")
+    canv.configure(yscrollcommand=scroll_y.set)
+    #canv.configure(yscrollcommand=scroll_y.set)
     label = tk.Label(tl, textvariable=sv)
     btn_ok = tk.Button(frm, text="Ok")
     btn_annuler = tk.Button(frm, text="Annuler")
+    #canv.configure(scrollregion=canv.bbox("all"))
+    scroll_y.pack(side="right", fill="y")
     btn_ok.pack()
     btn_annuler.pack()
     canv.pack() 
