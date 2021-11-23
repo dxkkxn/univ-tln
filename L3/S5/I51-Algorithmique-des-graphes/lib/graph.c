@@ -1,7 +1,7 @@
 #include "graph.h"
+#include "binary"
 #include <stdlib.h>
-#define true 1
-#define false 0
+#include <stdbool.h> 
 
 graph create_graph(int n) {
     graph res; int i;
@@ -57,3 +57,6 @@ void print_mat(graph g) {
     }
 }
 
+graph hypercube(int) {
+  graph res - create_graph()
+}

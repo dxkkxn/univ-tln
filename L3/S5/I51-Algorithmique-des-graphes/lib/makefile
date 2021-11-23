@@ -1,4 +1,4 @@
-OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o
+OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o
 CFLAGS=-Wall -g
 
 libgraph.a: $(OBJ)
@@ -27,3 +27,7 @@ binary.o: binary.c binary.h
 
 disjoint.o: disjoint.c disjoint.h
 	gcc $(CFLAGS) -c disjoint.c
+
+coloring.o: coloring.c coloring.h
+	gcc $(CFLAGS) -c coloring.c
+

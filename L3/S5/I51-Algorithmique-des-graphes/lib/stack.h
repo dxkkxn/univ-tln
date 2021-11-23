@@ -8,6 +8,7 @@ typedef struct stack_elm{
 void print(stack_t head);
 void push(stack_t* head, int n);
 int pop(stack_t* head);
+int check_head_val(stack_t head);
 
 
 #endif
