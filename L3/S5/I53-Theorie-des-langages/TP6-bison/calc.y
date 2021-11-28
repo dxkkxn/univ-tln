@@ -4,7 +4,7 @@
     #include <stdlib.h>
     #include "list_var.h"
 
-    int yylval;
+    //int yylval;
     int yylex();
     int yyerror(const char *msg);
     /* calc a^b */
@@ -31,9 +31,12 @@
 %}
 %define parse.error verbose 
 %union {
-  int nb;
-  struct p;
+  int num;
+  list_symb * node;
 }
+
+%type<node> MEM
+%type<num> EXP NB
 
 %token NB FIN PO PF MEM FINLIGNE
 // Unites lexicales
@@ -44,20 +47,21 @@
 
 %start PROG
 
+
 %%
 
 PROG : %empty
      | PROG EXP FINLIGNE { printf("%d\n", $2 );}
      ;
-EXP  : NB { $$ = $1 ;} 
-     | MEM { $$ = mem[$1]; }
+EXP  : NB { $$ = $1 ;}
+     | MEM { $$ = $1->val; }
      | PO EXP PF { $$ = $2 ;}
      | EXP MULT EXP { $$ = $1 * $3 ;}
      | EXP DIV EXP { $$ = $1 / $3 ;}
      | EXP PLUS EXP { $$ = $1 + $3 ;}
      | EXP MOINS EXP { $$ = $1 - $3 ;}
      | EXP POW EXP {$$ = mypow($1, $3);}
-     | MEM AFFECT EXP { $$ = (mem[$1] = $3);}
+     | MEM AFFECT EXP { $$ = ($1->val = $3);}
      ;
 %%
 
@@ -79,22 +83,25 @@ int yylex(){
             car = next_char();
         }
         ungetc(car,stdin);
-        yylval = nb;
+        yylval.num = nb;
         return NB;
     }
     if ('a' <= car && car <= 'z') {
         char name[16];
-        name[0] = car;
-        int i = 1;
+        int i = 0;
         while(i < 16 && 'a' <= car && car <= 'z') {
-            name[i] = car;
+            name[i++] = car;
             car = getchar();
         }
-        if (i == 16)
+        if (i == 16) {
+            fprintf(stderr, "variable name overflow");
             exit(1);
+        } else {
+            ungetc(car,stdin);
+        }
         inserer(name, 0, &head);
-        yylval = find(&head, name);
-        yylval = car - 'A';
+        yylval.node = find(head, name);
+        //yylval = car - 'A';
         return MEM; 
     } 
     switch (car) {

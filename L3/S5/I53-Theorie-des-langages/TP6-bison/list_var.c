@@ -16,7 +16,6 @@ int inserer(char *nom, int val, list_symb **head) {
   while (curr->next != NULL && continue_b) {
     if (strcmp(curr->symb, nom) == 0) {
       continue_b = false;
-      curr->val = val; 
     }
     curr = curr->next;
   }

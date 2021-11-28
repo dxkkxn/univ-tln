@@ -73,7 +73,7 @@
     #include <stdlib.h>
     #include "list_var.h"
 
-    int yylval;
+    //int yylval;
     int yylex();
     int yyerror(const char *msg);
     /* calc a^b */
@@ -95,9 +95,10 @@
       } while(car == ' ' || car == '\t' );
       return car;
     }
-    int mem[26] = {0};
+    //int mem[26] = {0};
+    list_symb * head = NULL;
 
-#line 101 "calc.c"
+#line 102 "calc.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -159,7 +160,17 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 33 "calc.y"
+
+  int num;
+  list_symb * node;
+
+#line 171 "calc.c"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -532,8 +543,8 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    44,    44,    45,    47,    48,    49,    50,    51,    52,
-      53,    54,    55
+       0,    53,    53,    54,    56,    57,    58,    59,    60,    61,
+      62,    63,    64
 };
 #endif
 
@@ -1334,67 +1345,67 @@ yyreduce:
   switch (yyn)
     {
   case 3:
-#line 45 "calc.y"
-                         { printf("%d\n", yyvsp[-1] );}
-#line 1340 "calc.c"
+#line 54 "calc.y"
+                         { printf("%d\n", (yyvsp[-1].num) );}
+#line 1351 "calc.c"
     break;
 
   case 4:
-#line 47 "calc.y"
-          { yyval = yyvsp[0] ;}
-#line 1346 "calc.c"
+#line 56 "calc.y"
+          { (yyval.num) = (yyvsp[0].num) ;}
+#line 1357 "calc.c"
     break;
 
   case 5:
-#line 48 "calc.y"
-           { yyval = mem[yyvsp[0]]; }
-#line 1352 "calc.c"
+#line 57 "calc.y"
+           { (yyval.num) = (yyvsp[0].node)->val; }
+#line 1363 "calc.c"
     break;
 
   case 6:
-#line 49 "calc.y"
-                 { yyval = yyvsp[-1] ;}
-#line 1358 "calc.c"
+#line 58 "calc.y"
+                 { (yyval.num) = (yyvsp[-1].num) ;}
+#line 1369 "calc.c"
     break;
 
   case 7:
-#line 50 "calc.y"
-                    { yyval = yyvsp[-2] * yyvsp[0] ;}
-#line 1364 "calc.c"
+#line 59 "calc.y"
+                    { (yyval.num) = (yyvsp[-2].num) * (yyvsp[0].num) ;}
+#line 1375 "calc.c"
     break;
 
   case 8:
-#line 51 "calc.y"
-                   { yyval = yyvsp[-2] / yyvsp[0] ;}
-#line 1370 "calc.c"
+#line 60 "calc.y"
+                   { (yyval.num) = (yyvsp[-2].num) / (yyvsp[0].num) ;}
+#line 1381 "calc.c"
     break;
 
   case 9:
-#line 52 "calc.y"
-                    { yyval = yyvsp[-2] + yyvsp[0] ;}
-#line 1376 "calc.c"
+#line 61 "calc.y"
+                    { (yyval.num) = (yyvsp[-2].num) + (yyvsp[0].num) ;}
+#line 1387 "calc.c"
     break;
 
   case 10:
-#line 53 "calc.y"
-                     { yyval = yyvsp[-2] - yyvsp[0] ;}
-#line 1382 "calc.c"
+#line 62 "calc.y"
+                     { (yyval.num) = (yyvsp[-2].num) - (yyvsp[0].num) ;}
+#line 1393 "calc.c"
     break;
 
   case 11:
-#line 54 "calc.y"
-                   {yyval = mypow(yyvsp[-2], yyvsp[0]);}
-#line 1388 "calc.c"
+#line 63 "calc.y"
+                   {(yyval.num) = mypow((yyvsp[-2].num), (yyvsp[0].num));}
+#line 1399 "calc.c"
     break;
 
   case 12:
-#line 55 "calc.y"
-                      { yyval = (mem[yyvsp[-2]] = yyvsp[0]);}
-#line 1394 "calc.c"
+#line 64 "calc.y"
+                      { (yyval.num) = ((yyvsp[-2].node)->val = (yyvsp[0].num));}
+#line 1405 "calc.c"
     break;
 
 
-#line 1398 "calc.c"
+#line 1409 "calc.c"
 
       default: break;
     }
@@ -1626,7 +1637,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 57 "calc.y"
+#line 66 "calc.y"
 
 
 int main( void ) {
@@ -1647,11 +1658,25 @@ int yylex(){
             car = next_char();
         }
         ungetc(car,stdin);
-        yylval = nb;
+        yylval.num = nb;
         return NB;
     }
-    if ('A' <= car && car <= 'Z') {
-        yylval = car - 'A';
+    if ('a' <= car && car <= 'z') {
+        char name[16];
+        int i = 0;
+        while(i < 16 && 'a' <= car && car <= 'z') {
+            name[i++] = car;
+            car = getchar();
+        }
+        if (i == 16) {
+            fprintf(stderr, "variable name overflow");
+            exit(1);
+        } else {
+            ungetc(car,stdin);
+        }
+        inserer(name, 0, &head);
+        yylval.node = find(head, name);
+        //yylval = car - 'A';
         return MEM; 
     } 
     switch (car) {
