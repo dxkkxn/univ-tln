@@ -20,4 +20,6 @@ graph random_graph(int n, float p);
 uint degree(graph g, uint s);
 graph copy_graph(graph g);
 void print_mat(graph g);
+void print_edge(edge_t edge);
+void print_arr_edge(edge_t * edges, size_t nmemb);
 #endif

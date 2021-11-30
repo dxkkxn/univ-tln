@@ -7,6 +7,7 @@
 #include "graph.h"
 #include "disjoint.h"
 #include "kruskal.h"
+#include "inout.h"
 
 int main(int argc, char* argv[]) {
     assert(argc==2);
@@ -19,8 +20,8 @@ int main(int argc, char* argv[]) {
     
     // generer n points
     for (i = 0; i < N; i++) {
-      points[i][0] = rand();
-      points[i][1] = rand();
+      points[i][0] = rand()%1000;
+      points[i][1] = rand()%1000;
     }
     graph g_complet = random_graph(N,1);
     g_complet.wt = calloc(N, sizeof(double*));
@@ -35,7 +36,20 @@ int main(int argc, char* argv[]) {
                                   pow(points[i][1]-points[j][1],2));
       }
     }
-    printf("OKKK\n");
-    kruskal(g_complet);
+    //draw_graph_wt(g_complet, "kruskal_test");
+    edge_t* t = kruskal(g_complet);
+    /* print_arr_edge(kruskal(g_complet), (N-1)); */
+    // frees
+    for (i = 0; i < N; i++) {
+      free(g_complet.wt[i]);
+    }
+    free(g_complet.wt);
+    free(t);
+    free_graph(g_complet);
+    for (i = 0; i < N; i++) {
+      free(points[i]);
+    }
+    free(points);
+
     return 0;
 }

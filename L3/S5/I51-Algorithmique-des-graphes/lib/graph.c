@@ -22,6 +22,7 @@ graph copy_graph(graph g) {
   }
   return res;
 }
+
 void free_graph(graph g) {
     for (int i = 0; i < g.nbs; i++)
         free(g.mat[i]);
@@ -57,6 +58,17 @@ void print_mat(graph g) {
         printf("%d]\n", g.mat[i][g.nbs-1]);
     }
 }
+
+void print_edge(edge_t edge) {
+    printf("%d---%f----%d\n", edge.i, edge.wt, edge.j);
+}
+
+void print_arr_edge(edge_t * edges, size_t nmemb) {
+    for (int i = 0; i < nmemb; i++) {
+        print_edge(edges[i]);
+    }
+}
+
 
 //graph hypercube(int) {
 //  graph res - create_graph()

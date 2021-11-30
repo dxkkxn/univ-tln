@@ -80,5 +80,27 @@ void draw_graph(graph g, char * filename) {
 }
     
 
-
-
+void draw_graph_wt(graph g, char * filename) {
+    FILE *dst;
+    char fn[1024];
+    sprintf(fn, "../../data/%s.dot",filename);
+    dst = fopen(fn,"w");
+    if (!dst) {
+        perror("open error");
+        exit(1);
+    }
+    char cmd[1024];
+    fprintf(dst, "graph { \n");
+    for(int i = 0; i < g.nbs; i++) {
+        fprintf(dst,"%d;\n", i);
+        for(int j = i; j < g.nbs; j++) {
+            if (g.mat[i][j])
+                fprintf(dst,"%d--%d [label=%f];\n",i,j, g.wt[i][j]);
+        }
+    }
+    fprintf(dst,"}\n");
+    fclose(dst);
+    sprintf(cmd, "dot -Tpng -o ../../data/%s.png ../../data/%s.dot",filename, filename);
+    system(cmd);
+    printf("Drawed succesfully\n");
+}
