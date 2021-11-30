@@ -64,6 +64,16 @@ def print_key_with_spaces(key):
             print(" ", char, end = "", sep="")
     print(" ", end="", sep="")
 
+def modif_sv(event=None):
+    id_canv = canv.find_withtag("current")[0]
+    txt = canv.gettags(id_canv)[0]
+    sv.set(txt)
+    return
+
+def color_choice():
+    print(f"You chose {sv.get()}")
+    print("Destroyed")
+    tl.destroy()
 
 if __name__ == '__main__':
     dico = parser()
@@ -79,11 +89,15 @@ if __name__ == '__main__':
     col = int((nb_coul**0.5)//1 + 1);
     root = tk.Tk()
     tl = tk.Toplevel(bg="#00ffff")
+    tl.grab_set()
     sv = tk.StringVar()
     HEIGHT = col*20
     WIDTH = col*20
-    canv = tk.Canvas(tl, highlightbackground="red", width=WIDTH, height=HEIGHT)
-    it_col = iter(sorted_dict_keys)
+    frm1= tk.Frame(tl, bd=3, bg="yellow")
+    canv = tk.Canvas(frm1, highlightbackground="red", width=WIDTH, height=col*10, 
+                     scrollregion=(0,0,0,HEIGHT))
+    scroll_y = tk.Scrollbar(frm1, orient=tk.VERTICAL, command=canv.yview);
+    canv.configure(yscrollcommand=scroll_y.set)
     k = 0
     for i in range(0, HEIGHT, 20):
         for j in range(0, WIDTH, 20):
@@ -91,24 +105,25 @@ if __name__ == '__main__':
                 if (sorted_dict_keys[k] == "DebianRed"):
                     k+=1
                 else:
-                    rec = canv.create_rectangle(i, j, i+20, j+20, fill=sorted_dict_keys[k])
-                    rec.tagbind()
+                    rec = canv.create_rectangle(i, j, i+20, j+20,
+                                                fill=sorted_dict_keys[k], 
+                                                tags=(sorted_dict_keys[k],
+                                                      "common_tag_col"))
                     k += 1
             else:
                 rec = canv.create_rectangle(i, j, i+20, j+20)
+    canv.tag_bind("common_tag_col", "<ButtonRelease-1>", modif_sv)
+    print(canv.gettags("common_tag_col"))
     frm = tk.Frame(tl, bd=3, bg="green")
-    scroll_y = tk.Scrollbar(tl, orient="vertical", command=canv.yview);
     sv.set("Hello World")
-    canv.configure(yscrollcommand=scroll_y.set)
-    #canv.configure(yscrollcommand=scroll_y.set)
     label = tk.Label(tl, textvariable=sv)
-    btn_ok = tk.Button(frm, text="Ok")
-    btn_annuler = tk.Button(frm, text="Annuler")
-    #canv.configure(scrollregion=canv.bbox("all"))
+    btn_ok = tk.Button(frm, text="Ok", command=color_choice)
+    btn_annuler = tk.Button(frm, text="Annuler", command=color_choice)
+    label.pack(side="top")
+    canv.pack(side="left")
     scroll_y.pack(side="right", fill="y")
-    btn_ok.pack()
-    btn_annuler.pack()
-    canv.pack() 
-    label.pack()
-    frm.pack()
+    frm1.pack(side="top")
+    frm.pack(side="top")
+    btn_ok.pack(side="left")
+    btn_annuler.pack(side="left")
     root.mainloop()
