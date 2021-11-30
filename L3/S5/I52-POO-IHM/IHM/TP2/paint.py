@@ -155,8 +155,6 @@ if __name__ == "__main__":
     bottom_string_var = tk.StringVar()
     label = tk.Label(bottom_frame, textvariable=bottom_string_var)
 
-
-
     # packings
     #menu_bar.pack()
     btn.pack(side="right")
