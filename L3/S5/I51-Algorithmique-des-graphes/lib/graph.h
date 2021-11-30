@@ -5,7 +5,14 @@ typedef unsigned int uint;
 typedef struct {
     int nbs;
     int **mat;
+    double **wt;
 } graph;
+
+typedef struct {
+  int i, j;
+  double wt;
+} edge_t;
+
 
 graph create_graph(int n);
 void free_graph(graph g);

@@ -1,7 +1,8 @@
-#include "graph.h"
-#include "binary"
 #include <stdlib.h>
 #include <stdbool.h> 
+
+#include "graph.h"
+#include "binary.h"
 
 graph create_graph(int n) {
     graph res; int i;
@@ -14,8 +15,8 @@ graph create_graph(int n) {
 
 graph copy_graph(graph g) {
   graph res = create_graph(g.nbs);
-  for(uint i = 0; i < g.nbs; i++) {
-    for(uint j = (i+1); j < g.nbs; j++) {
+  for(int i = 0; i < g.nbs; i++) {
+    for(int j = (i+1); j < g.nbs; j++) {
       res.mat[i][j] = res.mat[j][i] = g.mat[i][j];
     }
   }
@@ -57,6 +58,6 @@ void print_mat(graph g) {
     }
 }
 
-graph hypercube(int) {
-  graph res - create_graph()
-}
+//graph hypercube(int) {
+//  graph res - create_graph()
+//}

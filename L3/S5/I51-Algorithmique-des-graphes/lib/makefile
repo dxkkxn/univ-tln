@@ -1,5 +1,5 @@
-OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o
-CFLAGS=-Wall -g
+OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o kruskal.o
+CFLAGS=-Wall -g -fmax-errors=1
 
 libgraph.a: $(OBJ)
 	ar -cr libgraph.a $^
@@ -31,3 +31,5 @@ disjoint.o: disjoint.c disjoint.h
 coloring.o: coloring.c coloring.h
 	gcc $(CFLAGS) -c coloring.c
 
+kruskal.o: kruskal.c kruskal.h
+	gcc $(CFLAGS) -c kruskal.c

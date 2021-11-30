@@ -2,9 +2,11 @@
 #define CONNEXE_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+#include "graph.h"
 
 typedef unsigned int uint;
-typedef enum {false = 0, true = 1} bool;
 
 uint nb_of_components_r(graph g);
 uint browse(uint s, graph g);
