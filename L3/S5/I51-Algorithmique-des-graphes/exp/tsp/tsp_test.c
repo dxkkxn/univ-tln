@@ -10,6 +10,9 @@
 #include "inout.h"
 #include "tsp.h"
 
+float distance(int x_0, int y_0, int x_1, int y_1)
+    return  sqrt(pow(x_0-x_1, 2) + pow(y_0-y_1, 2));
+
 int main(int argc, char* argv[]) {
     assert(argc==2);
     int N = atoi(argv[1]);
@@ -60,6 +63,17 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    for (int i = 1; i < res.nbs; i++) {
+      int a_x = points[min_approx[i-1]][0];
+      int a_y = points[min_approx[i-1]][1];
+      int b_x = points[min_approx[i]][0];
+      int b_y = points[min_approx[i]][1];
+        for (int j = 1; j < res.nbs; j++) {
+          int d_x = points[min_approx[j-1]][0];
+          int d_y = points[min_approx[j-1]][1];
+          int c_x = points[min_approx[j]][0];
+          int c_y = points[min_approx[j]][1];
+        }
     for(int i = 0; i < res.nbs; i++) {
       printf("%d ", points[min_approx[i]][0]);
       printf("%d\n", points[min_approx[i]][1]);

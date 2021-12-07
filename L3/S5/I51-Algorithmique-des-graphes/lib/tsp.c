@@ -17,6 +17,7 @@ int* possible_tsp_sol(graph g, int s) {
   track = calloc(g.nbs, sizeof(int));
   queue = 0;
   browse_acm(g, s);
-
   return res;
 }
+
+int*
