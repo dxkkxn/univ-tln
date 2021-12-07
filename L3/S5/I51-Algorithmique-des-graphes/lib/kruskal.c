@@ -1,4 +1,5 @@
 #include "kruskal.h"
+#include "graph.h"
 
 int comp_edge(const void * p1, const void * p2) {
   /* printf("p1->%f\n",((edge_t *)p1)->wt); */
@@ -9,7 +10,22 @@ int comp_edge(const void * p1, const void * p2) {
   return res;
 }
 
-edge_t* kruskal(graph g) {
+graph edge_arr_to_graph(edge_t* edges, int nbs) {
+  graph res = create_graph(nbs);
+  res.wt = calloc(nbs, sizeof(double*));
+  for (int i = 0; i < nbs; i++) {
+    res.wt[i] = calloc(nbs, sizeof(double));
+  }
+  for (int i = 0; i < nbs-1; i++) {
+    res.mat[edges[i].i][edges[i].j]= 1;
+    res.mat[edges[i].j][edges[i].i]= 1;
+    res.wt[edges[i].i][edges[i].j]= edges[i].wt;
+    res.wt[edges[i].j][edges[i].i]= edges[i].wt;
+  }
+  return res; 
+}
+
+graph kruskal(graph g) {
   int ordre_g = g.nbs;
   edge_t * edges =  calloc((ordre_g*(ordre_g-1))/2, sizeof(edge_t));;
   size_t nmemb_edge = 0;
@@ -54,5 +70,5 @@ edge_t* kruskal(graph g) {
   for (i = 0; i < g.nbs ; i++)
       free(t[i]);
   free(t);
-  return edges_res;
+  return edge_arr_to_graph(edges_res, g.nbs);
 }

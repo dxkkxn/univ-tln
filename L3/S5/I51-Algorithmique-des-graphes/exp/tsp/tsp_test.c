@@ -8,6 +8,7 @@
 #include "disjoint.h"
 #include "kruskal.h"
 #include "inout.h"
+#include "tsp.h"
 
 int main(int argc, char* argv[]) {
     assert(argc==2);
@@ -37,15 +38,41 @@ int main(int argc, char* argv[]) {
                                   pow(points[i][1]-points[j][1],2));
       }
     }
-    //draw_graph_wt(g_complet, "kruskal_test");
-    edge_t* t = kruskal(g_complet);
+    graph res = kruskal(g_complet);
+    int * approx = possible_tsp_sol(res, 0);
+    int cost;
+    int min_cost;
+    int * min_approx;
+    for (int i = 0; i < res.nbs; i++) {
+        approx = possible_tsp_sol(res, i);
+        cost = 0;
+        for(int j = 1; j < res.nbs; j++) {
+          cost += res.wt[approx[j-1]][approx[j]];
+        }
+        if (i==0) {
+          min_cost = cost;
+          min_approx = approx;
+        }
+        //printf("cost = %d, min_cost = %d\n", cost, min_cost);
+        if (cost < min_cost) {
+          min_approx = approx;
+          min_cost = cost;
+        }
+    }
+
+    for(int i = 0; i < res.nbs; i++) {
+      printf("%d ", points[min_approx[i]][0]);
+      printf("%d\n", points[min_approx[i]][1]);
+    }
+    printf("%d ", points[min_approx[0]][0]);
+    printf("%d\n", points[min_approx[0]][1]);
+//    draw_graph_wt(res, "tsp_test");
     /* print_arr_edge(kruskal(g_complet), (N-1)); */
     // frees
     for (i = 0; i < N; i++) {
       free(g_complet.wt[i]);
     }
     free(g_complet.wt);
-    free(t);
     free_graph(g_complet);
     for (i = 0; i < N; i++) {
       free(points[i]);
