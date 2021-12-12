@@ -20,6 +20,13 @@ uint n_colorable(graph g, uint k) {
   return nb_pos;
 }
 
+
+int bicolore(graph g) {
+  int res = n_colorable(g, 2);
+  return res!=0;
+
+}
+
 void block_neighborhood(uint colour, uint vertex,  graph g) {
   uint head_val;
   for(int i = vertex; i < g.nbs; i++) {

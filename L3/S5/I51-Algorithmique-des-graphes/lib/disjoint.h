@@ -8,6 +8,7 @@ typedef struct _disjoint_ {
     struct _disjoint_ * next;
     struct _disjoint_ * rep;
     int card;
+    int rang;
 } el_disjoint, * disjoint;
 
 disjoint singleton(int);
