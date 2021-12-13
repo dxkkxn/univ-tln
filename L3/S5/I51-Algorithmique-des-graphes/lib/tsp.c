@@ -20,4 +20,3 @@ int* possible_tsp_sol(graph g, int s) {
   return res;
 }
 
-int*

@@ -1,4 +1,4 @@
-OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o kruskal.o tsp.o
+OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o kruskal.o tsp.o hamiltonian.o
 CFLAGS=-Wall -g -fmax-errors=1
 
 libgraph.a: $(OBJ)
@@ -36,3 +36,6 @@ kruskal.o: kruskal.c kruskal.h
 
 tsp.o: tsp.c tsp.h graph.h
 	gcc $(CFLAGS) -c tsp.c
+
+hamiltonian.o: hamiltonian.c hamiltonian.h graph.h
+	gcc $(CFLAGS) -c hamiltonian.c

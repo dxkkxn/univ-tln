@@ -57,7 +57,7 @@ void write_graph(char* filename, graph g) {
 void draw_graph(graph g, char * filename) {
     FILE *dst;
     char fn[1024];
-    sprintf(fn, "../data/%s.dot",filename);
+    sprintf(fn, "../../data/%s.dot",filename);
     dst = fopen(fn,"w");
     if (!dst) {
         perror("open error");
@@ -74,7 +74,7 @@ void draw_graph(graph g, char * filename) {
     }
     fprintf(dst,"}\n");
     fclose(dst);
-    sprintf(cmd, "dot -Tpng -o ../data/%s.png ../data/%s.dot",filename, filename);
+    sprintf(cmd, "dot -Tpng -o ../../data/%s.png ../../data/%s.dot",filename, filename);
     system(cmd);
     printf("Drawed succesfully\n");
 }
