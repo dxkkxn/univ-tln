@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o kruskal.o tsp.o hamiltonian.o
+=======
+OBJ=inout.o graph.o connexe.o stack.o eulerian.o list.o binary.o disjoint.o coloring.o kruskal.o tsp.o acyclique.o
+>>>>>>> d13391c4aee1a8923737e2f765fcd93cbbd842aa
 CFLAGS=-Wall -g -fmax-errors=1
 
 libgraph.a: $(OBJ)
@@ -37,5 +41,10 @@ kruskal.o: kruskal.c kruskal.h
 tsp.o: tsp.c tsp.h graph.h
 	gcc $(CFLAGS) -c tsp.c
 
+<<<<<<< HEAD
 hamiltonian.o: hamiltonian.c hamiltonian.h graph.h
 	gcc $(CFLAGS) -c hamiltonian.c
+=======
+acyclique.o: acyclique.c acyclique.h graph.h
+	gcc $(CFLAGS) -c acyclique.c
+>>>>>>> d13391c4aee1a8923737e2f765fcd93cbbd842aa

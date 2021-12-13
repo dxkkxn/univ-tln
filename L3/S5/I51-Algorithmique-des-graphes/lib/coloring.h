@@ -11,4 +11,4 @@ void unblock_neighborhood(uint col, uint vertex, graph g);
 
 void coloring(uint vertex, graph g) ;
 
-
+int bicolore(graph g);
