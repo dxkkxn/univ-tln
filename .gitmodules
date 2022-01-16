@@ -10,3 +10,6 @@
 [submodule "L3/S5/I52-POO-IHM/IHM/projet-modelisation-isometrique"]
 	path = L3/S5/I52-POO-IHM/IHM/projet-modelisation-isometrique
 	url = https://github.com/dxkkxn/isometric-modeling.git
+[submodule "L3/S5/I53-Theorie-des-langages/compilo-pseudoalgo"]
+	path = L3/S5/I53-Theorie-des-langages/compilo-pseudoalgo
+	url = https://github.com/dxkkxn/compilo-pseudoalgo
