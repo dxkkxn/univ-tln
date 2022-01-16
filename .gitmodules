@@ -7,3 +7,6 @@
 [submodule "L3/S5/I53-Theorie-des-langages/compilo-pseudoalgo"]
 	path = L3/S5/I53-Theorie-des-langages/compilo-pseudoalgo
 	url = https://github.com/dxkkxn/compilo-pseudoalgo
+[submodule "L2/S3/I31-Algorithmique/diffie-hellman-key-ex"]
+	path = L2/S3/I31-Algorithmique/diffie-hellman-key-ex
+	url = https://github.com/dxkkxn/diffie-hellman-key-ex
