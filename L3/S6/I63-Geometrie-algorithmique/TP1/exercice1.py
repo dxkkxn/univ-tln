@@ -49,10 +49,11 @@ def test(x):
 def draw_poly_func(xmin, xmax, nbpoints, poly):
     pas = (xmax-xmin)/nbpoints
     res = []
+    px = xmin
     for i in range(nbpoints):
-        px = xmin+pas
         py = horner(px, poly)
         res.append((px, py))
+        px += pas
     print(res)
     return res
 
@@ -71,13 +72,13 @@ if __name__ == "__main__":
     #          wc_to_dc((1,1), view_port, pos_viewport, window, pos_window))
     #cng.box(p1[0], p1[1], p2[0], p2[1])
     #print(p1, p2)
-    window = (44, 44)
-    pos_window = (-22, -22)
+    window = (40, 40)
+    pos_window = (0, 0)
     #for point in extract_points_from_file("points.txt"): 
     #    point = (wc_to_dc(point, view_port, pos_viewport, window, pos_window))
     #    cng.disc(point[0], point[1], 2)
 
-    for point in draw_poly_func(-4, 4, 50, [5,1,2,3]): 
+    for point in draw_poly_func(-20, 20, 50, [5, -5, 0.5]):
         point = (wc_to_dc(point, view_port, pos_viewport, window, pos_window))
         print(point)
         cng.disc(point[0], point[1], 2)
