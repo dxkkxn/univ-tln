@@ -1,0 +1,7 @@
+\contentsline {section}{\nonumberline Introduction}{1}{section*.4}%
+\contentsline {section}{\numberline {1}Rappels}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Condition intiale}{2}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Condition initiale tres initiale}{2}{subsubsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.2}Problème de Cauchy}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Exercises}{3}{section.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
