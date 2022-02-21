@@ -1,0 +1,121 @@
+\documentclass[a4paper,11pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{lmodern}
+\usepackage{xspace}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{braket}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+\lhead{\leftmark}
+\cfoot{\thepage}
+%\rfoot{\rightmark}
+%\lfoot{BENJELLOUN Youssef}
+
+% definitions des theoremes
+\theoremstyle{plain}
+\newtheorem{thm}{Théorème}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lemme}[thm]{Lemme}
+\theoremstyle{definition}
+\newtheorem{defi}[thm]{Définition}
+\newtheorem{exo}{Exercice}[section]
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\lstdefinestyle{myStyle}{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    frame=none,
+    numbers=none,
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{purple!40!black},
+    identifierstyle=\color{blue},
+    backgroundcolor=\color{gray!10!white},
+}
+% Style emprunté de https://nasa.github.io/nasa-latex-docs/html/examples/listing.html
+
+
+
+% commandes personnelle\s
+\newcommand{\ensemble}[1]{\mathbb{#1}}
+\newcommand{\R}{\ensemble{R}}
+\newcommand{\dijkstra}{\nom{Dijkstra}}
+\newcommand{\nom}[1]{\bsc{#1}\xspace}
+\newcommand{\algo}{algorithme de \dijkstra}
+\newcommand{\glms}[1]{\og#1\fg}
+
+% Définitions pour le titre du document
+\title{L'algorithme de Dijkstra en partant de zéro}
+\author{Youssef Benjelloun}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section*{Introduction}
+En théorie des graphes, l'\algo sert à résoudre le problème du plus court
+chemin. Il permet, par exemple, de déterminer un plus court chemin pour se
+rendre d'une ville à une autre connaissant le réseau routier d'une région.
+Plus précisément, il calcule des plus courts chemins à partir d'une source
+vers tous les autres sommets dans un graphe orienté pondéré par des réels
+positifs. On peut aussi l'utiliser pour calculer un plus court chemin entre
+un sommet de départ et un sommet d'arrivée.
+\section{Biographie}
+Edsger Wybe \dijkstra né à Rotterdam le 11 mai 1930 et mort Nuenen le
+6 août 2002, est un mathématicien et informaticien néerlandais du
+\textsc{xx}\ieme siécle. Il reçoit en 1972 le prix Turing pour ses
+contributions sur la science et l’art des langages de programmation et au
+langage Algol. Juste avant sa mort, en 2002, il reçoit le prix PoDC de
+l'article influent, pour ses travaux sur l'autostabilisation. L'année
+suivant sa mort, le prix sera renommé en son honneur prix Dijkstra.
+
+Dijkstra avait une écriture manuscrite très lisible et a toujours refusé
+d'utiliser un traitement de texte, malgré son domaine d'activité,
+préférant la lettre manuscrite photocopiée. Luca \nom{Cardelli}
+a créé une fonte \glms{Dijkstra} en son honneur, qui imite son écriture
+règuliére. Dijkstra référençait toutes ses lettres par EWD suivi d'un nombre,
+la dernière étant la lettre EWD 1318.
+Pour aller plus loin sur la vie de \dijkstra~\cite{dijkstra.wiki}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.2\textwidth]{dijkstra}
+\caption{Edsger Wybe \dijkstra}\label{fig:dijkstra}
+\end{figure}
+
+\input{theorie_des_graphes.tex}
+\input{algo_dijkstra.tex}
+\input{complexite.tex}
+
+\section{Applications}
+L'\algo est appliqué pour le calcul d'itinéraires routiers
+comme sur les sites Web de cartographie comme \textit{MapQuest} ou
+\textit{Google Maps}.
+Le poids des arcs pouvant être la distance (pour le trajet le plus court),
+le temps estimé (pour le trajet le plus rapide), la consommation de carburant
+et le prix des péages (pour le trajet le plus économique).
+
+Une application courante de l'algorithme de Dijkstra apparaît dans les
+protocoles de routage interne \glms{à état de liens}, tels que
+\textit{Open Shortest Path First} ou encore \textit{PNNI} sur les réseaux
+\textit{ATM}, qui permettent un routage internet très efficace des
+informations en cherchant le parcours le plus efficace.
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}

@@ -1,0 +1,87 @@
+\section{Complexité}
+\subsection{Rappels sur la complexité}
+\begin{defi}
+   Soit $g$ une fonction de $\mathfrak{F}$. On définit respectivement les notations grand omicron et grand oméga:
+   \[
+   O(g) := \Set{f \in \mathfrak{F} | \exists c>0\quad \exists N \in \ensemble{N}\quad
+     \forall n \geq N \quad 0 \leq f(n) \leq cg(n)}
+   \]
+   \[
+   \Omega(g) := \Set{f \in \mathfrak{F} | \exists c>0\quad \exists N \in \ensemble{N}\quad
+     \forall n \geq N \quad 0 \leq cg(n) \leq  f(n) }
+   \]
+\end{defi}
+\begin{defi}
+   Soit $g$ une fonction de $\mathfrak{F}$. On définit la notation grand thêta:
+   \[
+   \Theta(g) := \Set{f \in \mathfrak{F} |\exists a>0 \quad \exists b>0\quad \exists N \in \ensemble{N}\quad
+     \forall n \geq N \quad 0 \leq ag(n) \leq  f(n) \leq bg(n) }
+   \]
+\end{defi}
+\begin{prop}
+  Soient $f$ et $g$ deux fonctions de $\mathfrak{F}$. On a
+  \[
+  f = \Theta(g) \iff f = O(g) \quad \text{et} \quad f = \Omega(g)
+  \]
+\end{prop}
+L'expression algébrique d'une fonction et quelques connaissances sur la croissance des fonctions réelles suffisent parfois à mettre en évidence qu'une majoration est grossière, par exemple quand on affirme que la fonction $n\to 2n+1$ est en $O(n^3)$.
+Ce n'est pas la définition de la notation $O$ qui nous permet d'affirmer que cette estimation est grossière mais la connaissance de la croissance des fonctions monomiales.
+Ainsi l'écriture $f=O(g)$ ne précise pas si $f$ croit beaucoup moins vite que toute constante fois $g$ asymptotiquement ou si $f$ s'en approche.
+La notation petit $o$ répond partiellement à cette question, quand on écrit$f=o(g)$,
+on signifie que:
+\[
+\lim_{n \to + \infty}\frac{f(n)}{g(n)} = 0
+\]
+\begin{defi}
+  Soit $g$ une fonction de $\mathfrak{F}$. On définit respectivement les
+  notations petit omicron et petit oméga:
+   \[
+   o(g) := \Set{f \in \mathfrak{F} | \forall c>0\quad \exists N \in \ensemble{N}\quad
+     \forall n \geq N \quad 0 \leq f(n) \leq cg(n)}
+   \]
+   \[
+   \omega(g) := \Set{f \in \mathfrak{F} | \forall c>0\quad \exists N \in \ensemble{N}\quad
+     \forall n \geq N \quad 0 \leq cg(n) \leq  f(n) }
+   \]
+\end{defi}
+Pour plus d'information sur la théorie de l'infomation~\cite{zanotti.complex}
+\subsubsection{Estimation de l'efficacité}
+En calculant la complexité en temps d'un algorithme, il est possible de vérifier, avant de le mettre en œuvre, si'il est suffisamment efficace pour le problème. Nous partons pour les estimations qu'un ordinateur moderne peut effectuer quelques centaines de millions d'opérations en une seconde.
+
+Par exemple, supposons que le temps limite pour un problème est d'une seconde et que la taille de l'entrée est $n = 10^{5}$.  Si la complexité est $O(n^{2})$, l'algorithme effectuera environ ${(10^{5})}^2 = 10^{10}$ operations.
+Cela devrait prendre au moins quelques dizaines de secondes. Donc l'algorithme semble donc trop lent pour résoudre le problème.
+D'un autre côté, étant donné la taille de l'entrée, nous pouvons essayer de deviner la complexité requise pour l'algorithme.
+Le tableau \ref{fig:time_tab} contient quelques estimations utiles en supposant une limite de temps d'une seconde.
+Informations utiles sur la complexité~\cite[p.~20]{comp.prog.book}.
+\begin{figure}
+  \[
+  \begin{array}{|c|c|}
+    \hline
+    \text{taille de l'entrée} & \text{complexité requise} \\
+    \hline
+    n \leq 10 & O(n!) \\
+    \hline
+    n \leq 20 & O(2^n) \\
+    \hline
+    n \leq 500 & O(n^3) \\
+    \hline
+    n \leq 5000 & O(n^2) \\
+    \hline
+    n \leq {10}^6 & O(nlog(n)) \quad \text{ou} \quad O(n) \\
+    \hline
+    n > {10^6} & O(1)\quad \text{ou} \quad O(log(n)) \\
+    \hline
+  \end{array}
+  \]
+  \caption{Temps d'execution par taille de l'entrée}\label{fig:time_tab}
+\end{figure}
+\subsection{Complexité de l'\algo}
+L'efficacité de l'algorithme de Dijkstra repose sur une mise en œuvre efficace
+de la recherche du minimum. L'ensemble $\mathcal{Q}$ est implémenté par une
+file à priorités. Si le graphe possède $\lvert A \rvert$ arêtes et $\lvert S \rvert$
+sommets, qu'il est représenté par des listes d'adjacence et si on implémente
+la file à priorités par un tas binaire (en supposant que les comparaisons des
+poids des arêtes soient en temps constant), alors la complexité en temps de
+l'algorithme est $O((\lvert A \rvert + \lvert S \rvert)\times \log(\lvert S \rvert))$.
+En revanche, si on implémente la file à priorités avec un tas de Fibonacci,
+l'algorithme est en $O(\lvert A \rvert + \lvert S \rvert \times \log(\lvert S \rvert))$.
