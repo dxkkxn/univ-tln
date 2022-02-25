@@ -1,4 +1,5 @@
 import tp1
+from math import factorial
 from cng import cng
 
 selected = False
@@ -15,13 +16,33 @@ def move(control_points):
         y = y - obj_pos[1]
         cng.obj_move(curr_point, x, y)
         update_bezier(control_points)
+        cng.obj_put_color(curr_point)
         selected = False
     else :
         for point in control_points:
             if cng.obj_picked(point, x, y) :
                 selected = True
                 curr_point = point
+                cng.current_color("green")
+                cng.obj_put_color(curr_point)
+                cng.current_color("black")
     print(selected)
+
+
+def newton_bin(n, p):
+    return factorial(n)/(factorial(p)*factorial(n-p))
+
+def bernstein_poly(n, p, u):
+    return newton_bin(n, p) * u**p * (1-u)**(n-p)
+
+def bezier_poly(points, u):
+    n = len(points)
+    res = [0, 0]
+    for i in range(n):
+        berns_poly = bernstein_poly(n-1, i, u)
+        res[0] += berns_poly* points[i][0]
+        res[1] += berns_poly* points[i][1]
+    return res
 
 
 def update_bezier(control_p):
@@ -36,7 +57,7 @@ def update_bezier(control_p):
     curr_curve = []
     u = 0
     while (u < 1) :
-        p = bezier(points, u)
+        p = bezier_poly(points, u)
         curr_curve.append(cng.point(*p))
         u+=0.001
     return
@@ -73,8 +94,15 @@ if __name__ == '__main__':
     points = proj_p
     curr_curve = []
     while (u < 1) :
-        p = bezier(points, u)
+        p = bezier_poly(points, u)
         # p = tp1.wc_to_dc((p[0], p[1]), view_port, pos_viewport, window, pos_window)
         curr_curve.append(cng.point(*p))
         u+=0.001
     cng.mainloop()
+    # val = [0, 0.2, 0.5, 0.7, 1]
+    # points = [(1,0), (2,2), (6,2), (8,2)]
+    # for u in val :
+    #     p = bezier_poly(points, u)
+    #     # p = tp1.wc_to_dc((p[0], p[1]), view_port, pos_viewport, window, pos_window)
+    #     # curr_curve.append(cng.point(*p))
+    #     print(p)
