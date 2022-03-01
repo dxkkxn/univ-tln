@@ -1,0 +1,35 @@
+\begin{thebibliography}{1}
+
+\bibitem{example.web}
+Dijkstra's algorithm.
+\newblock
+  \url{https://www.codingame.com/playgrounds/1608/shortest-paths-with-dijkstras-algorithm/dijkstras-algorithm}.
+\newblock Visité: 21/02/2022.
+
+\bibitem{comp.prog.book}
+Antti Laaksonen.
+\newblock Competitive programmer’s handbook.
+\newblock Visité: 21/02/2022, 2018.
+
+\bibitem{langevin.book}
+Philippe Langevin.
+\newblock Theorie et algorithmique des graphes.
+\newblock Visité: 21/02/2022, 2021.
+
+\bibitem{dijkstra.algo.wiki}
+Algorithme de dijkstra.
+\newblock \url{https://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra}.
+\newblock Visité: 21/02/2022.
+
+\bibitem{dijkstra.wiki}
+Edsger dijkstra.
+\newblock \url{https://fr.wikipedia.org/wiki/Edsger_Dijkstra}.
+\newblock Visité: 21/02/2022.
+
+\bibitem{zanotti.complex}
+Jean~Pierre Zanotti.
+\newblock Notations asymtotiques.
+\newblock \url{http://zanotti.univ-tln.fr/ALGO/II/Asymptotiques.html}.
+\newblock Visité: 21/02/2022.
+
+\end{thebibliography}

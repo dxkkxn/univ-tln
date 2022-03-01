@@ -1,5 +1,6 @@
 from cng import cng
 
+rec = None
 def move_rectangle():
     cng.obj_move(rec, 20, 20)
 
@@ -12,14 +13,14 @@ def wc_to_dc(point, view_port, pos_viewport, window, pos_window):
     #res_px = px*(vx/wx) + (tvx*vx)/wx - twy
     #res_py = py*(vy/wy) + (tvy*vy)/wy - twx
 
-    res_px = px*(vx/wx) + (tvx*wx-twx*vx)/wx
-    res_py = py*(vy/wy) + (tvy*wy-twy*vy)/wy
+    res_px = px*(vx/wx) + (tvx*wx-twx*vx)/wx 
+    res_py = py*(vy/wy) + (tvy*wy-twy*vy)/wy 
     return res_px, res_py
 
 def create_rectangle(posx, posy, l, h):
+    global rec
     rec = cng.rectangle(posx, posy, posx+l, posy+h)
-    #cng.assoc_button(1, move_rectangle)
-    return rec
+    cng.assoc_button(1, move_rectangle)
 
 def get_size(p1x, p1y, p2x, p2y):
     l = abs(p1x - p2x)
@@ -34,11 +35,11 @@ def extract_points_from_file(filename):
         for line in data :
             res.append((int(line[0]), int(line[1])))
     return res
-
-def horner(x, poly):
+        
+def horner(x, poly): 
     res = poly[-1]
     i = -2
-    while(i >= -len(poly)) :
+    while(i >= -len(poly)) : 
         res = res * x + poly[i]
         i -= 1
     return res
@@ -60,7 +61,7 @@ def draw_poly_func(xmin, xmax, nbpoints, poly):
 
 if __name__ == "__main__":
     cng.init_window(pnom="test", pla=1200, pha=780)
-    rec = create_rectangle(1200//2-50, 780//2, 100, 100)
+    create_rectangle(1200//2-50, 780//2, 100, 100)
     cng.box(0, 0, 10, 10)
     view_port = (get_size(*cng.obj_get_coord(rec)))
     pos_viewport = (1200//2-50, 780//2)
@@ -71,13 +72,13 @@ if __name__ == "__main__":
     #          wc_to_dc((1,1), view_port, pos_viewport, window, pos_window))
     #cng.box(p1[0], p1[1], p2[0], p2[1])
     #print(p1, p2)
-    window = (44, 44)
+    window = (40, 40)
     pos_window = (0, 0)
     #for point in extract_points_from_file("points.txt"): 
     #    point = (wc_to_dc(point, view_port, pos_viewport, window, pos_window))
     #    cng.disc(point[0], point[1], 2)
 
-    for point in draw_poly_func(-4, 4, 50, [5,1,2,3]): 
+    for point in draw_poly_func(-20, 20, 50, [5, -5, 0.5]):
         point = (wc_to_dc(point, view_port, pos_viewport, window, pos_window))
         print(point)
         cng.disc(point[0], point[1], 2)

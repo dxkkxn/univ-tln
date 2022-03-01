@@ -5,6 +5,16 @@
 \usepackage[french]{babel}
 \usepackage{hyperref}
 \usepackage{braket}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+%\fancyhead[LE,RO]{Overleaf}
+%\fancyhead[RE,LO]{Guides and tutorials}
+%\fancyfoot[CE,CO]{\leftmark \thepage}
+%\fancyfoot[LE,RO]{}
+\lhead{\leftmark}
+\rfoot{Page \thepage}
 
 \theoremstyle{plain}
 \newtheorem{theoreme}{Théorème}[section]
