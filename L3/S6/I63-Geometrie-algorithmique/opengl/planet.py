@@ -7,12 +7,14 @@
 from OpenGL.GL import *  # exception car prefixe systematique
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
+from math import sin, cos
 import sys
 
 ###############################################################
 # variables globales
-year, day, hour,x_pos, y_pos, z_pos = 0, 0, 0, 5, 5, 5
+year, day, hour,x_pos, y_pos, z_pos = 0, 0, 0, 0, 0, 5
 quadric = None
+DISPLAY_GRID = False
 
 ############################################################## # 
 blue = []
@@ -38,12 +40,46 @@ def init():
 #    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse)
 #    glLightfv(GL_LIGHT0, GL_SPECULAR, specular)
 #    glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1)
-    glShadeModel(GL_SMOOTH)
+    glShadeModel(GL_FLAT)
 #    # definition of a quadric
     quadric = gluNewQuadric()
     # specify draw syle for quadrics
     gluQuadricDrawStyle(quadric, GLU_FILL)
 
+def display_grid():
+    glBegin(GL_LINES);
+
+    n = 90
+    for i in range(-n, n):
+        # x, y
+        glColor3f (1.0, 1.0, 1.0);
+        glVertex3f(i, -n, 0.0);
+        glVertex3f(i, n, 0.0);
+
+        glColor3f (1.0, 1.0, 1.0);
+        glVertex3f(-n, i, 0.0);
+        glVertex3f(n, i, 0.0);
+
+        #x, z
+        glColor3f (1.0, 1.0, 1.0);
+        glVertex3f(i, 0.0, -n);
+        glVertex3f(i, 0.0, n);
+
+        glColor3f (1.0, 1.0, 1.0);
+        glVertex3f(-n, 0.0, i);
+        glVertex3f(n, 0.0, i);
+
+        #y, z
+        glColor3f (1.0, 1.0, 1.0);
+        glVertex3f(0.0, i, -n);
+        glVertex3f(0.0, i, n);
+
+        glColor3f (1.0, 1.0, 1.0);
+        glVertex3f(0.0, -n, i);
+        glVertex3f(0.0, n, i);
+
+    glEnd()
+    return
 
 def display():
     #glClearDepth(0)
@@ -53,11 +89,16 @@ def display():
     blue = [1.0, 1.0, 1.0, 1.0]
     yellow = [0.7, .4, 0, 1]
     glPushMatrix()
-    gluLookAt(x_pos, y_pos, z_pos, #pos camera 
-              -5+x_pos, -5+y_pos, -5+z_pos, # look at
+    gluLookAt(x_pos, y_pos, z_pos, #pos camera
+              0, 0, 0, # look at
               0, 1, 0) #up vector
+
+    if DISPLAY_GRID :
+        display_grid()
+
     #glPushMatrix()
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, [1.0, 1.0, 0, 1.0])
+    # glTranslate(2, 2, 2)
     gluSphere(quadric, 1.0, 20, 16)
     glRotatef(year, 0.0, 1.0, 0.0)
     glTranslatef(2.0, 0.0, 0.0)
@@ -74,52 +115,89 @@ def display():
     glPopMatrix()
 
     glutSwapBuffers()
+    print(x_pos, y_pos, z_pos)
     #glFlush()
 
 def reshape(width, height):
     glViewport(0, 0, width, height)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    if width <= height:
+    print(width, height)
+    #if width <= height:
         #glOrtho(-2.5, 2.5, -2.5*height/width, 2.5*height/width, -1000.0, 1000.0)
-        gluPerspective(100, width/height, 1, 1000)
-    else:
-        glOrtho(-2.5*width/height, 2.5*width/height, -2.5, 2.5, -10.0, 10.0)
+    gluPerspective(90, width/height, 1, 10000)
+    # else:
+    #     glOrtho(-2.5*width/height, 2.5*width/height, -2.5, 2.5, -10.0, 10.0)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
 
 def keyboard(key, x, y):
-    global day, year, hour, x_pos, y_pos, z_pos
-    if key == b'j':
+    global day, year, hour, x_pos, y_pos, z_pos, DISPLAY_GRID
+    if key == b'd':
         day = (day + 10) % 360
 #    elif key == 'J':
 #        day = (day - 10) % 360
-    elif key == b'a':
+    elif key == b'y':
         year = (year + 5) % 360
 
-    elif key == b'h':
+    elif key == b'w':
         hour = (hour + 10) % 360
 
-    elif key == b't':
+    elif key == b'a':
         year = (year + 1) % 360
         hour = (hour + 20) % 360
         day = (day + 10) % 360
+    elif key == b'g':
+        if  DISPLAY_GRID == True:
+            DISPLAY_GRID = False
+        else :
+            DISPLAY_GRID = True
 #    elif key == 'A':
 #        year = (year - 5) % 360
-    elif key == b'x':
-        x_pos+=1
-    elif key == b'X':
-        x_pos-=1
+    # elif key == b'x':
+    #     x_pos+=1
+    # elif key == b'X':
+    #     x_pos-=1
 
-    elif key == b'y':
-        y_pos+= 1
-    elif key == b'Y':
-        y_pos-= 1
+    # elif key == b'y':
+    #     y_pos+= 1
+    # elif key == b'Y':
+    #     y_pos-= 1
 
+    # elif key == b'z':
+    #     z_pos += 1
+    # elif key == b'Z':
+    #     z_pos -= 1
     elif key == b'z':
-        z_pos += 1
+        z_pos+=1
     elif key == b'Z':
-        z_pos -= 1
+        z_pos-=1
+    elif key == b'h':
+        #x_pos+=1
+        #z_pos -=1
+        radius = 10
+        x, z = x_pos, z_pos
+        x_pos = x * cos(0.1) - z * sin(0.1)
+        z_pos = z * cos(0.1) + x * sin(0.1)
+    elif key == b'l':
+        #x_pos-=1
+        #z_pos-=1
+        radius = 10
+        x, z = x_pos, z_pos
+        x_pos = x * cos(-0.1) - z * sin(-0.1)
+        z_pos = z * cos(-0.1) + x * sin(-0.1)
+    elif key == b'j':
+        #y_pos+=1
+        #z_pos-=1
+        y, z = y_pos, z_pos
+        y_pos = y * cos(0.1) - z * sin(0.1)
+        z_pos = z * cos(0.1) + y * sin(0.1)
+    elif key == b'k':
+        #y_pos-=1
+        #z_pos-=1
+        y, z = y_pos, z_pos
+        y_pos = y * cos(-0.1) - z * sin(-0.1)
+        z_pos = z * cos(-0.1) + y * sin(-0.1)
     elif key == b'\033':
         glutDestroyWindow(WIN)
         sys.exit(0)
