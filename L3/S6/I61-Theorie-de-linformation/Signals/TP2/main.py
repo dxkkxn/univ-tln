@@ -12,9 +12,9 @@ def histogram(text : str):
 def prob(text : str): 
     n = len(text)
     hg = histogram(text)
-    res = []
+    res = {}
     for key, val in hg.items(): 
-        res.append(val/n);
+        res[key] = (val/n)
     return res
 
 def entropie(prob):
@@ -71,17 +71,37 @@ def create_tree(hg):
     print_dfs(nodes[0])
     return nodes[0]
 
+def avg_len(prob, huffman_code): 
+    assert(len(prob)==len(huffman_code))
+    res = 0
+    for key, val in huffman_code.items(): 
+        res += prob[key]*len(val)
+    return res
+
+def compression_rate(text, huffman_code): 
+    huffman_len = 0
+    for c in text: 
+        huffman_len += len(huffman_code[c])
+    return huffman_len/(len(text)*7)
+    
+
 def main(): 
     text = "TESTDETI"
-    text = "AAAAAAABCCCCCCDDEEEEE"
+#    text = "AAAAAAABCCCCCCDDEEEEE"
     hg = histogram(text)
     p = prob(text)
-    e = entropie(p)
+    e = entropie(list(p.values()))
     tree = create_tree(hg)
-    dico = {}
-    binary_code(tree, dico, "")
-    print(dico)
+    hc = {}
+    binary_code(tree, hc, "")
+    print(hc)
     print(p, e)
+    n_hc = {}
+    for key, val in hc.items() :
+        n_hc[key] = "1234567"
+    print(avg_len(p, hc))
+    print(avg_len(p, n_hc))
+    print(compression_rate(text, hc))
 
 if __name__ == "__main__":
     main()
