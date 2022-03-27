@@ -45,15 +45,14 @@ void main(int argc, char** argv)
     close(main_tube[1]);
 
     int total = 0; 
-    char buffer[1];
+    char buffer;
     int curr_num = 0;
     for(int i = 0; i < n; )
     {
         read(main_tube[0], &buffer, sizeof(char));
-	//printf("%d\n", buffer[0]);
-        if(isdigit(buffer[0])) {
+        if(48 <= buffer && buffer <= 57) {
 	    curr_num *= 10 ;
-	    curr_num += atoi(buffer);
+	    curr_num += buffer -48;
 	} else {
 	    total += curr_num;
 	    curr_num = 0;
