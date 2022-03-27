@@ -46,11 +46,20 @@ void main(int argc, char** argv)
 
     int total = 0; 
     char buffer[1];
-    for(int i = 0; i < (n*2); i++)
+    int curr_num = 0;
+    for(int i = 0; i < n; )
     {
-        read(main_tube[0], &buffer, sizeof(buffer));
-        if(isdigit(buffer[0]))
-            total += atoi(buffer);
+        read(main_tube[0], &buffer, sizeof(char));
+	//printf("%d\n", buffer[0]);
+        if(isdigit(buffer[0])) {
+	    curr_num *= 10 ;
+	    curr_num += atoi(buffer);
+	} else {
+	    total += curr_num;
+	    curr_num = 0;
+	    i++;
+	}
+		
     }
     printf("%d\n", total);
 }
