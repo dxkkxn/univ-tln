@@ -140,24 +140,27 @@ def display_earth():
     return
 
 def display_atmosphere():
-    glBindTexture(GL_TEXTURE_2D, texture_planet[3])
+    # glBindTexture(GL_TEXTURE_2D, texture_planet[3])
 
 
-    emission = (0.0, 1.0, 1.0, 1.0)
-    diffuse = (1.0, 1.0, 1.0, 1.0)
+    diffuse = (0.9, 0.8, 0.8, 0.8)
+    ambient = (0.3, 0.3, 0.3, 0.3)
+    specular = (0.9, 0.8, 0.8, 0.8)
     sph1 = gluNewQuadric()
 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse)
-    glMaterialfv(GL_FRONT, GL_EMISSION, emission)
+    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient)
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular)
+
 
     gluQuadricDrawStyle(sph1, GLU_FILL)
     gluQuadricNormals(sph1, GLU_SMOOTH)
     gluQuadricTexture(sph1, GL_TRUE)
 
-    glEnable (GL_BLEND);
-    glDepthMask (GL_FALSE);
+    glEnable(GL_BLEND);
+    #glDepthMask (GL_FALSE);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND)
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE);
+    glBlendFunc( GL_ONE, GL_SRC_ALPHA);
 
     gluSphere(sph1, 1.3, 100, 80)
 
@@ -181,18 +184,22 @@ def init_texture():
 def init():
     # clear color to black
     glClearColor(0.0, 0.0, 0.0, 0.0)
-    diffuse = [0.7, 0.7, 0.7, 1.0]
+    diffuse = [1.0, 1.0, 1.0, 1.0]
     specular = [0.001, 0.001, 0.001, 1.0]
     pos = [0, 0, 0, 1]
+    ambient = [1.0, 1.0, 1.0, 1.0]
     glEnable(GL_DEPTH_TEST)
-    glEnable(GL_BLEND)
+    glEnable(GL_LIGHTING)
+    glEnable(GL_TEXTURE_2D)
+
     glDepthFunc(GL_LESS)
     glClearDepth(1)
 
     glEnable(GL_LIGHT0)
-    glEnable(GL_TEXTURE_2D)
     glLightfv(GL_LIGHT0, GL_POSITION, pos)
-    glEnable(GL_LIGHTING)
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
     glShadeModel(GL_SMOOTH)
     quadric = gluNewQuadric()
     gluQuadricDrawStyle(quadric, GLU_FILL)
