@@ -261,55 +261,65 @@ int main(){
 //  copie("example.txt", "out_example.txt");
 //  print_arr(vecteur(32), 32);
 //  printf("%d\n", valeur(vecteur(32)));
-  int l0[N] = {1, 0, 0, 0, 1, 0, 1};
-  int l1[N] = {0, 1, 0, 0, 1, 1, 1};
-  int l2[N] = {0, 0, 1, 0, 1, 1, 0};
-  int l3[N] = {0, 0, 0, 1, 0, 1, 1};
+  /* int l0[N] = {1, 0, 0, 0, 1, 0, 1}; */
+  /* int l1[N] = {0, 1, 0, 0, 1, 1, 1}; */
+  /* int l2[N] = {0, 0, 1, 0, 1, 1, 0}; */
+  /* int l3[N] = {0, 0, 0, 1, 0, 1, 1}; */
+  /* int *G[K] = {l0, l1, l2, l3}; */
+  /* int l4[N] = {1, 1, 1, 0, 1, 0, 0}; */
+  /* int l5[N] = {0, 1, 1, 1, 0, 1, 0}; */
+  /* int l6[N] = {1, 1, 0, 1, 0, 0, 1}; */
+  /* int *H[3] = {l4, l5, l6}; */
+  int l0[N] = {1, 1, 1, 0, 0, 0, 0};
+  int l1[N] = {1, 0, 0, 1, 1, 0, 0};
+  int l2[N] = {0, 1, 0, 1, 0, 1, 0};
+  int l3[N] = {1, 0, 0, 1, 0, 0, 1};
   int *G[K] = {l0, l1, l2, l3};
-  int l4[N] = {1, 1, 1, 0, 1, 0, 0};
-  int l5[N] = {0, 1, 1, 1, 0, 1, 0};
-  int l6[N] = {1, 1, 0, 1, 0, 0, 1};
+  int l4[N] = {0, 0, 0, 1, 1, 1, 1};
+  int l5[N] = {0, 1, 1, 0, 0, 1, 1};
+  int l6[N] = {1, 0, 1, 0, 1, 0, 1};
   int *H[3] = {l4, l5, l6};
-  /* int V[4] = {1, 0, 1, 1}; */
+  int V[4] = {0, 1, 1, 1};
 
   /* int ** encoded_matrix = calloc(pow(2, K), sizeof(int*)); */
+  int * encoded = encode(V, K, G, K, N);
   printf("<vecteur original> - <syndrome original> -> <vecteur bruité> - syndrome\n");
-  for(int i = 0; i<pow(2, K); i++) {
-      int * v = vecteur(i, K) ;
-      int * encoded = encode(v, K, G, K, N);
-      int * syndrome = control(H, N-K, N, encoded, N);
-      /* int syndrome = valeur(control_b, N-K); */
-      /* int index = sizes[syndrome]; */
-      int * b_arr = bruite_bit(encoded, N, rand()%N);
-      int * syndrome_b = control(H, N-K, N, b_arr, N);
-      /* print_arr(encoded, N, true); */
-      /* print_arr(b_arr, N, true); */
-      /* printf("syndrome -> %d, index -> %d, N-K -> %d\n", syndrome, index, N-K); */
-      /* equiv_class[syndrome][index] = v; */
-      /* sizes[syndrome]++; */
-      printf("<");
-      print_arr(encoded, N, false);
-      printf("> - ");
-      printf("<");
-      print_arr(syndrome, N-K, false);
-      printf("> - ");
-      printf("<");
-      print_arr(b_arr, N, false);
-      printf("> - ");
-      printf("<");
-      print_arr(syndrome_b, N-K, false);
-      printf(">\n");
-      printf("corrected -> ");
-      int * corrected = correct(b_arr, N, H, N-K, N);
-      print_arr(corrected, N, false);
-      printf(" decode -> ");
-      print_arr(decode(corrected, K, N), K, true);
-      printf("\n\n");
-      /* printf("> indice_col = %d \n", indice_colonne(H, N-K, N, syndrome_b, N-K)); */
-      /* print_arr(control_b, 4); */
-      /* encoded_matrix[i] = encoded; */
-      /* free(v); */
-  }
+  /* for(int i = 0; i<pow(2, K); i++) { */
+  /*     int * v = vecteur(i, K) ; */
+  /*     int * encoded = encode(v, K, G, K, N); */
+  /*     int * syndrome = control(H, N-K, N, encoded, N); */
+  /*     /\* int syndrome = valeur(control_b, N-K); *\/ */
+  /*     /\* int index = sizes[syndrome]; *\/ */
+  /*     int * b_arr = bruite_bit(encoded, N, rand()%N); */
+  /*     int * syndrome_b = control(H, N-K, N, b_arr, N); */
+  /*     /\* print_arr(encoded, N, true); *\/ */
+  /*     /\* print_arr(b_arr, N, true); *\/ */
+  /*     /\* printf("syndrome -> %d, index -> %d, N-K -> %d\n", syndrome, index, N-K); *\/ */
+  /*     /\* equiv_class[syndrome][index] = v; *\/ */
+  /*     /\* sizes[syndrome]++; *\/ */
+  /*     printf("<"); */
+  /*     print_arr(encoded, N, false); */
+  /*     printf("> - "); */
+  /*     printf("<"); */
+  /*     print_arr(syndrome, N-K, false); */
+  /*     printf("> - "); */
+  /*     printf("<"); */
+  /*     print_arr(b_arr, N, false); */
+  /*     printf("> - "); */
+  /*     printf("<"); */
+  /*     print_arr(syndrome_b, N-K, false); */
+  /*     printf(">\n"); */
+  /*     printf("corrected -> "); */
+  /*     int * corrected = correct(b_arr, N, H, N-K, N); */
+  /*     print_arr(corrected, N, false); */
+  /*     printf(" decode -> "); */
+  /*     print_arr(decode(corrected, K, N), K, true); */
+  /*     printf("\n\n"); */
+  /*     /\* printf("> indice_col = %d \n", indice_colonne(H, N-K, N, syndrome_b, N-K)); *\/ */
+  /*     /\* print_arr(control_b, 4); *\/ */
+  /*     /\* encoded_matrix[i] = encoded; *\/ */
+  /*     /\* free(v); *\/ */
+  /* } */
   /* encoded_matrix[0][N-1] =  1; */
 /*   print_matrix(encoded_matrix, pow(2,K)-1, N); */
 /*   printf("dist_min = %d\n", dist_min(encoded_matrix, pow(2,K), N)); */
